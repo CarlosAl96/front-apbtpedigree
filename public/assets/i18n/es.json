@@ -1,0 +1,59 @@
+{
+  "header": {
+    "search": "Buscar pedigrí",
+    "hello": "Hola {{name}}!",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "login": "Iniciar sesión",
+    "by": "por",
+    "searchOptions": {
+      "registeredName": "Nombre registrado",
+      "dogId": "ID del can",
+      "registrationNumber": "Número de registro",
+      "callname": "Callname",
+      "breeder": "Criador",
+      "owner": "Propietario",
+      "performanceTitle": "Título de rendimiento",
+      "producingTitle": "Título de productor"
+    }
+  },
+  "navbar": {
+    "items": {
+      "home": "Inicio",
+      "pedigrees": "Pedigríes",
+      "yourPedigrees": "Mis Pedigríes",
+      "yourAccount": "Mi cuenta",
+      "messages": "Mensajes",
+      "forum": "Foro"
+    }
+  },
+  "menu": "Menú",
+  "onlineInfo": {
+    "title": "¿Quienes están online?",
+    "line1": "Hay actualmente, <b>{{guest}}</b> invitado(s) y <b>{{online}}</b> miembro(s) que están en línea.",
+    "line2": "Usted se ha registrado como <b>{{user}}</b>. Tienes <b>{{messages}}</b> mensaje(s)."
+  },
+  "buttons": {
+    "search": "Buscar",
+    "newDog": "Nuevo pedigrí"
+  },
+  "footer": {
+    "line1": "Todos los logos y marcas registradas en este sitio son propiedad de sus respectivo dueños. Los comentarios son propiedad de sus pósters.",
+    "line2": "Apbtpedigree Todos los derechos reservados ©{{year}}"
+  },
+
+  "login": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "lostPassword": "¿Perdiste tu contraseña?",
+    "newUser": "¿Eres nuevo? Regístrate!"
+  },
+
+  "pedigrees": {
+    "tips": "CONSEJOS DE BÚSQUEDA RÁPIDA",
+    "line1": "<b>Inicio rápido.</b> Para buscar pedigríes rápidamente utilice el formulario \"BÚSQUEDA RÁPIDA DE PEDIGRÍES\" que aparece en la esquina superior derecha en todo el sitio web.",
+    "line2": "<b>Nota:</b> Los títulos no forman parte del nombre, así que si quiere encontrar Garner's CH Chinaman ROM escriba \"garner's chinaman\". Si incluye el título dentro del nombre no lo encontrará.",
+    "line3": "<b>Para añadir nuevos pedigrees</b> sólo tienes que hacer clic en su icono de arriba y seguir las instrucciones. Una vez que hayas introducido algunos perros, puedes encontrarlos utilizando el formulario \"BÚSQUEDA RÁPIDA DE PEDIGRÍES\" A continuación, abre su pedigrí y verás un montón de iconos que te permitirán <b>editar las diferentes partes del pedigrí.</b> Haga clic en esos iconos y siga las instrucciones.",
+    "line4": "Si tiene preguntas, vaya a los Foros y publíquelas en el Área de Soporte."
+  }
+}

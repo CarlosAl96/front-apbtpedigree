@@ -1,0 +1,16 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{t("pedigrees.tips")}}</div>
+  </ng-template>
+
+  <div>
+    <p [innerHTML]="t('pedigrees.line1')"></p>
+    <p [innerHTML]="t('pedigrees.line2')"></p>
+    <p [innerHTML]="t('pedigrees.line3')"></p>
+    <p [innerHTML]="t('pedigrees.line4')"></p>
+  </div>
+
+  <div class="mt-5">
+    <p-button class="btn-primary" [label]="t('buttons.newDog')" />
+  </div>
+</p-card>

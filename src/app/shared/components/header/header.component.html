@@ -1,0 +1,42 @@
+<div class="header" *transloco="let t">
+
+  <div class="flex align-items-center gap-2 w-full">
+    <img style="width: 50px" src="./assets/images/logo.png" />
+  </div>
+
+  <div class="flex align-items-center gap-2 w-full">
+    <input pInputText type="text" [(ngModel)]="modelSearch" [placeholder]="t('header.search')"
+      (keyup.enter)="search()" />
+    <label>{{t("header.by")}}</label>
+    <p-dropdown [options]="searchOptions" [(ngModel)]="modelSearchOption">
+      <ng-template pTemplate="selectedItem">
+        <div>{{ t('header.searchOptions.' + modelSearchOption) }}</div>
+      </ng-template>
+      <ng-template let-searchOption pTemplate="item">
+
+        <div>{{ t('header.searchOptions.' + searchOption) }}</div>
+
+      </ng-template>
+    </p-dropdown>
+    <button pButton type="button" icon="pi pi-search" [label]="t('buttons.search')" class="p-button-primary"
+      (click)="search()"></button>
+  </div>
+
+  <div class="flex align-items-center justify-content-end gap-2 w-full">
+    <p-dropdown [options]="availableLangs" [(ngModel)]="activeLang" optionLabel="label" optionValue="id"
+      (onChange)="changeLang($event)">
+      <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2">
+          <img [src]="'./assets/images/'+ activeLang + '.png'" style="width: 18px" />
+        </div>
+      </ng-template>
+      <ng-template let-availableLang pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <img [src]="'./assets/images/'+ availableLang.id + '.png'" style="width: 18px" />
+          <div>{{ availableLang.id.toUpperCase() }}</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+
+</div>

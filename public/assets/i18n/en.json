@@ -1,0 +1,59 @@
+{
+  "header": {
+    "search": "Search pedigree",
+    "hello": "Hello {{name}}!",
+    "logout": "Logout",
+    "register": "Register",
+    "login": "Login",
+    "by": "By",
+    "searchOptions": {
+      "registeredName": "Registered Name",
+      "dogId": "Dog ID",
+      "registrationNumber": "Registration Number",
+      "callname": "Callname",
+      "breeder": "Breeder",
+      "owner": "Owner",
+      "performanceTitle": "Performance Title",
+      "producingTitle": "Producing Title"
+    }
+  },
+  "navbar": {
+    "items": {
+      "home": "Home",
+      "pedigrees": "Pedigrees",
+      "yourPedigrees": "Your Pedigrees",
+      "yourAccount": "Your Account",
+      "messages": "Private Messages",
+      "forum": "Forums"
+    }
+  },
+  "menu": "Menu",
+  "onlineInfo": {
+    "title": "Who's Online",
+    "line1": "There are currently, <b>{{guest}}</b> guest(s) and <b>{{online}}</b> member(s) that are online.",
+    "line2": "You are logged as <b>{{user}}</b>. You have <b>{{messages}}</b> private message(s)."
+  },
+  "buttons": {
+    "search": "Search",
+    "newDog": "New dog"
+  },
+  "footer": {
+    "line1": "All logos and trademarks on this site are the property of their respective owners. Comments are the property of their posters.",
+    "line2": "Apbtpedigree All rights reserved. ©{{year}}"
+  },
+
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "lostPassword": "Lost your Password?",
+    "newUser": "New User Registration"
+  },
+
+  "pedigrees": {
+    "tips": "QUICK SEARCH TIPS",
+    "line1": "<b>Quick Start.</b> To search pedigrees quickly use the \"QUICK PEDIGREE SEARCH\" form that appears on the top right corner througout the website.",
+    "line2": "<b>Note:</b> Titles are not part of the name, so if you want to find Garner's CH Chinaman ROM type \"garner's chinaman\". If you include the title inside the name you will not find it.",
+    "line3": "<b>To add new pedigrees</b> just click on its icon above and follow instructions. Once you've entered some dogs, you can find them using the \"QUICK PEDIGREE SEARCH\" form. Then just open its pedigree and you will see a bunch of icons that will allow you <b>to edit the different parts of the pedigree.</b> Click on those icons and follow instructions.",
+    "line4": "If you have questions go to the Forums and post on the Support Area."
+  }
+}

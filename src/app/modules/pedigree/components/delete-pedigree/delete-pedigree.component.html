@@ -1,0 +1,22 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">
+      @if (isFromPedigreeSearch) {
+      <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
+      }
+      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.deleteDog')}}</span>
+      @if (isFromPedigreeSearch) {
+      <div class="w-full"></div>
+      }
+    </div>
+  </ng-template>
+
+  <p [innerHTML]="t('yourPedigrees.deletePedigree.text', { name: pedigree.fullname })"></p>
+  <p [innerHTML]="t('yourPedigrees.deletePedigree.note')"></p>
+
+  <div class="w-full flex justify-content-end gap-3 mt-3">
+    <p-button severity="danger" label="{{ t('buttons.deletePedigree') }}" (onClick)="deletePedigree()" />
+  </div>
+</p-card>
+
+<p-confirmDialog />

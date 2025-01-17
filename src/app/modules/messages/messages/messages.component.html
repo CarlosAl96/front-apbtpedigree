@@ -1,1 +1,12 @@
-<p>messages works!</p>
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{t('navbar.items.messages')}}</div>
+  </ng-template>
+
+  <div>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga atque ipsa expedita ut harum consequatur rerum
+      accusantium modi voluptatum, eaque facere sequi ducimus molestiae soluta dolore impedit voluptatem suscipit odio!
+    </p>
+  </div>
+</p-card>

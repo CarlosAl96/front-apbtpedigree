@@ -11,6 +11,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QueryPaginationPedigree } from '../../../core/models/queryPaginationPedigree';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +34,11 @@ export class HeaderComponent implements OnInit {
   public activeLang: string = 'es';
   public modelSearch: string = '';
   public modelSearchOption: string = 'registeredName';
+  public queryPagination: QueryPaginationPedigree = {
+    orderBy: 'id ASC',
+    size: 50,
+    page: 0,
+  };
   public searchOptions: string[] = [
     'registeredName',
     'dogId',
@@ -39,13 +46,13 @@ export class HeaderComponent implements OnInit {
     'callname',
     'breeder',
     'owner',
-    'performanceTitle',
-    'producingTitle',
   ];
 
   constructor(
     private readonly sessionService: SessionService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    public readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {
     this.availableLangs =
       this.translocoService.getAvailableLangs() as LangDefinition[];
@@ -53,6 +60,35 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+
+    if (this.router.url.startsWith('/pedigree?')) {
+      this.route.queryParams.subscribe((params) => {
+        if (params['size'] && params['page'] && params['orderBy']) {
+          if (params['registeredName']) {
+            this.modelSearch = params['registeredName'];
+            this.modelSearchOption = 'registeredName';
+          } else if (params['dogId']) {
+            this.modelSearch = params['dogId'];
+            this.modelSearchOption = 'dogId';
+          } else if (params['registrationNumber']) {
+            this.modelSearchOption = 'registrationNumber';
+            this.modelSearch = params['registrationNumber'];
+          } else if (params['callname']) {
+            this.modelSearchOption = 'callname';
+            this.modelSearch = params['callname'];
+          } else if (params['breeder']) {
+            this.modelSearchOption = 'breeder';
+            this.modelSearch = params['breeder'];
+          } else if (params['owner']) {
+            this.modelSearchOption = 'owner';
+            this.modelSearch = params['owner'];
+          } else if (params['userId']) {
+            this.modelSearchOption = 'userId';
+            this.modelSearch = params['userId'];
+          }
+        }
+      });
+    }
   }
 
   public changeLang(event: any): void {
@@ -65,5 +101,33 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  public search(): void {}
+  public goToAdmin(): void {
+    this.router.navigate(['admin']);
+  }
+
+  public goToUserMode(): void {
+    this.router.navigate(['']);
+  }
+
+  public search(): void {
+    this.queryPagination = { orderBy: 'id ASC', size: 50, page: 0 };
+
+    if (this.modelSearchOption === 'registeredName') {
+      this.queryPagination.registeredName = this.modelSearch as string;
+    } else if (this.modelSearchOption === 'dogId') {
+      this.queryPagination.dogId = Number(this.modelSearch);
+    } else if (this.modelSearchOption === 'registrationNumber') {
+      this.queryPagination.registrationNumber = this.modelSearch as string;
+    } else if (this.modelSearchOption === 'callname') {
+      this.queryPagination.callname = this.modelSearch as string;
+    } else if (this.modelSearchOption === 'breeder') {
+      this.queryPagination.breeder = this.modelSearch as string;
+    } else if (this.modelSearchOption === 'owner') {
+      this.queryPagination.owner = this.modelSearch as string;
+    } else if (this.modelSearchOption === 'userId') {
+      this.queryPagination.userId = Number(this.modelSearch);
+    }
+
+    this.router.navigate(['pedigree'], { queryParams: this.queryPagination });
+  }
 }

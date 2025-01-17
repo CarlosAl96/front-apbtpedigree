@@ -1,0 +1,31 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">
+      @if (isFromPedigreeSearch) {
+      <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
+      }
+      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.publicLink')}}</span>
+      @if (isFromPedigreeSearch) {
+      <div class="w-full"></div>
+      }
+
+    </div>
+  </ng-template>
+
+  <div>
+    <p>{{ t('yourPedigrees.publicLink.text1') }}</p>
+    <p>{{ t('yourPedigrees.publicLink.text2') }}</p>
+
+    <div class="flex gap-3 align-items-center">
+      <span class="label-span"><strong>URL</strong></span>
+      <span>{{ url }}</span>
+      <p-button icon="pi pi-copy" [rounded]="true" [text]="true" [raised]="true" (onClick)="copy(url)" />
+    </div>
+
+    <div class="flex gap-3 align-items-center">
+      <span class="label-span"><strong>HTML</strong></span>
+      <span>{{ html }}</span>
+      <p-button icon="pi pi-copy" [rounded]="true" [text]="true" [raised]="true" (onClick)="copy(html)" />
+    </div>
+  </div>
+</p-card>

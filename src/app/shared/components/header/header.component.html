@@ -19,10 +19,21 @@
       </ng-template>
     </p-dropdown>
     <button pButton type="button" icon="pi pi-search" [label]="t('buttons.search')" class="p-button-primary"
-      (click)="search()"></button>
+      (click)="search()" [disabled]="modelSearch==''"></button>
   </div>
 
   <div class="flex align-items-center justify-content-end gap-2 w-full">
+
+    @if (user?.is_superuser && !this.router.url.includes('admin')) {
+    <button pButton type="button" icon="pi pi-th-large" [label]="t('buttons.admin')" class="p-button-primary"
+      (click)="goToAdmin()"></button>
+    }
+
+    @if(user?.is_superuser && this.router.url.includes('admin')){
+    <button pButton type="button" icon="pi pi-user" [label]="t('buttons.userMode')" class="p-button-primary"
+      (click)="goToUserMode()"></button>
+    }
+
     <p-dropdown [options]="availableLangs" [(ngModel)]="activeLang" optionLabel="label" optionValue="id"
       (onChange)="changeLang($event)">
       <ng-template pTemplate="selectedItem">

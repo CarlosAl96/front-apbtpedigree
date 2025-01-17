@@ -1,1 +1,106 @@
-<p>register works!</p>
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{t('header.register')}}</div>
+  </ng-template>
+
+  <form [formGroup]="formGroup" (ngSubmit)="register($event)" class="flex flex-column gap-2">
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="username">{{t("register.username")}}</label>
+        <input pInputText id="username" formControlName="username" (keydown.space)="$event.preventDefault()" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="email">{{t("login.email")}}</label>
+        <input pInputText id="email" formControlName="email" />
+      </div>
+    </div>
+
+    <p-messages [(value)]="errorUsername" [enableService]="false" [closable]="false" />
+    <p-messages [(value)]="errorEmail" [enableService]="false" [closable]="false" />
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="password">{{t("login.password")}}</label>
+        <p-password id="password" styleClass="w-full" inputStyleClass="w-full" formControlName="password"
+          [toggleMask]="true" [feedback]="false" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="password2">{{t("register.password2")}}</label>
+        <p-password id="password2" styleClass="w-full" inputStyleClass="w-full" formControlName="password2"
+          [toggleMask]="true" [feedback]="false" />
+      </div>
+    </div>
+
+    <p-messages [(value)]="errorPassword" [enableService]="false" [closable]="false" />
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="first_name">{{t("register.firstName")}}</label>
+        <input pInputText id="first_name" formControlName="first_name" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="last_name">{{t("register.lastName")}}</label>
+        <input pInputText id="last_name" formControlName="last_name" />
+      </div>
+    </div>
+
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="street">{{t("register.street")}}</label>
+        <input pInputText id="street" formControlName="street" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="city">{{t("register.city")}}</label>
+        <input pInputText id="city" formControlName="city" />
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="state">{{t("register.state")}}</label>
+        <input pInputText id="state" formControlName="state" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="country">{{t("register.country")}}</label>
+        <input pInputText id="country" formControlName="country" />
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <div class="flex flex-column gap-2 w-full">
+        <label for="zip_code">{{t("register.zipCode")}}</label>
+        <input pInputText id="zip_code" formControlName="zip_code" />
+      </div>
+
+      <div class="flex flex-column gap-2 w-full">
+        <label for="phone_number">{{t("register.phone")}}</label>
+        <input pInputText id="phone_number" formControlName="phone_number" />
+      </div>
+    </div>
+
+    <div class="w-full flex flex-column justify-content-center gap-2">
+      <label>{{ t('yourPedigrees.newPedigree.form.img') }}</label>
+      <p-fileUpload #fileUpload [multiple]="false" chooseLabel="{{ t('buttons.choose') }}" accept="image/*"
+        maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false" (onSelect)="onSelectFile($event)">
+      </p-fileUpload>
+    </div>
+
+    <p-messages [(value)]="error" [enableService]="false" [closable]="false" />
+
+    <div class="flex flex-column align-items-end gap-2 mt-3">
+      <p-button class="btn-primary" type="submit" [loading]="loading" [label]="t('header.register')" />
+    </div>
+
+  </form>
+
+  <div class="flex justify-content-center gap-2 w-full mt-5">
+    <a class="link" href="/auth/login">{{t('register.alreadyAccount')}}</a>
+  </div>
+</p-card>

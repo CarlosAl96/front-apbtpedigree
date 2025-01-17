@@ -1,0 +1,37 @@
+<div *transloco="let t">
+  <form class="flex flex-column gap-3" [formGroup]="formGroup" (ngSubmit)="createOrEdit()">
+
+    <div class="flex gap-3 mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="name">{{t("forum.name")}}</label>
+        <input pInputText styleClass="w-full" formControlName="name" inputId="name" />
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="description">{{t("forum.description")}}</label>
+        <textarea pInputTextarea rows="5" styleClass="w-full" formControlName="description" inputId="description"
+          style="resize: none;"></textarea>
+      </div>
+
+    </div>
+
+    <div class="w-full flex flex-column justify-content-center gap-2">
+      <label for="moderators">{{t("forum.moderators")}}</label>
+      <p-chips inputId="moderators" formControlName="moderators" styleClass="w-full" />
+    </div>
+
+    <div class="w-full flex justify-content-end mt-3">
+      @if (option == 'edit') {
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [loading]="loading"
+        label="{{t('buttons.saveCategory')}}" />
+      } @else {
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [loading]="loading"
+        label="{{t('buttons.saveCategory')}}" />
+      }
+    </div>
+  </form>
+
+</div>

@@ -4,6 +4,6 @@ import { MyPedigreesComponent } from './my-pedigrees/my-pedigrees.component';
 
 export const PEDIGREE_ROUTES: Routes = [
   { path: '', component: PedigreesComponent },
-  { path: 'my-pedigrees', component: MyPedigreesComponent },
+  { path: 'my-pedigrees/:id', component: MyPedigreesComponent },
   { path: '**', redirectTo: '' },
 ];

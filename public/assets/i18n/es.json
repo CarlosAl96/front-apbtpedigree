@@ -4,13 +4,14 @@
     "hello": "Hola {{name}}!",
     "logout": "Cerrar sesión",
     "register": "Registrarse",
+    "forgotPassword": "Reestablecer contraseña",
     "login": "Iniciar sesión",
     "by": "por",
     "searchOptions": {
       "registeredName": "Nombre registrado",
       "dogId": "ID del can",
       "registrationNumber": "Número de registro",
-      "callname": "Callname",
+      "callname": "Nombre de llamada",
       "breeder": "Criador",
       "owner": "Propietario",
       "performanceTitle": "Título de rendimiento",
@@ -24,6 +25,8 @@
       "yourPedigrees": "Mis Pedigríes",
       "yourAccount": "Mi cuenta",
       "messages": "Mensajes",
+      "users": "Usuarios",
+      "dashboard": "Dashboard",
       "forum": "Foro"
     }
   },
@@ -35,25 +38,231 @@
   },
   "buttons": {
     "search": "Buscar",
-    "newDog": "Nuevo pedigrí"
+    "newDog": "Nuevo pedigrí",
+    "admin": "Administrar",
+    "userMode": "Modo usuario",
+    "yes": "Aceptar",
+    "no": "Cancelar",
+    "next": "Continuar",
+    "back": "Atrás",
+    "save": "Guardar",
+    "saveAndAddBrother": "Guardar y agregar hermano",
+    "choose": "Examinar",
+    "deleteCurrentImg": "Eliminar foto actual",
+    "deletePedigree": "Eliminar pedigrí",
+    "changeOwner": "Cambiar dueño",
+    "newCategory": "Nueva categoría",
+    "saveCategory": "Guardar categoría",
+    "editCategory": "Editar categoría"
+  },
+  "colors": {
+    "red": "Rojo",
+    "black": "Negro",
+    "blue": "Azul",
+    "green": "Verde"
+  },
+  "sexs": {
+    "female": "Hembra",
+    "male": "Macho",
+    "unknown": "Desconocido"
   },
   "footer": {
     "line1": "Todos los logos y marcas registradas en este sitio son propiedad de sus respectivo dueños. Los comentarios son propiedad de sus pósters.",
     "line2": "Apbtpedigree Todos los derechos reservados ©{{year}}"
   },
-
   "login": {
     "email": "Correo electrónico",
+    "username": "Nombre de usuario",
     "password": "Contraseña",
     "lostPassword": "¿Perdiste tu contraseña?",
     "newUser": "¿Eres nuevo? Regístrate!"
   },
-
+  "register": {
+    "username": "Nombre de usuario",
+    "password2": "Repita la contraseña",
+    "firstName": "Nombres",
+    "lastName": "Apellidos",
+    "street": "Dirección",
+    "city": "Ciudad",
+    "state": "Estado",
+    "country": "País",
+    "zipCode": "Código postal",
+    "phone": "Número de teléfono",
+    "alreadyAccount": "¿Ya tienes una cuenta? Inicia sesión"
+  },
+  "forum": {
+    "index": "APBT Pedigree Página principal del foro",
+    "topics": "Temas",
+    "posts": "Publicaciones",
+    "name": "Nombre",
+    "replies": "Respuestas",
+    "author": "Autor",
+    "views": "Vistas",
+    "description": "Descripción",
+    "lastPost": "Última publicación",
+    "moderators": "Moderadores",
+    "actions": "Acciones",
+    "list": "Listado de categorias del foro",
+    "deleteQuestion": "¿Estás seguro de eliminar esta categoría?",
+    "deleteCategory": "Eliminar categoría",
+    "newPosts": "Nuevas publicaciones",
+    "noNewPosts": "Sin nuevas publicaciones",
+    "locked": "Foro bloqueado",
+    "whoOnline": {
+      "line1": "Nuestros usuarios han publicado un total de <strong>{{posts}}</strong> artículos",
+      "line2": "Tenemos <strong>{{users}}</strong> usuarios registrados",
+      "line3": "El usuario registrado más reciente es",
+      "line4": "En total hay <strong>{{users}}</strong> usuarios en línea",
+      "line5": "El mayor número de usuarios en línea fue de <strong>{{users}}</strong> el {{date}}",
+      "line6": "Usuarios registrados:",
+      "line7": "Estos datos se basan en usuarios activos durante los últimos cinco minutos"
+    }
+  },
   "pedigrees": {
     "tips": "CONSEJOS DE BÚSQUEDA RÁPIDA",
     "line1": "<b>Inicio rápido.</b> Para buscar pedigríes rápidamente utilice el formulario \"BÚSQUEDA RÁPIDA DE PEDIGRÍES\" que aparece en la esquina superior derecha en todo el sitio web.",
     "line2": "<b>Nota:</b> Los títulos no forman parte del nombre, así que si quiere encontrar Garner's CH Chinaman ROM escriba \"garner's chinaman\". Si incluye el título dentro del nombre no lo encontrará.",
     "line3": "<b>Para añadir nuevos pedigrees</b> sólo tienes que hacer clic en su icono de arriba y seguir las instrucciones. Una vez que hayas introducido algunos perros, puedes encontrarlos utilizando el formulario \"BÚSQUEDA RÁPIDA DE PEDIGRÍES\" A continuación, abre su pedigrí y verás un montón de iconos que te permitirán <b>editar las diferentes partes del pedigrí.</b> Haga clic en esos iconos y siga las instrucciones.",
-    "line4": "Si tiene preguntas, vaya a los Foros y publíquelas en el Área de Soporte."
+    "line4": "Si tiene preguntas, vaya a los Foros y publíquelas en el Área de Soporte.",
+    "results": "RESULTADOS DE LA BÚSQUEDA",
+    "emptyMessage": "No se encontró ningún pedigrí que coincida con los criterios de búsqueda. Se recomienda verificar los datos ingresados o intentar con otros términos."
+  },
+  "yourPedigrees": {
+    "title": "MIS PEDIGRÍES",
+    "of": "de",
+    "all": "Todos",
+    "show": "Mostrar",
+    "404": "Pedigrí no encontrado",
+    "401": "Este pedigrí es privado",
+    "emptyMessage": "Aún no has registrado ningún pedigrí",
+    "emptyMessage2": "Aún no se ha creado ningún pedigree. Para comenzar, haga click en el botón <strong>Nuevo Pedigrí</strong>.",
+    "selectMessage": "Selecciona un pedigrí para poder ver sus detalles.",
+    "menu": {
+      "details": "DETALLES DEL PEDIGRÍ",
+      "newDog": "NUEVO PEDIGRÍ",
+      "newDog2": "AÑADE UN NUEVO PEDIGRÍ",
+      "selectDog": "SELECCIONA UN PEDIGRÍ",
+      "editDog": "EDITAR PEDIGRÍ",
+      "uploadImg": "SUBIR / BORRAR FOTO",
+      "changePermissions": "CAMBIAR PERMISOS",
+      "transferOwnership": "CAMBIAR DUEÑO",
+      "deleteDog": "BORRAR PEDIGRÍ",
+      "publicLink": "LINK PUBLICO DEL PEDIGRÍ"
+    },
+    "menuPedigree": {
+      "pedigree": "PEDIGRÍ",
+      "offspring": "Hijos",
+      "siblings": "HERMANOS",
+      "pedStats": "ESTADÍSTICAS",
+      "printerFriendly": "IMPRIMIR"
+    },
+    "infoPedigree": {
+      "sex": "Sexo",
+      "color": "COLOR",
+      "enteredBy": "REGISTRADO POR",
+      "posted": "FECHA DE REGISTRO",
+      "lastModified": "ÚLTIMA MODIFICACIÓN",
+      "pedigreeHasBeenSeen": "EL PEDIGRÍ HA SIDO VISTO",
+      "times": "VECES",
+      "log": "REGISTROS DEL PEDIGRÍ",
+      "description": "Descripción"
+    },
+    "generations": {
+      "title": "4 GENERACIONES DEL PEDIGRÍ",
+      "first": "Primera",
+      "second": "Segunda",
+      "third": "Tercera",
+      "fourth": "Cuarta"
+    },
+    "uploadDeleteImg": {
+      "text": "Para cargar una imagen, haga clic en el botón Examinar y seleccione la imagen que desea cargar. Una vez que aparezca la ubicación de la imagen en el campo de carga de imágenes, haga clic en el botón Guardar.",
+      "confirm": "¿Estás seguro de eliminar la foto actual?",
+      "delete": "ELIMINAR FOTO"
+    },
+    "changeOwner": {
+      "currentOwner": "Dueño actual",
+      "usernameOrEmail": "Nombre usuario o correo electrónico",
+      "confirm": "¿Estás seguro que deseas transferir la propiedad de este perro a <strong>{{newOwner}}</strong>?"
+    },
+    "publicLink": {
+      "text1": "Para enlazar este pedigree en el foro de mensajes, copia la URL que aparece a continuación y pégala en tu publicación.",
+      "text2": "Para añadir un enlace al pedigree en tu sitio web, copia el código HTML y pégalo en la página donde deseas que aparezca el enlace."
+    },
+    "newPedigree": {
+      "step1": "Seleccionar padres",
+      "step2": "Información del pedigrí",
+      "textStep1": "De cada pedigrí en la base de datos se sabe quiénes son sus padres al guardar los números de identificación de éstos en su ficha. Por esta razón, los padres deben ser introducidos primero en la base de datos. Si los padres no están en la base de datos, no se puede saber quiénes son sus padres y el perro se mostrará como un perro con padres desconocidos. Si sabe que los padres ya están en la base de datos, bien porque los ha introducido usted mismo o porque lo ha hecho otra persona, utilice los formularios de búsqueda que aparecen a continuación para encontrar y seleccionar a los padres. De lo contrario, sólo tiene que pasar al siguiente paso sin seleccionar ninguno o hacer clic en \"Marcar como desconocido\".",
+      "note": "<strong>Nota:</strong> Los formularios de búsqueda que aparecen a continuación son idénticos al formulario de <strong>\"Buscar pedigrí\"</strong>. Para encontrar el padre de su perro, escriba en el formulario <strong>\"Buscar padre\"</strong> lo mismo que en el formulario <strong>\"Buscar pedigrí\"</strong>. Lo mismo se aplica para la madre.",
+      "textStep2": "En este paso introducirá la información del perro, como el nombre registrado, el criador, el propietario, el color, etc. Como mínimo, debe indicar un nombre registrado. Como no somos un registro, no tiene que ser un nombre registrado oficialmente en la adba o ukc o cualquier otro registro. Si usted puede proporcionar un nombre registrado, introduzca que uno, de lo contrario introduzca el nombre como el perro es mejor conocido y utilizar el formato covencional como  \"Jeep de Garrett\", \"Stompanato de Carver\", etc.",
+      "note2": "<strong>Notas:</strong> Los títulos deben introducirse en sus respectivos campos, no en el campo del nombre registrado. Los títulos anteriores al nombre son CH, GR CH, etc. Los títulos posteriores al nombre son ROM, POR, etc.Si el perro es conocido por varios nombres, puede introducirlos todos utilizando AKA para separar los nombres. Por ejemplo, \"Chico's Joker AKA Pitstop's Joker\" o \"Crenshaw's Jeep AKA Garrett's Jeep\".",
+      "markAsUnknown": "Marcar como desconocido",
+      "form": {
+        "beforeNameTitles": "Títulos antes del nombre",
+        "name": "Nombre registrado",
+        "afterNameTitles": "Títulos después del nombre",
+        "description": "Breve descripción y comentarios",
+        "callname": "Nombre de llamada",
+        "breeder": "Criador",
+        "owner": "Propietario",
+        "sex": "Sexo",
+        "color": "Color",
+        "registrationNumber": "Número de registro",
+        "birthdate": "Fecha de nacimiento",
+        "conditioned_weight": "Peso condicionado",
+        "chain_weight": "Peso de la cadena",
+        "img": "Añadir foto",
+        "actualImg": "Foto actual"
+      }
+    },
+    "changePermissions": {
+      "textIsEditable": "El pedigrí <strong>{{name}}</strong> puede ser visto por los demás usuarios. Si desea cambiarlo, desactive la opcion en la parte de abajo y haga click en Aceptar.",
+      "textIsNotEditable": "El pedigrí <strong>{{name}}</strong> no puede ser visto por los demás usuarios. Si desea cambiarlo, active la opcion en la parte de abajo y haga click en Aceptar.",
+      "label": "Permitir que otros usuarios vean este pedigrí",
+      "confirm": "¿Estás seguro de permitir a otros usuarios ver este pedigrí?",
+      "noConfirm": "¿Estás seguro de impedir a otros usuarios ver este pedigrí?"
+    },
+    "deletePedigree": {
+      "text": "Si quieres eliminar el pedigrí <strong>{{name}}</strong>, haz clic en el botón Eliminar pedigrí y luego en Aceptar.",
+      "note": "<strong>Advertencia:</strong> ¡Esta acción es permanente!.",
+      "confirm": "¿Estás seguro que quieres eliminar este pedigrí?"
+    },
+    "offspringList": "LISTA DE HIJOS",
+    "siblingsList": "LISTA DE HERMANOS",
+    "fullBrothers": "Hermanos / hermanas",
+    "has": "TIENE",
+    "sire": "Padre",
+    "dam": "Madre",
+    "unknown": "DESCONOCIDO",
+    "pedigreeStats": {
+      "title": "ESTADÍSTICAS DEL PEDIGRÍ",
+      "halfBrothersSire": "Medios hermanos/hermanas (mismo padre)",
+      "halfBrothersDam": "Medios hermanos/hermanas (misma madre)",
+      "generationsContribution": "CONTRIBUCIÓN GENÉTICA DE 4 GENERACIONES",
+      "beforeName": "Descendencia titulada antes del nombre (ch, gr ch, etc...)",
+      "afterName": "Descendencia titulada después del nombre (rom, por, etc...)"
+    }
+  },
+  "toast": {
+    "success": "Felicidades",
+    "error": "Error",
+    "pedigreeDeletedError": "¡Ha ocurrido un error eliminando el pedigrí!",
+    "login": "¡Has iniciado sesión como {{user}}!",
+    "register": "¡El usuario ha sido creado exitosamente!",
+    "pedigreeCreated": "¡El pedigrí ha sido creado exitosamente!",
+    "pedigreeEdited": "¡El pedigrí ha sido actualizado exitosamente!",
+    "pedigreeDeleted": "¡El pedigrí ha sido eliminado exitosamente!",
+    "categoryDeleted": "¡La categoría se ha eliminado exitosamente!",
+    "categoryCreated": "¡La categoría se ha creado exitosamente!",
+    "categoryEdited": "¡La categoría se ha actualizado exitosamente!",
+    "categoryCreatedError": "¡Ha ocurrido un error creando la categoría!",
+    "categoryDeletedError": "¡Ha ocurrido un error eliminando la categoría!"
+  },
+  "errorMessages": {
+    "alreadyEmail": "Ya existe una cuenta con este correo electrónico",
+    "alreadyUser": "Ya existe una cuenta con este nombre de usuario",
+    "errorRegister": "Ha ocurrido un error creando la cuenta, inténtalo de nuevo",
+    "noMatchPassword": "Ambas contraseñas deben coincidir",
+    "errorNewPedigree": "Ha ocurrido un error guardando el pedigrí",
+    "errorChangeOwner": "Ha ocurrido un error, el usuario <strong>{{user}}</strong> no fue encontrado"
   }
 }

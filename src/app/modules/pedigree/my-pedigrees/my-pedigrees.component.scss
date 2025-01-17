@@ -1,0 +1,38 @@
+.menu {
+  background-color: var(--color-bg-menu-pedigree);
+  border: 1px solid var(--color-primary);
+  color: var(--color-font-dark);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  gap: 1rem;
+}
+
+.link-menu {
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.link-menu:hover {
+  color: var(--color-primary);
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.active {
+  font-weight: bolder;
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.error-404 {
+  font-size: 4rem;
+  font-weight: bolder;
+  color: var(--color-font-primary);
+}

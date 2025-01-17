@@ -1,0 +1,45 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">
+      @if (isFromPedigreeSearch) {
+      <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
+      }
+      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.transferOwnership')}}</span>
+      @if (isFromPedigreeSearch) {
+      <div class="w-full"></div>
+      }
+
+    </div>
+  </ng-template>
+
+  <form class="flex flex-column gap-3 form" [formGroup]="formGroup" (ngSubmit)="changeOwner()">
+
+    <div class="flex gap-2">
+      <span>{{t("yourPedigrees.changeOwner.currentOwner")}}:</span>
+      <span><strong>{{ user?.username }}</strong></span>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <label for="username">{{t("yourPedigrees.changeOwner.usernameOrEmail")}}</label>
+      <input pInputText id="username" formControlName="username" (keydown.space)="$event.preventDefault()" />
+    </div>
+
+    <div class="flex mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="description">{{ t('yourPedigrees.newPedigree.form.description') }}</label>
+        <textarea pInputTextarea rows="5" styleClass="w-full" formControlName="description" inputId="description"
+          style="resize: none;"></textarea>
+      </div>
+    </div>
+
+    <p-messages class="mt-2" [(value)]="error" [enableService]="false" [closable]="false" />
+
+    <div class="flex flex-column align-items-start gap-2 mt-3">
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [label]="t('buttons.changeOwner')" />
+    </div>
+
+  </form>
+
+</p-card>
+
+<p-confirmDialog />

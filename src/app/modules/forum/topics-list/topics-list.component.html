@@ -1,0 +1,194 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{t('navbar.items.forum')}}</div>
+  </ng-template>
+
+  <p-table [value]="topics" styleClass="p-datatable-striped">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between">
+        <div class="flex flex-column gap-2">
+          <span class="text-xl">{{forumCategory.name}}</span>
+          <p-button label="New Topic" icon="pi pi-user"></p-button>
+        </div>
+        <div class="flex flex-column">
+          <span class="title">Mark all topics read</span>
+          <span>Moderators: DarkSoul, Admin</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th colspan="2">{{t("forum.topics")}}</th>
+        <th style="width: 60px;">{{t("forum.replies")}}</th>
+        <th style="width: 60px;">{{t("forum.author")}}</th>
+        <th style="width: 60px;">{{t("forum.views")}}</th>
+        <th style="width: 400px;">{{t("forum.lastPost")}}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-topic>
+      <tr class="row" (click)="goToTopic(topic.id)">
+        <td style="width: 50px;">
+          <diV class="icon-container">
+            <svg height="15px" width="15px" class="icon-category active" version="1.1" id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+              enable-background="new 0 0 512 512" xml:space="preserve">
+              <path
+                d="M0,512h232.7V279.3H0V512z M0,232.7h232.7V0H0V232.7z M279.3,512H512V279.3H279.3V512z M279.3,0v232.7H512V0H279.3z" />
+            </svg>
+          </diV>
+        </td>
+        <td>
+          <div class="flex flex-column gap-2">
+            <span class="title">{{ topic.name }}</span>
+            <!-- <span class="description">[ Goto page: 1, 2 ]</span> -->
+          </div>
+        </td>
+        <td style="width: 60px;">{{ topic.replies }}</td>
+        <td style="width: 60px;">{{ topic.author }}</td>
+        <td style="width: 60px;">{{ topic.views }}</td>
+        <td style="width: 400px;">
+          <div class="flex flex-column align-items-center ">
+            @if (topic.last_post_info){ <div class="flex flex-column align-items-center ">
+              <span>{{ topic.last_post_info.date | dateHourFormat }}</span>
+              <div class="flex align-items-center gap-1">
+                <span>{{ topic.last_post_info.author }}</span>
+                <i class="pi pi-arrow-right text-xs font-bold"></i>
+                <i class="pi pi-file font-bold"></i>
+              </div>
+            </div>
+            }@else {
+            <div class="flex flex-column align-items-center ">
+              <span>-</span>
+            </div>
+            }
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="previous-container">
+    <label>Display topics from previous:</label>
+    <p-dropdown [options]="previousOptions" [(ngModel)]="modelPrevious" optionLabel="name" optionValue="code">
+    </p-dropdown>
+    <button pButton type="button" [label]="'Go'" class="p-button-primary" (click)="changePreviousOption()"
+      [disabled]="modelPrevious == ''"></button>
+  </div>
+
+  <div class="flex align-items-start justify-content-between mt-5">
+    <div class="flex flex-column gap-3">
+      <div class="flex align-items-center gap-2 w-full">
+        <label>Jump To:</label>
+        <p-dropdown [options]="forumCategories" [(ngModel)]="modelCategory" optionLabel="name" optionValue="id">
+        </p-dropdown>
+        <button pButton type="button" [label]="'Go'" class="p-button-primary" (click)="changeCategory()"
+          [disabled]="modelCategory == 0"></button>
+      </div>
+
+      <div class="flex align-items-start gap-5">
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <diV class="icon-container">
+              <svg height="15px" width="15px" class="icon-category active" version="1.1" id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512" xml:space="preserve">
+                <path
+                  d="M0,512h232.7V279.3H0V512z M0,232.7h232.7V0H0V232.7z M279.3,512H512V279.3H279.3V512z M279.3,0v232.7H512V0H279.3z" />
+              </svg>
+            </diV>
+            <span>New posts</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <diV class="icon-container">
+              <svg height="15px" width="15px" class="icon-category active" version="1.1" id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512" xml:space="preserve">
+                <path
+                  d="M0,512h232.7V279.3H0V512z M0,232.7h232.7V0H0V232.7z M279.3,512H512V279.3H279.3V512z M279.3,0v232.7H512V0H279.3z" />
+              </svg>
+            </diV>
+            <span>New posts [ Popular ]</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <diV class="icon-container">
+              <i class="pi pi-lock font-bold" style="color: var(--surface-500);"></i>
+            </diV>
+            <span>Locked</span>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <diV class="icon-container">
+              <svg height="15px" width="15px" class="icon-category" version="1.1" id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512" xml:space="preserve">
+                <path
+                  d="M0,512h232.7V279.3H0V512z M0,232.7h232.7V0H0V232.7z M279.3,512H512V279.3H279.3V512z M279.3,0v232.7H512V0H279.3z" />
+              </svg>
+            </diV>
+            <span>No new posts</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <diV class="icon-container">
+              <svg height="15px" width="15px" class="icon-category" version="1.1" id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
+                enable-background="new 0 0 512 512" xml:space="preserve">
+                <path
+                  d="M0,512h232.7V279.3H0V512z M0,232.7h232.7V0H0V232.7z M279.3,512H512V279.3H279.3V512z M279.3,0v232.7H512V0H279.3z" />
+              </svg>
+            </diV>
+            <span>No new posts [ Popular ]</span>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <div class="icon-container">
+              <svg height="15px" width="15px" style="fill: var(--surface-500);" viewBox="0 0 32 32" version="1.1"
+                xmlns="http://www.w3.org/2000/svg">
+                <title>exclamation</title>
+                <path
+                  d="M10.656 8.864q0-2.208 1.568-3.776t3.776-1.568 3.776 1.568 1.6 3.776q0 0.256-0.064 0.448l-1.76 6.944q-0.096 1.408-1.12 2.368t-2.432 0.96q-1.376 0-2.4-0.928t-1.152-2.304q-0.32-0.96-0.672-2.112t-0.736-2.784-0.384-2.592zM12.416 24.928q0-1.472 1.056-2.496t2.528-1.056 2.528 1.056 1.056 2.496q0 1.504-1.056 2.528t-2.528 1.056-2.528-1.056-1.056-2.528z">
+                </path>
+              </svg>
+            </div>
+            <span>Announcement</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <div class="icon-container">
+              <svg height="15px" width="15px" style="fill: var(--surface-500);" viewBox="0 0 512 512" version="1.1"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>triangle-filled</title>
+                <g id="Page-1" stroke="none" stroke-width="1">
+                  <g id="drop" transform="translate(32.000000, 42.666667)">
+                    <path
+                      d="M246.312928,5.62892705 C252.927596,9.40873724 258.409564,14.8907053 262.189374,21.5053731 L444.667042,340.84129 C456.358134,361.300701 449.250007,387.363834 428.790595,399.054926 C422.34376,402.738832 415.04715,404.676552 407.622001,404.676552 L42.6666667,404.676552 C19.1025173,404.676552 7.10542736e-15,385.574034 7.10542736e-15,362.009885 C7.10542736e-15,354.584736 1.93772021,347.288125 5.62162594,340.84129 L188.099293,21.5053731 C199.790385,1.04596203 225.853517,-6.06216498 246.312928,5.62892705 Z"
+                      id="Combined-Shape">
+
+                    </path>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span>Sticky</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-column gap-3">
+      <div class="flex flex-column">
+        <span class="title">Mark all topics read</span>
+        <span>Moderators: DarkSoul, Admin</span>
+      </div>
+      <div class="flex flex-column">
+        <span>You <strong>can</strong> post new topics in this forum</span>
+        <span>You <strong>can</strong> reply to topics in this forum</span>
+        <span>You <strong>can</strong> edit your posts in this forum</span>
+        <span>You <strong>can</strong> delete your posts in this forum</span>
+        <span>You <strong>can</strong> vote in polls in this forum</span>
+      </div>
+    </div>
+  </div>
+
+</p-card>

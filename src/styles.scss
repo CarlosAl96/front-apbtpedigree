@@ -3,17 +3,17 @@ body {
   padding: 0;
   background-color: var(--color-bg-body);
 }
-//--color-primary: #1a5276;
-//  --color-bg-header: #352279;
-:root {
 
-  --color-primary: #415a51;
-  --color-secondary: #3e2e7a;
-  --color-bg-header: #669181;
-  --color-bg-footer: #ececec;
-  --color-bg-navbar: #ececec;
-  --color-bg-body: #f6f6f6;
+:root {
+  --color-primary: #2876a7;
+  --color-secondary: #6fb9e737;
+  --color-bg-header: #1a5276;
+  --color-bg-footer: #f6f6f6;
+  --color-bg-navbar: #e3e9ee;
+  --color-bg-menu-pedigree: #e3e9ee;
+  --color-bg-body: #f6f6f6cc;
   --color-font-light: #f6f6f6;
+  --color-font-primary: #0b202e;
   --color-font-dark: #181818;
 }
 
@@ -28,6 +28,22 @@ body {
   color: var(--color-font-light);
 }
 
-::ng-deep .p-button {
-  background-color: var(--color-secondary) !important;
+.p-progress-spinner-circle {
+  stroke-dasharray: 89, 200;
+  stroke-dashoffset: 0;
+  stroke: var(--color-primary);
+  animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+.red {
+  color: red !important;
+}
+
+.blue {
+  color: blue !important;
+}
+
+.green {
+  color: green !important;
 }

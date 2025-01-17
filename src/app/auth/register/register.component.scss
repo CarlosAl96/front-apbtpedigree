@@ -1,0 +1,13 @@
+.header-container {
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+}

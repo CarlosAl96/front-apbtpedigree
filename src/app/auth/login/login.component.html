@@ -4,13 +4,13 @@
   </ng-template>
   <form [formGroup]="formGroup" (ngSubmit)="login($event)" class="form">
     <div class="flex flex-column gap-2">
-      <label for="email">{{t("login.email")}}</label>
-      <input pInputText id="email" formControlName="email" placeholder="Ingresa tu correo" />
+      <label for="username">{{t("login.username")}}</label>
+      <input pInputText id="username" formControlName="username" (keydown.space)="$event.preventDefault()" />
     </div>
     <div class="flex flex-column gap-2 mt-3">
       <label for="password">{{t("login.password")}}</label>
       <p-password id="password" styleClass="w-full" inputStyleClass="w-full" formControlName="password"
-        placeholder="Ingresa tu contraseña" [toggleMask]="true" [feedback]="false" />
+        [toggleMask]="true" [feedback]="false" />
     </div>
     <p-messages class="mt-3" [(value)]="error" [enableService]="false" [closable]="false" />
     <div class="flex flex-column align-items-start gap-2 mt-3">
@@ -19,8 +19,8 @@
   </form>
 
   <div class="flex justify-content-center gap-2 w-full mt-5">
-    <a class="link" href="#">{{t('login.lostPassword')}}</a>
+    <a class="link" href="/auth/forgot-password">{{t('login.lostPassword')}}</a>
     {{' | '}}
-    <a class="link" href="#">{{t('login.newUser')}}</a>
+    <a class="link" href="/auth/register">{{t('login.newUser')}}</a>
   </div>
 </p-card>

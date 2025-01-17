@@ -1,0 +1,315 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">
+      @if (isFromPedigreeSearch) {
+      <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
+      }
+      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.newDog')}}</span>
+      @if (isFromPedigreeSearch) {
+      <div class="w-full"></div>
+      }
+    </div>
+  </ng-template>
+
+  <div class="flex align-items-center justify-content-between gap-2 mb-5">
+    <p-button label="{{ t('buttons.back') }}" icon="pi pi-arrow-left" (onClick)="active = 0" [disabled]="active == 0" />
+    <p-steps class="w-full" [model]="items" [activeIndex]="active" [readonly]="true" />
+    <p-button label="{{ t('buttons.next') }}" icon="pi pi-arrow-right" iconPos="right" (onClick)="active = 1"
+      [disabled]="active == 1" />
+  </div>
+
+
+  @if(active === 0){
+  <div>
+    <p>{{t('yourPedigrees.newPedigree.textStep1')}}</p>
+    <p [innerHTML]="t('yourPedigrees.newPedigree.note')"></p>
+  </div>
+
+  <div class="flex flex-row justify-content-between gap-2 mt-5">
+
+    <div class="w-full">
+      <div class="flex gap-2">
+        <label><strong>{{ t('yourPedigrees.sire').toUpperCase() + ':' }}</strong></label>
+        <span
+          class=" {{ { color: selectedFather.fightcolor, fullname: selectedFather.fullname } | fightColor}}">{{selectedFather.id
+          == 0 ? t('yourPedigrees.unknown')
+          : selectedFather.fullname}}</span>
+      </div>
+      <div class="flex align-items-center gap-2">
+        <label>{{ t('yourPedigrees.newPedigree.markAsUnknown') }}</label>
+        <p-button icon="pi pi-times" size="small" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="setUnknown('father')" />
+      </div>
+    </div>
+
+    <div class="w-full">
+      <div class="flex gap-2">
+        <label><strong>{{ t('yourPedigrees.dam').toUpperCase() + ':' }}</strong></label>
+        <span class=" {{ { color: selectedMother.fightcolor, fullname: selectedMother.fullname } | fightColor}}">{{
+          selectedMother.id == 0 ?
+          t('yourPedigrees.unknown') : selectedMother.fullname}}</span>
+      </div>
+      <div class="flex align-items-center gap-2">
+        <label>{{ t('yourPedigrees.newPedigree.markAsUnknown') }}</label>
+        <p-button icon="pi pi-times" size="small" [rounded]="true" [text]="true" severity="danger"
+          (onClick)="setUnknown('mother')" />
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flex justify-content-between gap-2 mt-3">
+
+    <div class="flex flex-column gap-2 w-full">
+      <div class="header-container">
+        <span>{{ t('yourPedigrees.sire').toUpperCase() }}</span>
+      </div>
+      <div class="flex flex-row align-items-center justify-content-center gap-2 w-full">
+        <input pInputText type="text" [(ngModel)]="modelSearchFather" [placeholder]="t('header.search')"
+          (keyup.enter)="search('father')" />
+        <label>{{t("header.by")}}</label>
+        <p-dropdown [options]="searchOptions" [(ngModel)]="modelSearchOptionFather">
+          <ng-template pTemplate="selectedItem">
+            <div>{{ t('header.searchOptions.' + modelSearchOptionFather) }}</div>
+          </ng-template>
+          <ng-template let-searchOption pTemplate="item">
+            <div>{{ t('header.searchOptions.' + searchOption) }}</div>
+          </ng-template>
+        </p-dropdown>
+        <button pButton type="button" icon="pi pi-search" [label]="t('buttons.search')" class="p-button-primary"
+          (click)="search('father')" [disabled]="modelSearchFather==''"></button>
+      </div>
+
+      <p-table [value]="pedigreesFather" [(selection)]="selectedFather" styleClass="p-datatable-striped"
+        (onLazyLoad)="customSort($event, 'father')" [lazy]="true">
+        <ng-template pTemplate="caption">
+          <div class="paginator">
+            <p-button icon="pi pi-angle-left" [rounded]="true" [text]="true" [raised]="true"
+              [disabled]="pageFather == 1" (onClick)="onPageChange(pageFather - 1, 'father')" />
+            <p-inputGroup class="w-5">
+              <p-inputNumber [(ngModel)]="pageFather" mode="decimal" [min]="1" [max]="totalPagesFather" />
+              <p-button icon="pi pi-search" (onClick)="onPageChange(pageFather, 'father')" />
+            </p-inputGroup>
+            <span>{{t("yourPedigrees.of")}}</span>
+            <span>{{totalPagesFather}}</span>
+            <p-button icon="pi pi-angle-right" [rounded]="true" [text]="true" [raised]="true"
+              (onClick)="onPageChange(pageFather + 1, 'father')" [disabled]="pageFather == totalPagesFather" />
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 4rem"></th>
+            <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
+            <th pSortableColumn="name">{{ t('header.searchOptions.registeredName') }} <p-sortIcon field="name" /></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pedigree>
+          <tr class="row {{ { color: pedigree.fightcolor, fullname: pedigree.fullname } | fightColor}}">
+            <td>
+              <p-tableRadioButton [value]="pedigree" />
+            </td>
+            <td>{{ pedigree.id }}</td>
+            <td>{{ pedigree.fullname ? pedigree.fullname : t('yourPedigrees.unknown')
+              }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            @if (isLoadingFather) {
+            <td colspan="3">
+              <div class="spinner">
+                <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+              </div>
+            </td>
+            }
+            @else {
+            <td colspan="3">
+              {{ t('pedigrees.emptyMessage') }}
+            </td>}
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="flex flex-column gap-2 w-full">
+      <div class="header-container">
+        <span>{{ t('yourPedigrees.dam').toUpperCase() }}</span>
+      </div>
+      <div class="flex flex-row align-items-center justify-content-center gap-2 w-full">
+        <input pInputText type="text" [(ngModel)]="modelSearchMother" [placeholder]="t('header.search')"
+          (keyup.enter)="search('mother')" />
+        <label>{{t("header.by")}}</label>
+        <p-dropdown [options]="searchOptions" [(ngModel)]="modelSearchOptionMother">
+          <ng-template pTemplate="selectedItem">
+            <div>{{ t('header.searchOptions.' + modelSearchOptionMother) }}</div>
+          </ng-template>
+          <ng-template let-searchOption pTemplate="item">
+            <div>{{ t('header.searchOptions.' + searchOption) }}</div>
+          </ng-template>
+        </p-dropdown>
+        <button pButton type="button" icon="pi pi-search" [label]="t('buttons.search')" class="p-button-primary"
+          (click)="search('mother')" [disabled]="modelSearchMother==''"></button>
+      </div>
+
+      <p-table #dt [value]="pedigreesMother" [(selection)]="selectedMother" styleClass="p-datatable-striped"
+        (onLazyLoad)="customSort($event, 'mother')" [lazy]="true">
+        <ng-template pTemplate="caption">
+          <div class="paginator">
+            <p-button icon="pi pi-angle-left" [rounded]="true" [text]="true" [raised]="true"
+              [disabled]="pageMother == 1" (onClick)="onPageChange(pageMother - 1, 'mother')" />
+            <p-inputGroup class="w-5">
+              <p-inputNumber [(ngModel)]="pageMother" mode="decimal" [min]="1" [max]="totalPagesMother" />
+              <p-button icon="pi pi-search" (onClick)="onPageChange(pageMother, 'mother')" />
+            </p-inputGroup>
+            <span>{{t("yourPedigrees.of")}}</span>
+            <span>{{totalPagesMother}}</span>
+            <p-button icon="pi pi-angle-right" [rounded]="true" [text]="true" [raised]="true"
+              (onClick)="onPageChange(pageMother + 1, 'mother')" [disabled]="pageMother == totalPagesMother" />
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 4rem"></th>
+            <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
+            <th pSortableColumn="name">{{ t('header.searchOptions.registeredName') }} <p-sortIcon field="name" /></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pedigree>
+          <tr class="row {{ { color: selectedMother.fightcolor, fullname: selectedMother.fullname } | fightColor}}">
+            <td>
+              <p-tableRadioButton [value]="pedigree" />
+            </td>
+            <td>{{ pedigree.id }}</td>
+            <td>{{ pedigree.fullname ? pedigree.fullname : t('yourPedigrees.unknown')
+              }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            @if (isLoadingMother) {
+            <td colspan="3">
+              <div class="spinner">
+                <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+              </div>
+            </td>
+            }
+            @else {
+            <td colspan="3">
+              {{ t('pedigrees.emptyMessage') }}
+            </td>}
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  } @else {
+  <div>
+    <p>{{t('yourPedigrees.newPedigree.textStep2')}}</p>
+    <p [innerHTML]="t('yourPedigrees.newPedigree.note2')"></p>
+  </div>
+
+  <form class="flex flex-column gap-3" [formGroup]="formGroup">
+
+    <div class="flex gap-3 mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="beforeNameTitles">{{ t('yourPedigrees.newPedigree.form.beforeNameTitles') }}</label>
+        <input pInputText styleClass="w-full" formControlName="beforeNameTitles" inputId="beforeNameTitles" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="name">{{ t('yourPedigrees.newPedigree.form.name') }}</label>
+        <input pInputText styleClass="w-full" formControlName="name" inputId="name" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="afterNameTitles">{{ t('yourPedigrees.newPedigree.form.afterNameTitles') }}</label>
+        <input pInputText styleClass="w-full" formControlName="afterNameTitles" inputId="afterNameTitles" />
+      </div>
+    </div>
+
+    <div class="flex mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="description">{{ t('yourPedigrees.newPedigree.form.description') }}</label>
+        <textarea pInputTextarea rows="5" styleClass="w-full" formControlName="description" inputId="description"
+          style="resize: none;"></textarea>
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="callname">{{ t('yourPedigrees.newPedigree.form.callname') }}</label>
+        <input pInputText styleClass="w-full" formControlName="callname" inputId="callname" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="breeder">{{ t('yourPedigrees.newPedigree.form.breeder') }}</label>
+        <input pInputText styleClass="w-full" formControlName="breeder" inputId="breeder" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="owner">{{ t('yourPedigrees.newPedigree.form.owner') }}</label>
+        <input pInputText styleClass="w-full" formControlName="owner" inputId="owner" />
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="sex">{{ t('yourPedigrees.newPedigree.form.sex') }}</label>
+        <p-dropdown styleClass="w-full" inputId="sex" formControlName="sex" [options]="sexOptions" optionLabel="name"
+          optionValue="code" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="color">{{ t('yourPedigrees.newPedigree.form.color') }}</label>
+        <input pInputText styleClass="w-full" formControlName="color" inputId="color" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="registration">{{ t('yourPedigrees.newPedigree.form.registrationNumber') }}</label>
+        <input pInputText styleClass="w-full" formControlName="registration" inputId="registration" />
+      </div>
+    </div>
+
+    <div class="flex gap-3 mt-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="birthdate">{{ t('yourPedigrees.newPedigree.form.birthdate') }}</label>
+        <p-calendar formControlName="birthdate" inputId="birthdate" styleClass="w-full" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="chain_weight">{{ t('yourPedigrees.newPedigree.form.chain_weight') }}</label>
+        <input pInputText styleClass="w-full" formControlName="chain_weight" inputId="chain_weight" />
+      </div>
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label for="conditioned_weight">{{ t('yourPedigrees.newPedigree.form.conditioned_weight') }}</label>
+        <input pInputText styleClass="w-full" formControlName="conditioned_weight" inputId="conditioned_weight" />
+      </div>
+    </div>
+
+    <div class="flex align-items-start gap-3">
+      <div class="w-full flex flex-column justify-content-center gap-2">
+        <label>{{ t('yourPedigrees.newPedigree.form.img') }}</label>
+        <p-fileUpload #fileUpload [multiple]="false" chooseLabel="{{ t('buttons.choose') }}" accept="image/*"
+          maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false" (onSelect)="onSelectFile($event)">
+        </p-fileUpload>
+      </div>
+
+      @if(pedigree && pedigree.pedigree.img){
+      <div class="flex flex-column gap-2">
+        <label>{{ t('yourPedigrees.newPedigree.form.actualImg') }}</label>
+        <img src="{{urlImg + pedigree.pedigree.img}}" width="230px">
+      </div>
+      }
+
+    </div>
+
+    <p-messages class="mt-2" [(value)]="error" [enableService]="false" [closable]="false" />
+
+    <div class="w-full flex justify-content-end gap-3 mt-3">
+      @if (pedigree) {
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [loading]="loading"
+        label="{{ t('buttons.save') }}" (onClick)="editPedigree()" />
+      } @else {
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid"
+        label="{{ t('buttons.saveAndAddBrother') }}" (onClick)="createPedigree(true)" />
+      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [loading]="loading"
+        label="{{ t('buttons.save') }}" (onClick)="createPedigree(false)" />
+      }
+    </div>
+  </form>
+  }
+
+</p-card>

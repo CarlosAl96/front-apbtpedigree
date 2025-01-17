@@ -1,0 +1,30 @@
+.paginator {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.header-container {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-back {
+  cursor: pointer;
+}
+
+.icon-back:hover {
+  opacity: 0.9;
+}
+
+.form {
+  width: 700px;
+}
+.spinner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

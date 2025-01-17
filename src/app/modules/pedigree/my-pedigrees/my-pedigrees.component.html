@@ -1,1 +1,119 @@
-<p>my-pedigrees works!</p>
+<div class="flex flex-column gap-2" *transloco="let t">
+  @if(!isPrivate){
+  @if (!isNewPedigree) {
+  <div class="menu">
+    @if (idPedigree > 0) {
+    <span [class]=" tabActive==='details' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('details')">{{t('yourPedigrees.menu.details')}}</span>
+    }
+    <span [class]=" tabActive==='newDog' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('newDog')">{{t('yourPedigrees.menu.newDog')}}</span>
+    @if (idPedigree > 0) {
+    @if(isEditable){
+    <span [class]=" tabActive==='editDog' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('editDog')">{{t('yourPedigrees.menu.editDog')}}</span>
+    <span [class]=" tabActive==='uploadImg' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('uploadImg')">{{t('yourPedigrees.menu.uploadImg')}}</span>
+    <span [class]=" tabActive==='changePermissions' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('changePermissions')">{{t('yourPedigrees.menu.changePermissions')}}</span>
+    <span [class]=" tabActive==='transferOwnership' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('transferOwnership')">{{t('yourPedigrees.menu.transferOwnership')}}</span>
+    <span [class]=" tabActive==='deleteDog' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('deleteDog')">{{t('yourPedigrees.menu.deleteDog')}}</span>
+    }
+    <span [class]=" tabActive==='publicLink' ? 'link-menu active' : 'link-menu'"
+      (click)="changeTab('publicLink')">{{t('yourPedigrees.menu.publicLink')}}</span>
+    }
+  </div>
+  }
+
+
+  <div class="flex gap-2">
+
+    @if (!isFromPedigreeSearch && tabActive === 'details') {
+    <div style="min-width: 350px; max-width: 350px;">
+      <app-menu-pedigrees (isResults)="onIsResults($event)"></app-menu-pedigrees>
+    </div>
+    }
+
+    @if (!isLoading) {
+    <div class="w-full">
+      @if (idPedigree > 0 && tabActive === 'details') {
+      <app-pedigree-view [pedigree]="pedigree" [isFromPedigreeSearch]="isFromPedigreeSearch"
+        (idPedigree)="onIdPedigreeChange($event)"></app-pedigree-view>
+      } @else if (tabActive === 'newDog') {
+      <app-new-pedigree [isFromPedigreeSearch]="isFromPedigreeSearch"></app-new-pedigree>
+      }@else if (idPedigree > 0 && tabActive === 'editDog') {
+      <app-new-pedigree [pedigree]="pedigree" [isFromPedigreeSearch]="isFromPedigreeSearch"></app-new-pedigree>
+      }
+      @else if (idPedigree > 0 && tabActive === 'uploadImg') {
+      <app-upload-picture [pedigree]="pedigree.pedigree"
+        [isFromPedigreeSearch]="isFromPedigreeSearch"></app-upload-picture>
+      }
+      @else if (idPedigree > 0 && tabActive === 'changePermissions') {
+      <app-change-permissions [pedigree]="pedigree.pedigree"
+        [isFromPedigreeSearch]="isFromPedigreeSearch"></app-change-permissions>
+      }
+      @else if (idPedigree > 0 && tabActive === 'transferOwnership') {
+      <app-transfer-ownership [pedigree]="pedigree.pedigree"
+        [isFromPedigreeSearch]="isFromPedigreeSearch"></app-transfer-ownership>
+      }
+      @else if (idPedigree > 0 && tabActive === 'deleteDog') {
+      <app-delete-pedigree [pedigree]="pedigree.pedigree"
+        [isFromPedigreeSearch]="isFromPedigreeSearch"></app-delete-pedigree>
+      }
+      @else if (idPedigree > 0 && tabActive === 'publicLink') {
+      <app-public-link [pedigree]="pedigree.pedigree" [isFromPedigreeSearch]="isFromPedigreeSearch"></app-public-link>
+      }
+
+      @if(idPedigree==0 && tabActive != 'newDog' && !isResults) {
+      <p-card>
+
+        <ng-template pTemplate="header">
+          <div class="header-container justify-content-center">{{t('yourPedigrees.menu.newDog2')}}</div>
+        </ng-template>
+
+        <div>
+          <p [innerHTML]="t('yourPedigrees.emptyMessage2')">
+          </p>
+        </div>
+
+        <div class="mt-5">
+          <p-button class="btn-primary" [label]="t('buttons.newDog')" (onClick)="tabActive = 'newDog'" />
+        </div>
+      </p-card>
+      }
+
+      @if(idPedigree==0 && tabActive != 'newDog' && isResults) {
+      <p-card [style]="{height: '100%'}">
+
+        <ng-template pTemplate="header">
+          <div class="header-container justify-content-center">{{t('yourPedigrees.menu.selectDog')}}</div>
+        </ng-template>
+
+        <div class="flex justify-content-center align-items-center">
+          <p [innerHTML]="t('yourPedigrees.selectMessage')">
+          </p>
+        </div>
+
+      </p-card>
+      }
+    </div>
+    }@else {
+    <div class="flex w-full align-items-center justify-content-center">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+    </div>
+    }
+
+  </div>
+
+  } @else {
+  <div class="flex flex-column align-items-center justify-content-center g-5" *transloco="let t" style="height: 50vh;">
+    <span class="error-404">401</span>
+    <span>{{t('yourPedigrees.401')}}</span>
+    <div class="mt-5">
+      <p-button class="btn-primary" [label]="t('buttons.back')" (onClick)="back()" />
+    </div>
+  </div>
+  }
+</div>

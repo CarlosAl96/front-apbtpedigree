@@ -1,0 +1,149 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{t('navbar.items.forum')}}</div>
+  </ng-template>
+
+  <p-table [value]="posts" styleClass="p-datatable-striped">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between gap-3">
+        <div class="flex flex-column gap-3">
+          <span class="message">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore, voluptate? Molestiae
+            veritatis id
+            perferendis, eius at sit fuga voluptates ab, est ut amet nihil quos magnam libero aperiam quia nemo?</span>
+          <div class="flex gap-2">
+            <p-button label="New Topic" icon="pi pi-user"></p-button>
+            <p-button label="Post Reply" icon="pi pi-user"></p-button>
+          </div>
+        </div>
+        <div class="flex flex-column">
+          <span class="option-view">View next topic</span>
+          <span class="option-view">View previous topic</span>
+          <span class="option-view title">Watch this topic for replies</span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 200px;">Author</th>
+        <th>Message</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-post>
+      <tr>
+        <td>
+          <div class="flex flex-column align-items-start" style="width: 200px;">
+            <span class="title">{{ post.user.username }}</span>
+            <span class="info">{{ post.user.level }}</span>
+            <div class="flex gap-1">
+              @for (star of post.user.stars; track $index)
+              {
+              <i class="pi pi-star mb-3"></i>
+              }
+            </div>
+            @if (post.user.picture) {
+            <img class="picture mb-3" [src]="post.user.picture">
+            }
+            <span class="info">Joined: {{ post.user.joined_date }}</span>
+            <span class="info">Posts: {{ post.user.posts }}</span>
+            @if(post.user.location){
+            <span class="info">Location: {{ post.user.location }}</span>
+            }
+          </div>
+        </td>
+        <td>
+          <div class="flex flex-column align-items-start gap-3">
+            <div class="flex justify-content-between align-items-center w-full gap-2">
+              <span class="info">Posted: {{ post.post.posted_date }}</span>
+              <div class="flex gap-2">
+                <p-button label="Quota" icon="pi pi-user"></p-button>
+                <p-button icon="pi pi-user"></p-button>
+              </div>
+            </div>
+            <span class="message">{{ post.post.message }}</span>
+            <div class="flex justify-content-end w-full gap-2">
+              <p-button label="Profile" icon="pi pi-user"></p-button>
+              <p-button label="PM" icon="pi pi-user"></p-button>
+              <p-button label="Email" icon="pi pi-user"></p-button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div class="previous-container">
+    <label>Display topics from previous:</label>
+    <p-dropdown [options]="previousOptions" [(ngModel)]="modelPrevious" optionLabel="name" optionValue="code">
+    </p-dropdown>
+    <button pButton type="button" [label]="'Go'" class="p-button-primary" (click)="changePreviousOption()"
+      [disabled]="modelPrevious == ''"></button>
+  </div>
+
+  <div class="flex align-items-start justify-content-between mt-5">
+    <div class="flex flex-column gap-3">
+      <div class="flex align-items-center gap-2 w-full">
+        <label>Jump To:</label>
+        <p-dropdown [options]="forumCategories" [(ngModel)]="modelCategory" optionLabel="name" optionValue="code">
+        </p-dropdown>
+        <button pButton type="button" [label]="'Go'" class="p-button-primary" (click)="changeCategory()"
+          [disabled]="modelCategory == 0"></button>
+      </div>
+
+      <div class="flex align-items-start gap-5">
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>New posts</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>New posts [ Popular ]</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>New posts [ Locked ]</span>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>No new posts</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>No new posts [ Popular ]</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>No new posts [ Locked ]</span>
+          </div>
+        </div>
+        <div class="flex flex-column justify-content-center gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>Announcement</span>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-user"></i>
+            <span>Sticky</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-column gap-3">
+      <div class="flex flex-column">
+        <span class="title">Mark all topics read</span>
+        <span>Moderators: DarkSoul, Admin</span>
+      </div>
+      <div class="flex flex-column">
+        <span>You <strong>can</strong> post new topics in this forum</span>
+        <span>You <strong>can</strong> reply to topics in this forum</span>
+        <span>You <strong>can</strong> edit your posts in this forum</span>
+        <span>You <strong>can</strong> delete your posts in this forum</span>
+        <span>You <strong>can</strong> vote in polls in this forum</span>
+      </div>
+    </div>
+  </div>
+
+</p-card>

@@ -1,0 +1,430 @@
+@if(!isLoading){
+@if(pedigree){
+@if(!isPrivate){
+<div class="p-3">
+  <p-card styleClass="h-full" *transloco="let t">
+    <ng-template pTemplate="header">
+      <div class="header-container">
+        <span class="w-full flex justify-content-center">{{ (pedigree.pedigree.fullname ? pedigree.pedigree.fullname :
+          t('yourPedigrees.unknown')) }}</span>
+      </div>
+      <div class="menu-pedigree">
+        <span [class]="tabActive === 'pedigree' ? 'link-menu active' : 'link-menu'"
+          (click)="changeTab('pedigree')">{{t('yourPedigrees.menuPedigree.pedigree')}}</span>
+        <div class="separator"></div>
+        <span [class]="tabActive === 'offspring' ? 'link-menu active' : 'link-menu'"
+          (click)="changeTab('offspring')">{{t('yourPedigrees.menuPedigree.offspring')}}</span>
+        <div class="separator"></div>
+        <span [class]="tabActive === 'siblings' ? 'link-menu active' : 'link-menu'"
+          (click)="changeTab('siblings')">{{t('yourPedigrees.menuPedigree.siblings')}}</span>
+        <div class="separator"></div>
+        <span [class]="tabActive === 'pedStats' ? 'link-menu active' : 'link-menu'"
+          (click)="changeTab('pedStats')">{{t('yourPedigrees.menuPedigree.pedStats')}}</span>
+      </div>
+    </ng-template>
+
+    @if (tabActive === 'pedigree') {
+    <div class="flex gap-2 pb-3">
+
+      @if(pedigree.pedigree.img){
+      <img src="{{urlImg + pedigree.pedigree.img}}" class="img">
+      }@else {
+      <img src="./assets/images/logo.png" class="img">
+      }
+
+      <div class="w-full flex flex-column">
+        <span><strong>ID: </strong><span>{{pedigree.pedigree.id}}</span></span>
+
+        @if (pedigree.pedigree.breeder) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.breeder').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.breeder}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.owner) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.owner').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.owner}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.sex) {
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.sex').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.sex.toUpperCase()}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.color) {
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.color').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.color.toUpperCase()}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.callname) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.callname').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.callname}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.conditioned_weight) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.conditioned_weight').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.conditioned_weight}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.chain_weight) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.chain_weight').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.chain_weight}}</span>
+        </span>
+        }
+
+        @if (user?.username) {
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.enteredBy')}}: </strong>
+          <span>{{user?.username}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.registration) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.registrationNumber').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.registration}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.birthdate) {
+        <span>
+          <strong>{{t('yourPedigrees.newPedigree.form.birthdate').toUpperCase()}}: </strong>
+          <span>{{pedigree.pedigree.birthdate.toString() | dateFormat}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.created_at) {
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.posted')}}: </strong>
+          <span>{{pedigree.pedigree.created_at.toString() | dateFormat}}</span>
+        </span>
+        }
+
+        @if (pedigree.pedigree.updated_at) {
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.lastModified')}}: </strong>
+          <span>{{pedigree.pedigree.updated_at.toString() | dateFormat}}</span>
+        </span>
+        }
+
+        <span>
+          <strong>{{t('yourPedigrees.infoPedigree.pedigreeHasBeenSeen')}}: </strong>
+          <span>{{pedigree.pedigree.seen}} {{t('yourPedigrees.infoPedigree.times')}}</span>
+        </span>
+
+        <a class="link-menu justify-content-start" href="#" style="width: fit-content;">
+          <strong>{{t('yourPedigrees.infoPedigree.log')}}</strong>
+        </a>
+
+        @if (pedigree.pedigree.description) {
+        <div class="flex flex-column">
+          <span>
+            <strong>{{t('yourPedigrees.infoPedigree.description').toUpperCase()}}:</strong>
+          </span>
+          <span>{{pedigree.pedigree.description}}</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="border-primary">
+      <div class="header-container justify-content-center">{{t('yourPedigrees.generations.title')}}</div>
+
+      <div class="menu-pedigree generations-menu">
+        <span class="w-full ml-2">{{t('yourPedigrees.generations.first')}}</span>
+        <div class="separator"></div>
+        <span class="w-full ml-2">{{t('yourPedigrees.generations.second')}}</span>
+        <div class="separator"></div>
+        <span class="w-full ml-2">{{t('yourPedigrees.generations.third')}}</span>
+        <div class="separator"></div>
+        <span class="w-full ml-2">{{t('yourPedigrees.generations.fourth')}}</span>
+      </div>
+
+      <div class="flex justify-content-between generations">
+        <div class="flex flex-column justify-content-between w-full">
+          @for (parent of pedigree.generation1; track $index) {
+          <div class="flex align-items-center justify-content-center parent"
+            [style]="$index == pedigree.generation1.length - 1  ? 'border: none': ''">
+            @if(parent!=null){
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link"
+              (click)="onChangeIdPedigree(parent.id)"><strong>{{
+                parent.fullname ? parent.fullname :
+                t('yourPedigrees.unknown') }}</strong></span>
+            } @else {
+            <span><strong>{{t('yourPedigrees.unknown')}}</strong></span>
+            }
+          </div>
+          }
+        </div>
+        <div class="separator"></div>
+        <div class="flex flex-column justify-content-between w-full">
+          @for (parent of pedigree.generation2; track $index) {
+          <div class="flex align-items-center justify-content-center parent"
+            [style]="$index == pedigree.generation2.length - 1  ? 'border: none': ''">
+            @if(parent!=null){
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link"
+              (click)="onChangeIdPedigree(parent.id)"><strong>{{
+                parent.fullname ? parent.fullname :
+                t('yourPedigrees.unknown') }}</strong></span>
+            } @else {
+            <span><strong>{{t('yourPedigrees.unknown')}}</strong></span>
+            }
+          </div>
+          }
+        </div>
+        <div class="separator"></div>
+        <div class="flex flex-column justify-content-between w-full">
+          @for (parent of pedigree.generation3; track $index) {
+          <div class="flex align-items-center justify-content-center parent"
+            [style]="$index == pedigree.generation3.length - 1  ? 'border: none': ''">
+            @if(parent!=null){
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link"
+              (click)="onChangeIdPedigree(parent.id)"><strong>{{
+                parent.fullname ? parent.fullname :
+                t('yourPedigrees.unknown') }}</strong></span>
+            } @else {
+            <span><strong>{{t('yourPedigrees.unknown')}}</strong></span>
+            }
+          </div>
+          }
+        </div>
+        <div class="separator"></div>
+        <div class="flex flex-column justify-content-between w-full">
+          @for (parent of pedigree.generation4; track $index) {
+          <div class="flex align-items-center justify-content-center parent"
+            [style]="$index == pedigree.generation4.length - 1  ? 'border: none': ''">
+            @if(parent!=null){
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link"
+              (click)="onChangeIdPedigree(parent.id)"><strong>{{
+                parent.fullname ? parent.fullname :
+                t('yourPedigrees.unknown') }}</strong></span>
+            } @else {
+            <span><strong>{{t('yourPedigrees.unknown')}}</strong></span>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    }
+    @else if (tabActive === 'offspring') {
+    <div class="flex justify-content-center flex-column gap-5">
+      <div class="flex flex-column gap-2 align-items-center">
+        <span><strong>{{t('yourPedigrees.offspringList')}}</strong></span>
+        <span><strong>{{ pedigree.pedigree.fullname ? pedigree.pedigree.fullname : t('yourPedigrees.unknown')
+            }}</strong>
+          {{ t('yourPedigrees.has') }} <strong>{{pedigree.offsprings.length}}</strong>
+          {{t('yourPedigrees.menuPedigree.offspring').toUpperCase()}}</span>
+      </div>
+
+      @if (pedigree.offsprings.length) {
+      <p-table [value]="pedigree.offsprings" [rows]="16" [paginator]="true" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" style="width: 10%;">ID <p-sortIcon field="id" /></th>
+            <th pSortableColumn="fullname" style="width: 30%;">{{ t('header.searchOptions.registeredName') }}
+              <p-sortIcon field="fullname" />
+            </th>
+            <th pSortableColumn="father_fullname" style="width: 30%;">{{ t('yourPedigrees.sire') }} <p-sortIcon
+                field="father_fullname" /></th>
+            <th pSortableColumn="mother_fullname" style="width: 30%;">{{ t('yourPedigrees.dam') }} <p-sortIcon
+                field="mother_fullname" /></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-offspring>
+          <tr class="{{{ color: offspring.fightcolor, fullname: offspring.fullname } | fightColor}} row"
+            (click)="onChangeIdPedigree(offspring.id)">
+            <td>{{ offspring.id }}</td>
+            <td>{{ offspring.fullname ? offspring.fullname : t('yourPedigrees.unknown') }}</td>
+            <td>{{ offspring.father_fullname ? offspring.father_fullname : t('yourPedigrees.unknown') }}</td>
+            <td>{{ offspring.mother_fullname ? offspring.mother_fullname : t('yourPedigrees.unknown') }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      }
+    </div>
+    }
+    @else if (tabActive === 'siblings') {
+    <div class="flex justify-content-center flex-column gap-5">
+      <div class="flex flex-column gap-2 align-items-center">
+        <span><strong>{{t('yourPedigrees.siblingsList')}}</strong></span>
+        <span><strong>{{ pedigree.pedigree.fullname ? pedigree.pedigree.fullname : t('yourPedigrees.unknown')
+            }}</strong>
+          {{
+          t('yourPedigrees.has') }} <strong>{{fullBrothersCount}}</strong>
+          {{t('yourPedigrees.fullBrothers').toUpperCase()}}</span>
+      </div>
+
+      @if(pedigree.siblings.length){
+      <p-table [value]="siblings" [rows]="16" [paginator]="true" styleClass="p-datatable-striped">
+
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center gap-2">
+            <label>{{t('yourPedigrees.show')}}</label>
+
+
+            <p-dropdown [options]="filterOptions" (onChange)="onChangeFilter($event)" optionLabel="name"
+              optionValue="code" />
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id" style="width: 10%;">ID <p-sortIcon field="id" /></th>
+            <th pSortableColumn="fullname" style="width: 30%;">{{ t('header.searchOptions.registeredName') }}
+              <p-sortIcon field="fullname" />
+            </th>
+            <th pSortableColumn="father_fullname" style="width: 30%;">{{ t('yourPedigrees.sire') }} <p-sortIcon
+                field="father_fullname" /></th>
+            <th pSortableColumn="mother_fullname" style="width: 30%;">{{ t('yourPedigrees.dam') }} <p-sortIcon
+                field="mother_fullname" /></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sibling>
+          <tr class="{{{ color: sibling.fightcolor, fullname: sibling.fullname } | fightColor}} row"
+            (click)="onChangeIdPedigree(sibling.id)">
+            <td>{{ sibling.id }}</td>
+            <td>{{ sibling.fullname ? sibling.fullname : t('yourPedigrees.unknown') }}</td>
+            <td>{{ sibling.father_fullname ? sibling.father_fullname : t('yourPedigrees.unknown') }}</td>
+            <td>{{ sibling.mother_fullname ? sibling.mother_fullname : t('yourPedigrees.unknown') }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      }
+    </div>
+    }
+    @else if (tabActive === 'pedStats') {
+    <div class="flex justify-content-center flex-column gap-5">
+      <div class="flex flex-column gap-2 align-items-center">
+        <span><strong>{{t('yourPedigrees.pedigreeStats.title')}}</strong></span>
+        <span><strong>{{ pedigree.pedigree.fullname ? pedigree.pedigree.fullname : t('yourPedigrees.unknown')
+            }}</strong></span>
+      </div>
+
+      <div class="flex flex-column align-items-start">
+        <span><strong>{{t('yourPedigrees.sire')}}: </strong><span>
+            {{pedigree.generation1[0] ?
+            pedigree.generation1[0].fullname ? pedigree.generation1[0].fullname : t('yourPedigrees.unknown') :
+            t('yourPedigrees.unknown')}}</span></span>
+        <span><strong>{{t('yourPedigrees.dam')}}: </strong><span> {{pedigree.generation1[1] ?
+            pedigree.generation1[1].fullname ? pedigree.generation1[1].fullname : t('yourPedigrees.unknown') :
+            t('yourPedigrees.unknown')}}</span></span>
+        <span><strong>{{t('yourPedigrees.menuPedigree.offspring')}}:
+          </strong><span>{{pedigree.offsprings.length}}</span></span>
+        <span><strong>{{t('yourPedigrees.fullBrothers')}}: </strong><span>{{fullBrothersCount}}</span></span>
+        <span><strong>{{t('yourPedigrees.pedigreeStats.halfBrothersSire')}}:
+          </strong><span>{{getBrothers('half-sire').length}}</span></span>
+        <span><strong>{{t('yourPedigrees.pedigreeStats.halfBrothersDam')}}:
+          </strong><span>{{getBrothers('half-dam').length}}</span></span>
+        <span><strong>{{t('yourPedigrees.pedigreeStats.beforeName')}}:
+          </strong><span>{{offspringsWithTitlesBeforeName}}</span></span>
+        <span><strong>{{t('yourPedigrees.pedigreeStats.afterName')}}:
+          </strong><span>{{offspringsWithTitlesAfterName}}</span></span>
+      </div>
+      <div class="flex flex-column gap-2 align-items-center">
+        <span><strong>{{t('yourPedigrees.pedigreeStats.generationsContribution')}}:</strong></span>
+      </div>
+      <div>
+        @for (parent of pedigree.generation1; track $index) {
+        @if(parent!=null){
+        <div class="w-full flex justify-content-between align-items-center gap-2 mt-2">
+          <div class="w-full flex justify-content-end" (click)="onChangeIdPedigree(parent.id)">
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link">
+              {{
+              parent.fullname ?
+              parent.fullname : t('yourPedigrees.unknown')
+              }} 50%
+            </span>
+          </div>
+          <div class="w-full flex justify-content-start">
+            <div class="bar bar-50"></div>
+          </div>
+        </div>
+        }
+        }
+        @for (parent of pedigree.generation2; track $index) {
+        @if(parent!=null){
+        <div class="w-full flex justify-content-between align-items-center gap-2 mt-2">
+          <div class="w-full flex justify-content-end" (click)="onChangeIdPedigree(parent.id)">
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link">
+              {{
+              parent.fullname ?
+              parent.fullname : t('yourPedigrees.unknown')
+              }} 25%
+            </span>
+          </div>
+          <div class="w-full flex justify-content-start">
+            <div class="bar bar-25"></div>
+          </div>
+        </div>
+        }
+        }
+        @for (parent of pedigree.generation3; track $index) {
+        @if(parent!=null){
+        <div class="w-full flex justify-content-between align-items-center gap-2 mt-2">
+          <div class="w-full flex justify-content-end" (click)="onChangeIdPedigree(parent.id)">
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link">
+              {{
+              parent.fullname ?
+              parent.fullname : t('yourPedigrees.unknown')
+              }} 12.5%
+            </span>
+          </div>
+          <div class="w-full flex justify-content-start">
+            <div class="bar bar-125"></div>
+          </div>
+        </div>
+        }
+        }
+        @for (parent of pedigree.generation4; track $index) {
+        @if(parent!=null){
+        <div class="w-full flex justify-content-between align-items-center gap-2 mt-2">
+          <div class="w-full flex justify-content-end" (click)="onChangeIdPedigree(parent.id)">
+            <span class="{{{ color: parent.fightcolor, fullname: parent.fullname } | fightColor}} parent-link">
+              {{
+              parent.fullname ?
+              parent.fullname : t('yourPedigrees.unknown')
+              }} 6.25%
+            </span>
+          </div>
+          <div class="w-full flex justify-content-start">
+            <div class="bar bar-625"></div>
+          </div>
+        </div>
+        }
+        }
+      </div>
+    </div>
+    }
+
+  </p-card>
+</div>
+}@else {
+<div class="flex flex-column align-items-center justify-content-center g-5" *transloco="let t" style="height: 100vh;">
+  <span class="error-404">401</span>
+  <span>{{t('yourPedigrees.401')}}</span>
+</div>
+}
+} @else {
+<div class="flex flex-column align-items-center justify-content-center g-5" *transloco="let t" style="height: 100vh;">
+  <span class="error-404">404</span>
+  <span>{{t('yourPedigrees.404')}}</span>
+</div>
+}
+} @else {
+<div class="flex align-items-center justify-content-center" style="height: 100vh;">
+  <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+</div>
+}

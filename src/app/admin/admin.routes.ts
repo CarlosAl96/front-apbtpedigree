@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
 import { UsersComponent } from './users/users.component';
+import { ForumComponent } from './forum/forum.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const ADMIN_ROUTES: Routes = [
-  // { path: 'calendario', component: CalendarComponent },
-  { path: 'usuarios', component: UsersComponent },
-  // { path: 'pagos', component: InvoicesComponent },
-  // { path: 'productos', component: ProductsComponent },
-  // { path: 'contratos', component: ContractsComponent },
-  // { path: 'proximos-pagos', component: NextInvoicesComponent },
-  { path: '**', redirectTo: 'usuarios' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'users', component: UsersComponent },
+  { path: 'forum', component: ForumComponent },
+  { path: '**', redirectTo: 'dashboard' },
 ];

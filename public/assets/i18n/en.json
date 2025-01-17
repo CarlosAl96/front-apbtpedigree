@@ -4,6 +4,7 @@
     "hello": "Hello {{name}}!",
     "logout": "Logout",
     "register": "Register",
+    "forgotPassword": "Reset Password",
     "login": "Login",
     "by": "By",
     "searchOptions": {
@@ -24,6 +25,8 @@
       "yourPedigrees": "Your Pedigrees",
       "yourAccount": "Your Account",
       "messages": "Private Messages",
+      "users": "Users",
+      "dashboard": "Dashboard",
       "forum": "Forums"
     }
   },
@@ -35,25 +38,231 @@
   },
   "buttons": {
     "search": "Search",
-    "newDog": "New dog"
+    "newDog": "New dog",
+    "admin": "Admin Mode",
+    "userMode": "User Mode",
+    "yes": "Ok",
+    "no": "Cancel",
+    "next": "Next",
+    "back": "Back",
+    "save": "Save",
+    "saveAndAddBrother": "Save And Add Full Borther",
+    "choose": "Browse",
+    "deleteCurrentImg": "Delete current photo",
+    "deletePedigree": "Delete pedigree",
+    "changeOwner": "Change owner",
+    "newCategory": "New Category",
+    "saveCategory": "Save Category",
+    "editCategory": "Edit Category"
+  },
+  "colors": {
+    "red": "Red",
+    "black": "Black",
+    "blue": "Blue",
+    "green": "green"
+  },
+  "sexs": {
+    "female": "Female",
+    "male": "Male",
+    "unknown": "Unknown"
   },
   "footer": {
     "line1": "All logos and trademarks on this site are the property of their respective owners. Comments are the property of their posters.",
     "line2": "Apbtpedigree All rights reserved. ©{{year}}"
   },
-
   "login": {
     "email": "Email",
+    "username": "Username",
     "password": "Password",
     "lostPassword": "Lost your Password?",
     "newUser": "New User Registration"
   },
-
+  "register": {
+    "username": "Nickname",
+    "password2": "Repeat Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "zipCode": "Zipcode",
+    "phone": "Phone Number",
+    "alreadyAccount": "Already have an account? Sign in"
+  },
+  "forum": {
+    "index": "APBT Pedigree Forum Index",
+    "topics": "Topics",
+    "posts": "Posts",
+    "replies": "Replies",
+    "author": "Author",
+    "views": "Views",
+    "name": "Name",
+    "description": "Description",
+    "lastPost": "Last post",
+    "moderators": "Moderators",
+    "actions": "Actions",
+    "list": "List of forum categories",
+    "deleteQuestion": "Are you sure to delete this category?",
+    "deleteCategory": "Delete Category",
+    "newPosts": "New posts",
+    "noNewPosts": "No new posts",
+    "locked": "Forum is locked",
+    "whoOnline": {
+      "line1": "Our users have posted a total of <strong>{{posts}}</strong> articles",
+      "line2": "We have <strong>{{users}}</strong> registered users",
+      "line3": "Te newest registered user is",
+      "line4": "In total there are <strong>{{users}}</strong> users online",
+      "line5": "Most users ever online was <strong>{{users}}</strong> on {{date}}",
+      "line6": "Registered Users:",
+      "line7": "This data is based on users active over the past five minutes"
+    }
+  },
   "pedigrees": {
     "tips": "QUICK SEARCH TIPS",
     "line1": "<b>Quick Start.</b> To search pedigrees quickly use the \"QUICK PEDIGREE SEARCH\" form that appears on the top right corner througout the website.",
     "line2": "<b>Note:</b> Titles are not part of the name, so if you want to find Garner's CH Chinaman ROM type \"garner's chinaman\". If you include the title inside the name you will not find it.",
     "line3": "<b>To add new pedigrees</b> just click on its icon above and follow instructions. Once you've entered some dogs, you can find them using the \"QUICK PEDIGREE SEARCH\" form. Then just open its pedigree and you will see a bunch of icons that will allow you <b>to edit the different parts of the pedigree.</b> Click on those icons and follow instructions.",
-    "line4": "If you have questions go to the Forums and post on the Support Area."
+    "line4": "If you have questions go to the Forums and post on the Support Area.",
+    "results": "SEARCH RESULTS",
+    "emptyMessage": "No pedigree was found matching the search criteria. It is recommended to check the entered information or try with different terms."
+  },
+  "yourPedigrees": {
+    "title": "YOUR PEDIGREES",
+    "of": "of",
+    "all": "All",
+    "show": "Show",
+    "404": "Pedigree not found",
+    "401": "Pedigree is private",
+    "emptyMessage": "You have not yet registered any pedigree",
+    "emptyMessage2": "No pedigree has been created yet. To start, click on the <strong>New Pedigree</strong> button",
+    "selectMessage": "Select a pedigree to view more details",
+    "menu": {
+      "details": "PEDIGREE DETAILS",
+      "newDog": "NEW DOG",
+      "newDog2": "ADDS A NEW PEDIGREE",
+      "selectDog": "SELECT A PEDIGREE",
+      "editDog": "EDIT DOG",
+      "uploadImg": "UPLOAD / DELETE PICTURE",
+      "changePermissions": "CHANGE PERMISSIONS",
+      "transferOwnership": "TRANSFER OWNERSHIP",
+      "deleteDog": "DELETE DOG",
+      "publicLink": "PUBLIC LINK TO PED"
+    },
+    "menuPedigree": {
+      "pedigree": "PEDIGREE",
+      "offspring": "Offspring",
+      "siblings": "SIBLINGS",
+      "pedStats": "PEDSTATS",
+      "printerFriendly": "PRINTER FRIENDLY"
+    },
+    "infoPedigree": {
+      "sex": "Sex",
+      "color": "COLOR",
+      "enteredBy": "ENTERED BY",
+      "posted": "POSTED",
+      "lastModified": "LAST MODIFIED",
+      "pedigreeHasBeenSeen": "PEDIGREE HAS BEEN SEEN",
+      "times": "TIMES",
+      "log": "PEDIGREE LOG",
+      "description": "Description"
+    },
+    "generations": {
+      "title": "4 GENERATION PEDIGREE",
+      "first": "First",
+      "second": "Second",
+      "third": "Third",
+      "fourth": "Fourth"
+    },
+    "uploadDeleteImg": {
+      "text": "To upload a picture just click the browse button and select the picture you want to upload. Once you see the location of the picture appear on the upload picture field click the upload button.",
+      "confirm": "Are you sure you want to delete the current photo?",
+      "delete": "DELETE PHOTO"
+    },
+    "changeOwner": {
+      "currentOwner": "Current owner",
+      "usernameOrEmail": "Username or email",
+      "confirm": "Are you sure you want to transfer ownership of this dog to <strong>{{newOwner}}</strong>?"
+    },
+    "publicLink": {
+      "text1": "To share this pedigree on the message board, copy the URL below and paste it into your post.",
+      "text2": "To add a link to this pedigree on your website, copy the HTML code and paste it into the webpage where you want the link to appear."
+    },
+    "newPedigree": {
+      "step1": "Finding parents",
+      "step2": "Pedigree Information",
+      "textStep1": "For each pedigree in the database we know who its parents are by storing their identification numbers in their file. For this reason, the parents must first be entered in the database. If the parents are not in the database, you cannot know who their parents are and the dog will be shown as a dog with unknown parents. If you know that the parents are already in the database, either because you have entered them yourself or someone else has, use the search forms below to find and select the parents. Otherwise, just go to the next step without selecting any or click on \"Mark as unknown\".",
+      "note": "<strong>Note:</strong> The search forms below are just like the <strong>\"Search pedigree:\"</strong> form above. So to find the sire of your dog, type in the <strong>\"Search sire:\"</strong> form just what you would type in the <strong>\"Search pedigree\"</strong> form above. The same applies for the dam.",
+      "textStep2": "In this step you will enter the dog's information such as the registered name, breeder, owner, color, etc. You need to provide a registered name at the very least. Since we are not a registry it does not have to be an officially registered name with the adba or ukc or any other registry. If you can provide a registered name, enter that one, otherwise enter the name as the dog is best known and use the coventional format like \"Garrett's Jeep\", \"Carver's Stompanato\", etc.",
+      "note2": "<strong>Notes:</strong> Titles should be entered in their respective fields, not in the registered name field. Before name titles are CH, GR CH, etc. After name titles are ROM, POR, etc. If the dog is known by several names you can enter them all using AKA to separate the names. For example, \"Chico's Joker AKA Pitstop's Joker\" or \"Crenshaw's Jeep AKA Garrett's Jeep\".",
+      "markAsUnknown": "Mark as unknown",
+      "form": {
+        "beforeNameTitles": "Before Name Titles",
+        "name": "Registered Name",
+        "afterNameTitles": "After Name Titles",
+        "description": "Brief Description And Comments",
+        "callname": "Callname",
+        "breeder": "Breeder",
+        "owner": "Owner",
+        "sex": "Sex",
+        "color": "Color",
+        "registrationNumber": "Registration Number",
+        "birthdate": "Birthdate",
+        "conditioned_weight": "Conditioned Weight",
+        "chain_weight": "Chain Weight",
+        "img": "Add photo",
+        "actualImg": "Current photo"
+      }
+    },
+    "changePermissions": {
+      "textIsNotEditable": "The pedigree <strong>{{name}}</strong> cannot be seen by other users. Izf you want to change it, activate the option at the bottom and click OK.",
+      "textIsEditable": "The pedigree <strong>{{name}}</strong> can be seen by other users. If you want to change it, activate the option at the bottom and click OK.",
+      "label": "Allow other users to edit this pedigree",
+      "confirm": "Are you sure to allow other users to view this pedigree?",
+      "noConfirm": "Are you sure you are sure to prevent other users from seeing this pedigree?"
+    },
+    "deletePedigree": {
+      "text": "If you want to delete the pedigree <strong>{{name}}</strong>, click the Delete Pedigree button and then click OK. ",
+      "note": "Warning: This action is permanent.",
+      "confirm": "Are you sure you want to remove this pedigree?"
+    },
+    "offspringList": "OFFSPRING LIST",
+    "siblingsList": "SIBLINGS LIST",
+    "fullBrothers": "Full brothers / sisters",
+    "has": "HAS",
+    "sire": "Sire",
+    "dam": "Dam",
+    "unknown": "UNKNOWN",
+    "pedigreeStats": {
+      "title": "PEDIGREE STATISTICS",
+      "halfBrothersSire": "Half brothers/sisters (same sire)",
+      "halfBrothersDam": "Half brothers/sisters (same dam)",
+      "generationsContribution": "4 GENERATION GENETIC CONTRIBUTION",
+      "beforeName": "Before-name titled offspring (ch, gr ch, etc...)",
+      "afterName": "After-name titled offspring (rom, por, etc...)"
+    }
+  },
+  "toast": {
+    "success": "Success",
+    "error": "Error",
+    "pedigreeDeletedError": "An error has occurred in removing the pedigree!",
+    "login": "You are logged in as {{user}}!",
+    "register": "The user has been successfully created!",
+    "pedigreeCreated": "The pedigree has been successfully created!",
+    "pedigreeEdited": "The pedigree has been successfully updated!",
+    "pedigreeDeleted": "The pedigree has been successfully deleted!",
+    "categoryDeleted": "The category has been successfully deleted!",
+    "categoryCreated": "The category has been successfully created!",
+    "categoryEdited": "The category has been successfully updated!",
+    "categoryDeletedError": "An error occurred while deleting the category!",
+    "categoryCreatedError": "An error occurred while saving the category!"
+  },
+  "errorMessages": {
+    "alreadyEmail": "An account with this email already exists",
+    "alreadyUser": "An account with this username already exists",
+    "errorRegister": "An error occurred while creating the account, please try again",
+    "noMatchPassword": "Both passwords must match",
+    "errorNewPedigree": "An error occurred when saving the pedigree",
+    "errorChangeOwner": "An error has occurred, the user <strong>{{user}}</strong> was not found"
   }
 }

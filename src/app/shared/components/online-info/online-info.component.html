@@ -3,7 +3,7 @@
     <div class="header-container">{{t("onlineInfo.title")}}</div>
   </ng-template>
   <diV>
-    <p class="text-center" [innerHTML]="t('onlineInfo.line1', {guest: 457, online: 153})"></p>
-    <p class="text-center" [innerHTML]="t('onlineInfo.line2', {user: 'User', messages: 24})"></p>
+    <p class="text-center" [innerHTML]="t('onlineInfo.line1', {guest: loggeds, online: subs})"></p>
+    <p class="text-center" [innerHTML]="t('onlineInfo.line2', {user: user?.username, messages: 24})"></p>
   </diV>
 </p-card>

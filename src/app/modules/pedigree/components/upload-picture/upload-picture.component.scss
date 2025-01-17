@@ -1,0 +1,17 @@
+.header-container {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-back {
+  cursor: pointer;
+}
+
+.icon-back:hover {
+  opacity: 0.9;
+}
+
+.img {
+  height: 300px;
+  object-fit: contain;
+}

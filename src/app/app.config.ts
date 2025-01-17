@@ -5,15 +5,14 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideRouter } from '@angular/router';
 import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from './transloco-loader';
-
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    //provideHttpClient(withInterceptors([authInterceptor])),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor, loadingInterceptor])),
     provideAnimations(),
     provideTransloco({
       loader: TranslocoHttpLoader,

@@ -10,7 +10,8 @@ import { MessagesModule } from 'primeng/messages';
 import { Message } from 'primeng/api';
 import { SessionService } from '../../core/services/session.service';
 import { PasswordModule } from 'primeng/password';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -36,23 +37,33 @@ export class LoginComponent {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly toastService: ToastService,
+    private readonly translocoService: TranslocoService
   ) {
     this.formGroup = this.formBuilder.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   public login(event: any): void {
     event.preventDefault();
+
     if (this.formGroup.valid) {
       this.loading = true;
       this.authService.login(this.formGroup.value).subscribe({
         next: (res) => {
           this.error = [];
           this.sessionService.saveSession('USER_TOKEN', res.response.token);
-          this.router.navigate(['/admin/usuarios']);
+          this.toastService.setMessage({
+            severity: 'success',
+            summary: this.translocoService.translate('toast.success'),
+            detail: this.translocoService.translate('toast.login', {
+              user: this.formGroup.controls['username'].value,
+            }),
+          });
+          this.router.navigate(['/home']);
           this.loading = false;
         },
         error: () => {

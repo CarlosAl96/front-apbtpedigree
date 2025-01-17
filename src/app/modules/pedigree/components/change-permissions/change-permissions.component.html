@@ -1,0 +1,24 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">
+      @if (isFromPedigreeSearch) {
+      <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
+      }
+      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.changePermissions')}}</span>
+      @if (isFromPedigreeSearch) {
+      <div class="w-full"></div>
+      }
+    </div>
+  </ng-template>
+
+  <p [innerHTML]="pedigree.private ? t('yourPedigrees.changePermissions.textIsEditable', {name: pedigree.fullname}) :
+    t('yourPedigrees.changePermissions.textIsNotEditable', {name: pedigree.fullname})"></p>
+
+  <div class="flex align-items-center gap-2 mt-5">
+    <label>{{t('yourPedigrees.changePermissions.label')}}</label>
+    <p-inputSwitch [readonly]="true" [(ngModel)]="modelPedigreeStatus" (click)="changePermissions()" />
+  </div>
+
+</p-card>
+
+<p-confirmDialog />

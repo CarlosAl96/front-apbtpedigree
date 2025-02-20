@@ -9,7 +9,7 @@ export const FORUM_ROUTES: Routes = [
   { path: '', component: ForumComponent },
   { path: 'topics/:idCategory', component: TopicsListComponent },
   { path: 'posts/:idTopic', component: PostsListComponent },
-  { path: 'posts/new/:idPost', component: NewPostComponent },
-  { path: 'topics/new', component: NewTopicComponent },
+  { path: 'posts/new/:idTopic', component: NewPostComponent },
+  { path: 'topics/new/:idCategory', component: NewTopicComponent },
   { path: '**', redirectTo: '' },
 ];

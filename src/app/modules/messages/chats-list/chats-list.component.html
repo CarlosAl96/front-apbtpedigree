@@ -1,0 +1,93 @@
+<div class="chats-container" *transloco="let t">
+  <div class="header-chat">
+    <span class="title">Chats</span>
+
+    <p-autoComplete
+      [(ngModel)]="selectedUser"
+      [suggestions]="filteredUsers"
+      (completeMethod)="searchUsers($event)"
+      (onSelect)="createChat($event)"
+      optionLabel="username"
+      class="w-full"
+      inputStyleClass="w-full"
+      styleClass="w-full"
+      [placeholder]="t('messages.placeholderNewChat')"
+    >
+      <ng-template let-user pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          @if (user.picture) {
+          <img
+            [src]="urlImg + user.picture"
+            class="chat-avatar"
+            style="width: 32px; height: 32px"
+          />
+          }
+          <div>{{ user.username }}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+
+  @if(!chats.length){
+  <div class="flex justify-content-center align-items-center h-full w-full">
+    <span class="px-2 text-lg">{{ t("messages.emptyChats") }} </span>
+  </div>
+  } @else {
+  <div class="chat-items">
+    @for (chat of chats; track $index) {
+    <div
+      [class]="idChatSelected == chat.id ? 'chat-item selected' : 'chat-item'"
+    >
+      @if ((chat.im_first && chat.img_two) || (!chat.im_first && chat.img_one))
+      {
+      <img
+        [src]="chat.im_first ? urlImg + chat.img_two : urlImg + chat.img_one"
+        alt="{{ chat.username_two }}"
+        class="chat-avatar"
+        (click)="setChatActive(chat)"
+      />
+      } @else {
+      <img
+        src="./assets/images/profile.png"
+        alt="{{ chat.username_two }}"
+        class="chat-avatar"
+        (click)="setChatActive(chat)"
+      />
+      }
+
+      <div class="flex flex-column w-full h-full" (click)="setChatActive(chat)">
+        <span class="username">{{
+          chat.im_first ? chat.username_two : chat.username_one
+        }}</span>
+
+        <div class="flex align-items-center gap-2">
+          @if ((chat.im_first && !chat.viewed_one) || (!chat.im_first &&
+          !chat.viewed_two)) {
+          <div class="circle"></div>
+          } @if(chat.last_message.img){
+          <img height="30px" [src]="chat.last_message.img" />
+          }@else {
+          <span class="last-message">
+            {{ chat.last_message.message }}
+          </span>
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-column align-items-end justify-content-between gap-1 w-4 cursor-auto">
+        <span>{{ chat.last_message.created_at | timeFormat }}</span>
+
+        <div class="flex justify-content-end w-full">
+          <i
+            class="pi pi-trash cursor-pointer"
+            style="color: red"
+            (click)="deleteChat(chat.id)"
+          ></i>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
+<p-confirmDialog />

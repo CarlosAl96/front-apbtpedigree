@@ -1,59 +1,88 @@
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t('navbar.items.forum')}}</div>
+    <div class="header-container">{{ t("navbar.items.forum") }}</div>
   </ng-template>
 
   <p-table [value]="forumCategories" styleClass="p-datatable-striped">
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
-        <h2>{{t("forum.list")}}</h2>
-        <p-button label="{{t('buttons.newCategory')}}" icon="pi pi-plus" (onClick)="showCreateModal()"></p-button>
+        <h2>{{ t("forum.list") }}</h2>
+        <p-button
+          label="{{ t('buttons.newCategory') }}"
+          icon="pi pi-plus"
+          (onClick)="showCreateModal()"
+        ></p-button>
       </div>
     </ng-template>
 
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>{{t("forum.name")}}</th>
-        <th>{{t("forum.description")}}</th>
-        <th>{{t("forum.moderators")}}</th>
-        <th>{{t("forum.topics")}}</th>
-        <th>{{t("forum.posts")}}</th>
-        <th>{{t("forum.lastPost")}}</th>
-        <th>{{t("forum.actions")}}</th>
+        <th>{{ t("forum.name") }}</th>
+        <th>{{ t("forum.description") }}</th>
+        <th>{{ t("forum.moderators") }}</th>
+        <th>{{ t("forum.topics") }}</th>
+        <th>{{ t("forum.posts") }}</th>
+        <th>{{ t("forum.lastPost") }}</th>
+        <th>{{ t("forum.actions") }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-category>
       <tr>
-        <td>{{category.id}}</td>
-        <td>{{category.name}}</td>
-        <td>{{category.description}}</td>
-        <td>{{category.moderators}}</td>
-        <td>{{category.topics}}</td>
-        <td>{{category.posts}}</td>
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>{{ category.moderators }}</td>
+        <td>{{ category.topics }}</td>
+        <td>{{ category.posts }}</td>
         <td>
-          @if (category.last_post_info){ <div class="flex flex-column align-items-center ">
+          @if (category.last_post_info){
+          <div class="flex flex-column align-items-center">
             <span>{{ category.last_post_info.date | dateHourFormat }}</span>
             <span>{{ category.last_post_info.author }}</span>
           </div>
           }@else {
-          <div class="flex flex-column align-items-center ">
+          <div class="flex flex-column align-items-center">
             <span>-</span>
           </div>
           }
         </td>
         <td>
           <div class="flex gap-1">
-            <p-button icon="pi pi-pencil" (onClick)="showEditModal(category)"></p-button>
-            <p-button severity="danger" icon="pi pi-trash" (onClick)="deleteCategory(category.id)"></p-button>
+            <p-button
+              icon="pi pi-pencil"
+              (onClick)="showEditModal(category)"
+            ></p-button>
+            @if (category.is_locked) {
+            <p-button
+              icon="pi pi-lock-open"
+              (onClick)="lockCategory(category.id, category.is_locked)"
+            ></p-button>
+            } @else {
+            <p-button
+              severity="warning"
+              icon="pi pi-lock"
+              (onClick)="lockCategory(category.id, category.is_locked)"
+            ></p-button>
+            }
+            <p-button
+              severity="danger"
+              icon="pi pi-trash"
+              (onClick)="deleteCategory(category.id)"
+            ></p-button>
           </div>
         </td>
       </tr>
     </ng-template>
   </p-table>
 
-  <p-paginator #paginator (onPageChange)="onPageChange($event)" [rows]="queryPagination.size"
-    [totalRecords]="totalRows" />
+  <p-paginator
+    #paginator
+    [first]="first"
+    (onPageChange)="onPageChange($event)"
+    [rows]="queryPagination.size"
+    [totalRecords]="totalRows"
+  />
 </p-card>
 
 <p-confirmDialog />

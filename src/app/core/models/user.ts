@@ -19,6 +19,8 @@ export interface User {
   adminuser: boolean;
   is_staff: boolean;
   is_active: boolean;
+  is_enabled: boolean;
+  forum_ban: boolean;
   subscription: boolean;
   last_login: Date | null;
   date_joined: Date;

@@ -3,7 +3,7 @@ import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token: string | null = sessionStorage.getItem('USER_TOKEN');
+  const token: string | null = localStorage.getItem('USER_TOKEN');
   const router: Router = new Router();
 
   if (token) {
@@ -18,7 +18,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
-        sessionStorage.clear();
+        localStorage.clear();
         if (router.url != '/') {
           router.navigate(['']);
         }

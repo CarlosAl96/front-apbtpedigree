@@ -1,0 +1,28 @@
+.header-container {
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.link {
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+  color: inherit;
+  &:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+}
+
+.title {
+  font-size: large;
+  font-weight: bold;
+}
+
+.separator {
+  border-top: 2px solid var(--color-bg-body);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}

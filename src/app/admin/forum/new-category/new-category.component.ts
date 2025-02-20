@@ -128,7 +128,7 @@ export class NewCategoryComponent {
             severity: 'error',
             summary: this.translocoService.translate('toast.error'),
             detail: this.translocoService.translate(
-              'toast.categoryCreatedError'
+              'toast.categoryEditedError'
             ),
           });
           this.loading = false;

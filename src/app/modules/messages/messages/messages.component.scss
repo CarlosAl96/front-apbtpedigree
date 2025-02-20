@@ -2,3 +2,10 @@
   justify-content: center;
   text-transform: uppercase;
 }
+::ng-deep .p-card .p-card-content {
+  padding: 0;
+}
+
+::ng-deep .p-card .p-card-body {
+  padding: 0;
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
@@ -11,96 +11,38 @@ import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [TranslocoModule, CardModule, TableModule, DateHourFormatPipe],
+  imports: [
+    TranslocoModule,
+    CardModule,
+    TableModule,
+    DateHourFormatPipe,
+    RouterLink,
+  ],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
 export class ForumComponent {
   public forumCategories: ForumCategory[] = [];
   public totalRows: number = 0;
+  public categoriesInfo!: any;
   public queryPagination: QueryPagination = {
     size: 50,
     page: 0,
   };
-
-  public forum: any[] = [
-    {
-      id: 1,
-      title: 'Titulo 1',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eius provident! Magni delectus asperiores minima, architecto animi facilis. Sint voluptatem asperiores quia nostrum, in voluptatibus non praesentium voluptatum officiis quod?',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 2,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 3,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 4,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 5,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 6,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-    {
-      id: 7,
-      title: 'Titulo 1',
-      description: 'Descripcion',
-      topics: 230,
-      posts: 1564,
-      last_post: new Date(),
-      author: 'DarkSoul',
-    },
-  ];
 
   constructor(
     private readonly router: Router,
     private readonly forumService: ForumService
   ) {
     this.getCategories(this.queryPagination);
+    this.getCategoriesInfo();
   }
 
   private getCategories(query: QueryPagination): void {
     this.forumService.getCategories(query).subscribe({
       next: (res) => {
         this.forumCategories = res.response.data;
+
         this.totalRows = res.response.totalRows;
 
         this.forumCategories.map((category) => {
@@ -112,6 +54,18 @@ export class ForumComponent {
         console.log(error);
       },
     });
+  }
+
+  private getCategoriesInfo(): void {
+    this.forumService.getCategoriesInfo().subscribe(
+      (res) => {
+        this.categoriesInfo = res.response;
+        console.log(this.categoriesInfo);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   public onPageChange(event: any): void {
@@ -130,9 +84,13 @@ export class ForumComponent {
   public getModerators(moderators: string): any {
     if (moderators) {
       const jsonObject = JSON.parse(moderators);
-      return jsonObject.join(', ');
+      return jsonObject;
     }
     return null;
+  }
+
+  public goToLastPost(idTopic: number): void {
+    this.router.navigateByUrl(`forum/posts/${idTopic}?opt=last`);
   }
 
   public goToCategory(categoryId: number): void {

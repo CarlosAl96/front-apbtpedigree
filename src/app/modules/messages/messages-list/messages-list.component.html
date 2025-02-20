@@ -1,0 +1,142 @@
+<div class="messages-list-container" *transloco="let t">
+  @if (chatSelected.id != -1) {
+  <div class="header-chat">
+    @if ((chatSelected.im_first && chatSelected.img_two) ||
+    (!chatSelected.im_first && chatSelected.img_one)) {
+    <img
+      [src]="
+        chatSelected.im_first
+          ? urlImg + chatSelected.img_two
+          : urlImg + chatSelected.img_one
+      "
+      alt="{{ chatSelected.username_two }}"
+      class="chat-avatar"
+    />
+    } @else {
+    <img
+      src="./assets/images/profile.png"
+      alt="{{ chatSelected.username_two }}"
+      class="chat-avatar"
+    />
+    }
+    <span class="username-head">{{
+      chatSelected.im_first
+        ? chatSelected.username_two
+        : chatSelected.username_one
+    }}</span>
+  </div>
+
+  <div #messageContainer class="messages-container">
+    @if(totalPages > 1 && totalPages > queryPagination.page + 1){
+    <div class="flex justify-content-center w-full">
+      <p-tag
+        class="cursor-pointer"
+        severity="contrast"
+        value="{{ t('messages.loadMoreMessages') }}"
+        (click)="onPageChange()"
+      />
+    </div>
+    } @for (message of messages; track $index) {
+    <div
+      [class]="
+        message.id_sender == user?.id
+          ? 'message-container right-align'
+          : 'message-container left-align'
+      "
+    >
+      <div
+        [class]="
+          message.id_sender == user?.id
+            ? 'message-bubble right'
+            : 'message-bubble left'
+        "
+      >
+        @if (message.img && message.img!= '') {
+        <img class="message-img" [src]="message.img" />
+        }
+        <span class="message">
+          {{ message.message }}
+        </span>
+
+        <div class="flex align-items-center gap-1">
+          <span class="time">{{ message.created_at | timeFormat }}</span>
+          @if (message.id_sender == user?.id) {
+          <i
+            class="pi pi-trash cursor-pointer"
+            style="color: red"
+            (click)="deleteMessage(message.id)"
+          ></i>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (showEmojiPicker) {
+  <emoji-mart
+    (emojiSelect)="addEmoji($event)"
+    [style]="{ position: 'absolute', bottom: '80px', left: '32rem' }"
+    title="Pick your emoji…"
+    emoji="point_up"
+  ></emoji-mart>
+  }
+
+  <div class="input-container">
+    @if(imageBase64 != ''){
+    <div class="flex justify-content-center w-full p-2">
+      <img class="preview-img" [src]="imageBase64" />
+    </div>
+    } @if(maxSizeExceeded){
+    <div class="flex justify-content-center w-full p-2">
+      <span style="color: red">{{ t("messages.maxSizeExceeded") }}</span>
+    </div>
+    }
+    <p-inputGroup class="input-message w-full gap-2">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-face-smile"
+        (click)="toggleEmojiPicker()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        (click)="fileUpload()"
+        icon="pi pi-image"
+      ></button>
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="messageModel"
+        (keyup.enter)="sendMessage()"
+        placeholder="{{ t('messages.messagePlaceholder') }}"
+        (focus)="showEmojiPicker = false"
+      />
+      <input
+        #fileInput
+        type="file"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        hidden
+      />
+      <button
+        pButton
+        type="button"
+        icon="pi pi-send"
+        label="{{ t('buttons.send') }}"
+        [disabled]="messageModel == '' && imageBase64 == ''"
+        (click)="sendMessage()"
+      ></button>
+    </p-inputGroup>
+  </div>
+  } @else {
+  <div
+    class="flex flex-column gap-3 w-full h-full align-items-center justify-content-center"
+  >
+    <i class="pi pi-envelope" style="font-size: 4rem; font-weight: 900"></i>
+    <span class="text-lg">{{ t("messages.emptyMessages") }}</span>
+  </div>
+  }
+</div>
+<p-confirmDialog />

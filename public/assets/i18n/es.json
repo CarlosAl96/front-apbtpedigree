@@ -53,7 +53,14 @@
     "changeOwner": "Cambiar dueño",
     "newCategory": "Nueva categoría",
     "saveCategory": "Guardar categoría",
-    "editCategory": "Editar categoría"
+    "editCategory": "Editar categoría",
+    "newUser": "Nuevo usuario",
+    "editUser": "Editar usuario",
+    "newTopic": "Nuevo tema",
+    "newPost": "Responder",
+    "go": "Ir",
+    "quote": "Citar",
+    "send": "Enviar"
   },
   "colors": {
     "red": "Rojo",
@@ -65,6 +72,14 @@
     "female": "Hembra",
     "male": "Macho",
     "unknown": "Desconocido"
+  },
+  "activeOptions": {
+    "alls": "Todos",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "forumBanned": "Baneados del foro",
+    "activateUser": "Activar usuario",
+    "desactivateUser": "Desactivar usuario"
   },
   "footer": {
     "line1": "Todos los logos y marcas registradas en este sitio son propiedad de sus respectivo dueños. Los comentarios son propiedad de sus pósters.",
@@ -78,6 +93,7 @@
     "newUser": "¿Eres nuevo? Regístrate!"
   },
   "register": {
+    "fullname": "Nombre completo",
     "username": "Nombre de usuario",
     "password2": "Repita la contraseña",
     "firstName": "Nombres",
@@ -88,7 +104,22 @@
     "country": "País",
     "zipCode": "Código postal",
     "phone": "Número de teléfono",
-    "alreadyAccount": "¿Ya tienes una cuenta? Inicia sesión"
+    "alreadyAccount": "¿Ya tienes una cuenta? Inicia sesión",
+    "subscription": "Suscripción",
+    "lastLogin": "Última conexión",
+    "userType": "Tipo de usuario"
+  },
+  "messages": {
+    "emptyChats": "No hay chats creados. ¡Crea uno para iniciar a chatear!",
+    "emptyMessages": "Selecciona un chat para ver sus mensajes o crea uno si aún no tienes.",
+    "placeholderNewChat": "Buscar usuario para chatear...",
+    "messagePlaceholder": "Escribe tu mensaje...",
+    "loadMoreMessages": "Mostrar mensajes antiguos",
+    "deleteChat": "Eliminar Chat",
+    "deleteChatQuestion": "¿Estás seguro de eliminar este chat?",
+    "deleteMessage": "Eliminar Mensaje",
+    "deleteMessageQuestion": "¿Estás seguro de eliminar este mensaje?",
+    "maxSizeExceeded": "El archivo es demasiado grande. Máximo permitido: 250KB"
   },
   "forum": {
     "index": "APBT Pedigree Página principal del foro",
@@ -97,17 +128,55 @@
     "name": "Nombre",
     "replies": "Respuestas",
     "author": "Autor",
+    "message": "Mensaje",
     "views": "Vistas",
     "description": "Descripción",
     "lastPost": "Última publicación",
     "moderators": "Moderadores",
     "actions": "Acciones",
+    "searchTopics": "Buscar temas",
+    "searchPosts": "Buscar publicaciones",
     "list": "Listado de categorias del foro",
     "deleteQuestion": "¿Estás seguro de eliminar esta categoría?",
     "deleteCategory": "Eliminar categoría",
+    "lockCategory": "Bloquear categoría",
+    "unlockCategory": "Desbloquear categoría",
+    "lockQuestion": "¿Estás seguro de bloquear esta categoría?",
+    "unlockQuestion": "¿Estás seguro de desbloquear esta categoría?",
     "newPosts": "Nuevas publicaciones",
     "noNewPosts": "Sin nuevas publicaciones",
     "locked": "Foro bloqueado",
+    "mark": "Marcar todos los temas como leidos",
+    "displayFrom": "Mostrar temas de anteriores",
+    "displayPostsFrom": "Mostrar publicaciones de anteriores",
+    "jumpTo": "Ir a",
+    "announcement": "Anuncio",
+    "sticky": "Fijado",
+    "postNewTopic": "Publicar nuevo tema",
+    "postReply": "Respuesta a la publicación",
+    "subject": "Asunto",
+    "messageBody": "Cuerpo del mensaje",
+    "urlImg": "URL de la imágen",
+    "posted": "Publicado",
+    "preview": "Vista previa",
+    "joined": "Miembro desde",
+    "location": "Ubicación",
+    "lockTopic": "Bloquear tema",
+    "unlockTopic": "Desbloquear tema",
+    "lockTopicQuestion": "¿Estás seguro de bloquear este tema?",
+    "unlockTopicQuestion": "¿Estás seguro de desbloquear este tema?",
+    "stickyTopic": "Fijar tema",
+    "unstickyTopic": "Desfijar tema",
+    "stickyTopicQuestion": "¿Estás seguro de fijar este tema?",
+    "unstickyTopicQuestion": "¿Estás seguro de desfijar este tema?",
+    "announcementTopic": "Anunciar tema",
+    "unannouncementTopic": "Desanunciar tema",
+    "announcementTopicQuestion": "¿Estás seguro de anunciar este tema?",
+    "unannouncementTopicQuestion": "¿Estás seguro de desanunciar este tema?",
+    "deleteTopic": "Eliminar tema",
+    "deleteTopicQuestion": "¿Estás seguro de eliminar este tema?",
+    "deletePost": "Eliminar publicación",
+    "deletePostQuestion": "¿Estás seguro de eliminar esta publicación?",
     "whoOnline": {
       "line1": "Nuestros usuarios han publicado un total de <strong>{{posts}}</strong> artículos",
       "line2": "Tenemos <strong>{{users}}</strong> usuarios registrados",
@@ -116,6 +185,34 @@
       "line5": "El mayor número de usuarios en línea fue de <strong>{{users}}</strong> el {{date}}",
       "line6": "Usuarios registrados:",
       "line7": "Estos datos se basan en usuarios activos durante los últimos cinco minutos"
+    },
+    "youCan": {
+      "line1": "Puedes <strong>publicar</strong> nuevos temas en este foro",
+      "line2": "Puedes <strong>responder</strong> a los temas en este foro",
+      "line3": "Puedes <strong>editar</strong> tus publicaciones en este foro",
+      "line4": "Puedes <strong>eliminar</strong> tus publicaciones en este foro"
+    },
+    "previous": {
+      "1days": "1 Día",
+      "2days": "2 Días",
+      "3days": "3 Días",
+      "4days": "4 Días",
+      "5days": "5 Días",
+      "6days": "6 Días",
+      "7days": "7 Días",
+      "1year": "1 Año",
+      "all": "Todos"
+    },
+    "order": {
+      "newest": "Más recientes primero",
+      "oldest": "Más antiguos primero"
+    },
+    "levels": {
+      "newbie": "Novato",
+      "junior": "Junior",
+      "mid": "Intermedio",
+      "advanced": "Avanzado",
+      "senior": "Senior"
     }
   },
   "pedigrees": {
@@ -126,6 +223,22 @@
     "line4": "Si tiene preguntas, vaya a los Foros y publíquelas en el Área de Soporte.",
     "results": "RESULTADOS DE LA BÚSQUEDA",
     "emptyMessage": "No se encontró ningún pedigrí que coincida con los criterios de búsqueda. Se recomienda verificar los datos ingresados o intentar con otros términos."
+  },
+  "users": {
+    "list": "Lista de usuarios",
+    "search": "Buscar usuarios",
+    "delete": "Eliminar usuario",
+    "admin": "Administrador",
+    "user": "Usuario",
+    "edit": "Editar usuario",
+    "forumBan": "Banear del foro",
+    "forumUnban": "Desbanear del foro",
+    "status": "Estado",
+    "deleteMessage": "¿Estás seguro que deseas eliminar de manera permanente este usuario?",
+    "banMessage": "¿Estás seguro que deseas banear a este usuario del foro?",
+    "unbanMessage": "¿Estás seguro que deseas desbanear a este usuario del foro?",
+    "activateUser": "¿Estás seguro que deseas activar a este usuario?",
+    "desactivateUser": "¿Estás seguro que deseas desactivar a este usuario?"
   },
   "yourPedigrees": {
     "title": "MIS PEDIGRÍES",
@@ -255,7 +368,24 @@
     "categoryCreated": "¡La categoría se ha creado exitosamente!",
     "categoryEdited": "¡La categoría se ha actualizado exitosamente!",
     "categoryCreatedError": "¡Ha ocurrido un error creando la categoría!",
-    "categoryDeletedError": "¡Ha ocurrido un error eliminando la categoría!"
+    "categoryDeletedError": "¡Ha ocurrido un error eliminando la categoría!",
+    "categoryEditedError": "¡Ha ocurrido un error actualizando la categoría!",
+    "updateMessage": "¡El usuario ha sido actualizado exitosamente!",
+    "deleteError": "¡Ha ocurrido un error eliminando el usuario!",
+    "deleteMessage2": "¡El usuario ha sido eliminado exitosamente!",
+    "updateError": "¡Ha ocurrido un error actualizando el usuario!",
+    "createdTopic": "¡El tema ha sido creado exitosamente!",
+    "createdTopicError": "¡Ha ocurrido un error creando el tema!",
+    "deleteTopic": "¡El tema ha sido eliminado exitosamente!",
+    "deleteTopicError": "¡Ha ocurrido un error eliminando el tema!",
+    "updateTopic": "¡El tema ha sido actualizado exitosamente!",
+    "updateTopicError": "¡Ha ocurrido un error actualizando el tema!",
+    "createdPost": "¡La publicación ha sido creada exitosamente!",
+    "createdPostError": "¡Ha ocurrido un error creando la publicación!",
+    "deletePost": "¡La publicación ha sido eliminada exitosamente!",
+    "deletePostError": "¡Ha ocurrido un error eliminando la publicación!",
+    "updatePost": "¡La publicación ha sido actualizada exitosamente!",
+    "updatePostError": "¡Ha ocurrido un error actualizando la publicación!"
   },
   "errorMessages": {
     "alreadyEmail": "Ya existe una cuenta con este correo electrónico",

@@ -38,7 +38,7 @@ export const routes: Routes = [
   },
   {
     path: 'messages',
-    component: LayoutMenuComponent,
+    component: LayoutComponent,
     loadChildren: () =>
       import('./modules/messages/messages.routes').then(
         (m) => m.MESSAGES_ROUTES
@@ -58,6 +58,13 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
     canActivate: [adminGuard],
+  },
+  {
+    path: 'profile',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./modules/profile/profile.routes').then((m) => m.PROFILE_ROUTES),
+    canActivate: [noAuthGuard],
   },
   {
     path: 'public/pedigree/:id',

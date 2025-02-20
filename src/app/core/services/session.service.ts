@@ -9,18 +9,18 @@ import { Router } from '@angular/router';
 export class SessionService {
   constructor(private readonly router: Router) {}
   saveSession(key: string, value: string) {
-    sessionStorage.setItem(key, value);
+    localStorage.setItem(key, value);
   }
 
   readSession(key: string): UserTokenData | null {
-    if (sessionStorage.getItem(key) == null) {
+    if (localStorage.getItem(key) == null) {
       return null;
     }
-    return jwtDecode(sessionStorage.getItem(key)!);
+    return jwtDecode(localStorage.getItem(key)!);
   }
 
   deleteSession() {
-    sessionStorage.clear();
+    localStorage.clear();
     this.router.navigate(['']);
   }
 }

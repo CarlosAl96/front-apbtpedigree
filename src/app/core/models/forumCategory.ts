@@ -7,4 +7,6 @@ export interface ForumCategory {
   posts: number;
   last_post: string;
   last_post_info?: any;
+  is_locked: boolean;
+  new_posts?: boolean;
 }

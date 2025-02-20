@@ -3,10 +3,6 @@
   text-transform: uppercase;
 }
 
-.row {
-  cursor: pointer;
-}
-
 .row:hover {
   background-color: rgba(0, 0, 0, 0.041);
 }
@@ -62,4 +58,21 @@
 
 .active {
   fill: var(--color-font-primary);
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+  &:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+}
+
+.link-last-post {
+  cursor: pointer;
+  &:hover {
+    font-weight: 900;
+  }
 }

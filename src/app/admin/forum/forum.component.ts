@@ -34,6 +34,7 @@ export class ForumComponent {
   public forumCategories: ForumCategory[] = [];
   public dialogRef!: DynamicDialogRef;
   public totalRows: number = 0;
+  public first: number = 0;
   public queryPagination: QueryPagination = {
     size: 50,
     page: 0,
@@ -132,8 +133,54 @@ export class ForumComponent {
     });
   }
 
+  public lockCategory(id: number, value: boolean): void {
+    this.confirmationService.confirm({
+      message: value
+        ? this.translocoService.translate('forum.unlockQuestion')
+        : this.translocoService.translate('forum.lockQuestion'),
+      header: value
+        ? this.translocoService.translate('forum.unlockCategory')
+        : this.translocoService.translate('forum.lockCategory'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: value ? 'pi pi-lock-open mr-2' : 'pi pi-lock mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      acceptButtonStyleClass: value ? '' : 'p-button-warning',
+      acceptLabel: this.translocoService.translate('buttons.yes'),
+      rejectLabel: this.translocoService.translate('buttons.no'),
+      accept: () => {
+        this.forumCategories.map((category) => {
+          if (category.id === id) {
+            category.is_locked = !value;
+          }
+        });
+        this.forumService.lockOrUnlockCategory(id).subscribe({
+          next: (res) => {
+            this.queryPagination.page = 0;
+            this.getCategories(this.queryPagination);
+            this.messageService.setMessage({
+              severity: 'success',
+              summary: this.translocoService.translate('toast.success'),
+              detail: this.translocoService.translate('toast.categoryEdited'),
+            });
+          },
+          error: (error) => {
+            this.messageService.setMessage({
+              severity: 'error',
+              summary: this.translocoService.translate('toast.error'),
+              detail: this.translocoService.translate(
+                'toast.categoryEditedError'
+              ),
+            });
+          },
+        });
+      },
+      reject: () => {},
+    });
+  }
+
   public onPageChange(event: any): void {
     this.queryPagination.page = event.page;
+    this.first = this.queryPagination.page * this.queryPagination.size;
     this.getCategories(this.queryPagination);
   }
 

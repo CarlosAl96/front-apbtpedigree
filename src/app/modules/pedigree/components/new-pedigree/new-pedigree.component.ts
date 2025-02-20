@@ -143,18 +143,6 @@ export class NewPedigreeComponent implements OnInit {
     });
 
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
-    // this.colorsOptions = [
-    //   { name: this.translocoService.translate('colors.red'), code: 'red' },
-    //   { name: this.translocoService.translate('colors.blue'), code: 'blue' },
-    //   {
-    //     name: this.translocoService.translate('colors.black'),
-    //     code: 'black',
-    //   },
-    //   {
-    //     name: this.translocoService.translate('colors.green'),
-    //     code: 'green',
-    //   },
-    // ];
 
     this.translocoService.langChanges$.subscribe((res) => {
       this.sexOptions = [

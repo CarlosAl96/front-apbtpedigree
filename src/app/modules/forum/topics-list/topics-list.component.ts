@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
@@ -20,6 +20,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { User } from '../../../core/models/user';
 import { SessionService } from '../../../core/services/session.service';
+import { SocketService } from '../../../core/services/socket.service';
 
 @Component({
   selector: 'app-topics-list',
@@ -43,7 +44,7 @@ import { SessionService } from '../../../core/services/session.service';
   templateUrl: './topics-list.component.html',
   styleUrl: './topics-list.component.scss',
 })
-export class TopicsListComponent implements OnInit {
+export class TopicsListComponent implements OnInit, OnDestroy {
   public idCategory: number = 0;
   public modelCategory: number = 0;
   public modelPrevious: string = '';
@@ -78,7 +79,8 @@ export class TopicsListComponent implements OnInit {
     private readonly translocoService: TranslocoService,
     private readonly confirmationService: ConfirmationService,
     private readonly messageService: ToastService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly socketService: SocketService
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
@@ -88,6 +90,17 @@ export class TopicsListComponent implements OnInit {
       this.isLoading = true;
       this.modelCategory = this.idCategory;
       this.getCategory(this.idCategory);
+    });
+
+    this.socketService.onForum().subscribe({
+      next: (res) => {
+        console.log(res);
+        console.log(this.idCategory);
+
+        if (res.id_category == this.idCategory) {
+          this.getTopicsFromCategory(this.idCategory);
+        }
+      },
     });
 
     this.translocoService.langChanges$.subscribe((res) => {
@@ -228,7 +241,14 @@ export class TopicsListComponent implements OnInit {
   }
 
   public goToLastPost(idTopic: number): void {
-    this.router.navigateByUrl(`forum/posts/${idTopic}?opt=last`);
+    const query: QueryPagination = {
+      size: 20,
+      page: 0,
+      order: 'ASC',
+    };
+    this.router.navigate(['forum/posts/' + idTopic], {
+      queryParams: { ...query, opt: 'last' },
+    });
   }
 
   public goToEditTopic(idTopic: number): void {
@@ -408,10 +428,28 @@ export class TopicsListComponent implements OnInit {
     });
   }
 
+  public markAllAsViewed(): void {
+    console.log('yeah');
+    this.forumService.markAllAsViewed(this.idCategory).subscribe({
+      next: (res) => {
+        console.log(res);
+
+        this.topics = this.topics.map((topic) => {
+          topic.new_posts = false;
+          return topic;
+        });
+      },
+    });
+  }
+
   private getIsPopular(views: number, replies: number): boolean {
     if (views > 1000 && replies > 300) {
       return true;
     }
     return false;
+  }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 }

@@ -72,12 +72,14 @@ export class UsersComponent implements OnInit {
         this.translocoService.selectTranslate('activeOptions.active'),
         this.translocoService.selectTranslate('activeOptions.inactive'),
         this.translocoService.selectTranslate('activeOptions.forumBanned'),
+        this.translocoService.selectTranslate('activeOptions.subscribers'),
         this.translocoService.langChanges$,
-      ]).subscribe(([alls, active, inactive, forumBanned]) => {
+      ]).subscribe(([alls, active, inactive, forumBanned, subscribers]) => {
         this.activeOptions = [
           { name: alls, code: 2 },
           { name: active, code: 1 },
           { name: inactive, code: 0 },
+          { name: subscribers, code: 4 },
           { name: forumBanned, code: 3 },
         ];
       });

@@ -52,11 +52,16 @@
         </td>
         <td>
           <div class="flex flex-column">
+            @if(!category.is_locked || user?.is_superuser ||
+            category.moderators.includes(user?.username ?? '')){
             <a
               class="link title"
               [routerLink]="'/forum/topics/' + category.id"
               >{{ category.name }}</a
             >
+            } @else {
+            <span class="title">{{ category.name }}</span>
+            }
             <span class="description">{{ category.description }}</span>
             @if (category.moderators) {
             <div class="flex gap-1">

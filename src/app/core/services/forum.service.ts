@@ -96,9 +96,17 @@ export class ForumService {
       .pipe(catchError(this.handleError));
   }
 
-  public getTopicById(id: number): Observable<ApiResponse<ForumTopic>> {
+  public getTopicById(
+    id: number,
+    addview: boolean
+  ): Observable<ApiResponse<ForumTopic>> {
+    const httpParams = new HttpParams().appendAll({ addview: addview });
+    const options = httpParams
+      ? { params: httpParams, header: new HttpHeaders() }
+      : { header: new HttpHeaders() };
+
     return this.http
-      .get<ApiResponse<ForumTopic>>(this.forumTopicsUrl + '/' + id)
+      .get<ApiResponse<ForumTopic>>(this.forumTopicsUrl + '/' + id, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -111,6 +119,12 @@ export class ForumService {
   public updateTopic(form: FormData, id: number): Observable<any> {
     return this.http
       .patch<any>(this.forumTopicsUrl + '/' + id, form)
+      .pipe(catchError(this.handleError));
+  }
+
+  public markAllAsViewed(idCtaegory: number): Observable<any> {
+    return this.http
+      .patch<any>(this.forumTopicsUrl + '/' + idCtaegory + '/markAll', {})
       .pipe(catchError(this.handleError));
   }
 

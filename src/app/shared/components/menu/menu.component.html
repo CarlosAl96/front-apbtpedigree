@@ -1,21 +1,27 @@
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t("menu")}}</div>
+    <div class="header-container">{{ t("menu") }}</div>
   </ng-template>
   <ul class="navbar-list w-full">
-    <li class="navbar-item" routerLinkActive="active"><a routerLink="/home">
-        {{ t('navbar.items.home') }}</a></li>
-
-    <li [class]="(router.url == '/pedigree' ? 'navbar-item active' : 'navbar-item')"><a routerLink="/pedigree">
-        {{ t('navbar.items.pedigrees') }}</a></li>
-
-    <li class="navbar-item" routerLinkActive="active"><a routerLink="/account">
-        {{ t('navbar.items.yourAccount') }}</a></li>
-
-    <li class="navbar-item" routerLinkActive="active"><a routerLink="/messages">
-        {{ t('navbar.items.messages') }}</a>
+    <li class="navbar-item" routerLinkActive="active">
+      <a routerLink="/home"> {{ t("navbar.items.home") }}</a>
     </li>
-    <li class="navbar-item" routerLinkActive="active"><a routerLink="/forum">
-        {{ t('navbar.items.forum') }}</a></li>
+
+    <li
+      [class]="router.url == '/pedigree' ? 'navbar-item active' : 'navbar-item'"
+    >
+      <a routerLink="/pedigree"> {{ t("navbar.items.pedigrees") }}</a>
+    </li>
+
+    <li class="navbar-item" routerLinkActive="active">
+      <a routerLink="/account"> {{ t("navbar.items.yourAccount") }}</a>
+    </li>
+
+    <li class="navbar-item" routerLinkActive="active">
+      <a routerLink="/messages"> {{ t("navbar.items.messages") }}</a>
+    </li>
+    <li class="navbar-item" routerLinkActive="active">
+      <a routerLink="/forum"> {{ t("navbar.items.forum") }}</a>
+    </li>
   </ul>
 </p-card>

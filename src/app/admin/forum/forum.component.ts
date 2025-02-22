@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ForumCategory } from '../../core/models/forumCategory';
 import { ForumService } from '../../core/services/forum.service';
 import { QueryPagination } from '../../core/models/queryPagination';
@@ -13,6 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NewCategoryComponent } from './new-category/new-category.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SocketService } from '../../core/services/socket.service';
 
 @Component({
   selector: 'app-forum',
@@ -30,7 +31,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
-export class ForumComponent {
+export class ForumComponent implements OnDestroy {
   public forumCategories: ForumCategory[] = [];
   public dialogRef!: DynamicDialogRef;
   public totalRows: number = 0;
@@ -45,9 +46,16 @@ export class ForumComponent {
     private readonly dialogService: DialogService,
     private readonly messageService: ToastService,
     private readonly confirmationService: ConfirmationService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly socketService: SocketService
   ) {
     this.getCategories(this.queryPagination);
+
+    this.socketService.onForum().subscribe({
+      next: (res) => {
+        this.getCategories(this.queryPagination);
+      },
+    });
   }
 
   private getCategories(query: QueryPagination): void {
@@ -198,5 +206,9 @@ export class ForumComponent {
       return jsonObject.join(', ');
     }
     return null;
+  }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 }

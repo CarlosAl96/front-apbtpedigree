@@ -5,10 +5,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { AuthService } from '../../core/services/auth.service';
+import { Message } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     ButtonModule,
     ReactiveFormsModule,
+    MessagesModule,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
@@ -26,8 +30,13 @@ import { ButtonModule } from 'primeng/button';
 export class ForgotPasswordComponent {
   public formGroup!: FormGroup;
   public loading: boolean = false;
+  public message!: Message[];
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly translocoService: TranslocoService
+  ) {
     this.formGroup = this.formBuilder.group({
       username: ['', Validators.required],
     });
@@ -36,6 +45,38 @@ export class ForgotPasswordComponent {
   public resetPassword(): void {
     if (this.formGroup.valid) {
       console.log(this.formGroup.value);
+      this.authService.resetPassword(this.formGroup.value).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.message = [
+            {
+              severity: 'success',
+              detail: this.translocoService.translate('login.emailSended'),
+            },
+          ];
+        },
+        error: (error) => {
+          console.log(error);
+
+          if (error.status === 404) {
+            this.message = [
+              {
+                severity: 'error',
+                detail: this.translocoService.translate('login.errorUser'),
+              },
+            ];
+          }
+
+          if (error.status === 500) {
+            this.message = [
+              {
+                severity: 'error',
+                detail: this.translocoService.translate('login.errorReset'),
+              },
+            ];
+          }
+        },
+      });
     }
   }
 }

@@ -3,7 +3,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { MessagesModule } from 'primeng/messages';
@@ -24,6 +24,7 @@ import { ToastService } from '../../core/services/toast.service';
     MessagesModule,
     PasswordModule,
     TranslocoModule,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -70,7 +71,7 @@ export class LoginComponent {
           this.error = [
             {
               severity: 'error',
-              detail: 'Nombre de usuario o contraseña incorrectos',
+              detail: this.translocoService.translate('toast.errorLogin'),
             },
           ];
           this.loading = false;

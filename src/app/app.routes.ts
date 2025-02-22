@@ -6,6 +6,7 @@ import { LayoutMenuComponent } from './shared/layouts/layout-menu/layout-menu.co
 import { adminGuard } from './core/guards/admin.guard';
 import { PublicPedigreeViewComponent } from './modules/pedigree/components/public-pedigree-view/public-pedigree-view.component';
 import { LayoutAdminComponent } from './shared/layouts/layout-admin/layout-admin.component';
+import { forumBanGuard } from './core/guards/forum-ban.guard';
 
 export const routes: Routes = [
   {
@@ -50,7 +51,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () =>
       import('./modules/forum/forum.routes').then((m) => m.FORUM_ROUTES),
-    canActivate: [noAuthGuard],
+    canActivate: [noAuthGuard, forumBanGuard],
   },
   {
     path: 'admin',

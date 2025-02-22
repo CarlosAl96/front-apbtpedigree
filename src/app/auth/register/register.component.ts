@@ -114,9 +114,9 @@ export class RegisterComponent {
         error: (error) => {
           this.loading = false;
 
-          console.log(error.error);
+          console.log(error);
 
-          if (error.error == 'email') {
+          if (error.error.message == 'email') {
             this.error = [];
             this.errorUsername = [];
             this.errorEmail = [
@@ -129,7 +129,7 @@ export class RegisterComponent {
             ];
             return;
           }
-          if (error.error == 'username') {
+          if (error.error.message == 'username') {
             this.error = [];
             this.errorEmail = [];
             this.errorUsername = [

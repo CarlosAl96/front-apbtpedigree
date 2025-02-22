@@ -1,12 +1,42 @@
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t('navbar.items.home')}}</div>
+    <div class="header-container">{{ t("navbar.items.home") }}</div>
   </ng-template>
 
   <div>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga atque ipsa expedita ut harum consequatur rerum
-      accusantium modi voluptatum, eaque facere sequi ducimus molestiae soluta dolore impedit voluptatem suscipit odio!
-    </p>
+    <h2>{{ t("home.welcome") }}</h2>
+    <span class="text-home">{{ t("home.p1") }}</span>
+    <h3>{{ t("home.q1") }}</h3>
+    <div class="flex flex-column gap-2 px-5">
+      <span class="text-home"
+        ><strong>{{ t("home.list.q1") }}: </strong
+        >{{ t("home.list.text1") }}</span
+      >
+      <span class="text-home"
+        ><strong>{{ t("home.list.q2") }}: </strong
+        >{{ t("home.list.text2") }}</span
+      >
+      <span class="text-home"
+        ><strong>{{ t("home.list.q3") }}: </strong
+        >{{ t("home.list.text3") }}</span
+      >
+      <span class="text-home"
+        ><strong>{{ t("home.list.q4") }}: </strong
+        >{{ t("home.list.text4") }}</span
+      >
+      <span class="text-home"
+        ><strong>{{ t("home.list.q5") }}: </strong
+        >{{ t("home.list.text5") }}</span
+      >
+      <span class="text-home"
+        ><strong>{{ t("home.list.q6") }}: </strong
+        >{{ t("home.list.text6") }}</span
+      >
+    </div>
+    @if (!user) {
+    <h3>{{ t("home.q2") }}</h3>
+    <span class="text-home">{{ t("home.p2") }}</span>
+    <h3 class="text-center">{{ t("home.final") }}</h3>
+    }
   </div>
 </p-card>

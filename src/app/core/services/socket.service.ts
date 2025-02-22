@@ -29,6 +29,22 @@ export class SocketService {
     });
   }
 
+  onForum(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('forum', (id) => {
+        observer.next(id);
+      });
+    });
+  }
+
+  onLogin(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('login', (id) => {
+        observer.next(id);
+      });
+    });
+  }
+
   disconnect() {
     this.socket.disconnect();
   }

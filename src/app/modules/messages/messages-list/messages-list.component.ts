@@ -92,6 +92,7 @@ export class MessagesListComponent implements OnDestroy {
             res.id_chat == this.chatSelected.id)
         ) {
           this.chatSelected.id = res.id_chat;
+
           this.getMessages({ size: 50, page: 0 });
         }
       },
@@ -103,14 +104,17 @@ export class MessagesListComponent implements OnDestroy {
   }
 
   public getMessages(query: QueryPagination, is_socket: boolean = false): void {
-    this.chatService.markAsViewedChat(this.chatSelected.id).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    if (this.chatSelected.id > 0) {
+      this.chatService.markAsViewedChat(this.chatSelected.id).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
+
     this.chatService.getMessages(query, this.chatSelected.id).subscribe({
       next: (res) => {
         console.log(this.messages);
@@ -163,7 +167,10 @@ export class MessagesListComponent implements OnDestroy {
       .sendMessage(message, this.chatSelected.im_first ?? false)
       .subscribe({
         next: (res) => {
-          this.getMessages(this.queryPagination);
+          this.chatSelected.id = res.response;
+          console.log(res);
+          
+          this.chatService.setChatSelected(this.chatSelected);
           this.scrollToBottom();
         },
       });

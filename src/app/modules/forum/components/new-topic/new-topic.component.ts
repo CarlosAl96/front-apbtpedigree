@@ -21,6 +21,7 @@ import { DateHourFormatPipe } from '../../../../core/pipes/date-hour-format.pipe
 import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
 import { ForumTopic } from '../../../../core/models/forumTopic';
+import { SocketService } from '../../../../core/services/socket.service';
 
 @Component({
   selector: 'app-new-topic',
@@ -140,7 +141,7 @@ export class NewTopicComponent {
   }
 
   private getTopicById(id: number): void {
-    this.forumService.getTopicById(id).subscribe({
+    this.forumService.getTopicById(id, false).subscribe({
       next: (res) => {
         this.topic = res.response;
         console.log(this.topic);

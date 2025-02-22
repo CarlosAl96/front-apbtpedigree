@@ -22,6 +22,7 @@ export class AuthService {
   private registerUrl: string = `${environment.api_url}users/store`;
   private logoutUrl: string = `${environment.api_url}users/logout`;
   private usersInfo: string = `${environment.api_url}usersInfo`;
+  private resertPasswordUrl: string = `${environment.api_url}users/passwordReset`;
 
   constructor(private http: HttpClient) {}
 
@@ -100,7 +101,22 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  public resetPassword(request: any): Observable<ApiResponse<any>> {
+    return this.http
+      .post<ApiResponse<any>>(this.resertPasswordUrl, request)
+      .pipe(catchError(this.handleError));
+  }
+
+  public updatePassword(
+    request: any,
+    token: string
+  ): Observable<ApiResponse<any>> {
+    return this.http
+      .post<ApiResponse<any>>(this.resertPasswordUrl + '/' + token, request)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
-    return throwError(() => error.error.response || 'Ocurrió un error');
+    return throwError(() => error);
   }
 }

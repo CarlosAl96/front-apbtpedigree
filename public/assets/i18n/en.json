@@ -18,6 +18,29 @@
       "producingTitle": "Producing Title"
     }
   },
+  "home": {
+    "welcome": "Welcome!",
+    "p1": "We welcome you to our website! This is the perfect place to explore and manage dog pedigrees, access exclusive tools, and connect with a global community of enthusiasts, breeders, and experts. We've designed this site with the goal of providing you with a unique, user-friendly, and secure experience.",
+    "q1": "What can you do on our platform?",
+    "list": {
+      "q1": "1. Explore Pedigrees",
+      "text1": "Access a vast database of over 800,000 dog pedigrees, with complete details, images, and links to past generations. Each pedigree is a gateway to the world of bloodlines and the history of dogs.",
+      "q2": "2. Add your own Pedigrees",
+      "text2": "If you're a breeder or a dog enthusiast, you can add your own pedigrees to the database. Our system gives you full control over the information you enter. You can decide who can edit it and ensure no one can modify it without your consent.",
+      "q3": "3. Participate in Forums",
+      "text3": "Join our forums where you can interact with other users, share experiences, and ask questions about the world of pedigrees and responsible dog breeding. It’s the perfect space to learn and grow together!",
+      "q4": "4. Keep your privacy protected",
+      "text4": "We respect your privacy on our platform. Any personal information you share will be safe and used only for billing and security purposes. Your identity is protected, and only you decide what information to share.",
+      "q5": "5. Connect with other users",
+      "text5": "Our private messaging system allows you to communicate directly with other community members. Whether to resolve doubts, share information, or collaborate on research, you'll be in touch with a network of passionate users.",
+      "q6": "6. Access advanced tools",
+      "text6": "In addition to browsing pedigrees, you'll enjoy useful tools such as a quick search tool to find pedigrees efficiently and the option to easily transfer ownership of a pedigree."
+    },
+    "q2": "Why register?",
+    "p2": "By registering, you gain full access to all the site's features. From advanced search to the ability to add and manage pedigrees, your annual subscription allows you to enjoy a complete, professional, and easy-to-use platform. The subscription costs 30 USD per year and guarantees you access to all the tools and resources we offer.",
+    "final": "Join today and start exploring the fascinating world of pedigrees!"
+  },
+
   "navbar": {
     "items": {
       "home": "Home",
@@ -34,7 +57,9 @@
   "onlineInfo": {
     "title": "Who's Online",
     "line1": "There are currently, <b>{{guest}}</b> guest(s) and <b>{{online}}</b> member(s) that are online.",
-    "line2": "You are logged as <b>{{user}}</b>. You have <b>{{messages}}</b> private message(s)."
+    "line2": "You are logged as <b>{{user}}</b>.",
+    "line3": "You are Anonymous user. You can register by clicking",
+    "here": "here"
   },
   "buttons": {
     "search": "Search",
@@ -60,7 +85,8 @@
     "newPost": "New Post Reply",
     "go": "Go",
     "quote": "Quote",
-    "send": "Send"
+    "send": "Send",
+    "changePassword": "Change Password"
   },
   "colors": {
     "red": "Red",
@@ -79,7 +105,8 @@
     "inactive": "Inactive",
     "forumBanned": "Banned from the forum",
     "activateUser": "Activate User",
-    "desactivateUser": "Desactivate User"
+    "desactivateUser": "Desactivate User",
+    "subscribers": "Subscribers"
   },
   "footer": {
     "line1": "All logos and trademarks on this site are the property of their respective owners. Comments are the property of their posters.",
@@ -90,7 +117,11 @@
     "username": "Username",
     "password": "Password",
     "lostPassword": "Lost your Password?",
-    "newUser": "New User Registration"
+    "newUser": "New User Registration",
+    "emailSended": "An email has been sent to your email address with instructions to reset your password.",
+    "errorUser": "There is no user with that email or username.",
+    "errorReset": "An error occurred sending the email. Please try again.",
+    "errorNewPassword": "An error occurred while changing the password. Please try again."
   },
   "register": {
     "fullname": "Fullname",
@@ -245,6 +276,7 @@
     "of": "of",
     "all": "All",
     "show": "Show",
+    "date": "Date",
     "404": "Pedigree not found",
     "401": "Pedigree is private",
     "emptyMessage": "You have not yet registered any pedigree",
@@ -360,6 +392,7 @@
     "error": "Error",
     "pedigreeDeletedError": "An error has occurred in removing the pedigree!",
     "login": "You are logged in as {{user}}!",
+    "errorLogin": "Incorrect username or password!",
     "register": "The user has been successfully created!",
     "pedigreeCreated": "The pedigree has been successfully created!",
     "pedigreeEdited": "The pedigree has been successfully updated!",
@@ -385,7 +418,8 @@
     "updatePost": "The post has been successfully updated!",
     "updatePostError": "An error occurred while updating the post!",
     "deletePost": "The post has been successfully deleted!",
-    "deletePostError": "An error occurred while deleting the post!"
+    "deletePostError": "An error occurred while deleting the post!",
+    "passwordChanged": "The password has been successfully changed!"
   },
   "errorMessages": {
     "alreadyEmail": "An account with this email already exists",

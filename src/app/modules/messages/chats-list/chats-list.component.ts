@@ -18,6 +18,7 @@ import { SocketService } from '../../../core/services/socket.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { filter } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chats-list',
@@ -37,6 +38,8 @@ import { filter } from 'rxjs';
 })
 export class ChatsListComponent implements OnDestroy {
   public user!: User | undefined;
+  public userReceiver!: User;
+  public usernameFromForum: string = '';
   public idChatSelected: number = 0;
   public chats: Chat[] = [];
   public filteredUsers: User[] = [];
@@ -49,9 +52,17 @@ export class ChatsListComponent implements OnDestroy {
     private readonly authService: AuthService,
     private readonly socketService: SocketService,
     private readonly confirmationService: ConfirmationService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly route: ActivatedRoute
   ) {
     console.log(this.chats);
+
+    this.route.queryParams.subscribe((params) => {
+      if (params['user']) {
+        this.usernameFromForum = params['user'] as string;
+      }
+    });
+
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
     this.socketService.onChat().subscribe({
       next: (res) => {
@@ -59,6 +70,12 @@ export class ChatsListComponent implements OnDestroy {
         if (res.id_one == this.user?.id || res.id_two == this.user?.id) {
           this.getChats();
         }
+      },
+    });
+
+    this.chatService.getChatSelected().subscribe({
+      next: (res) => {
+        this.idChatSelected = res.id;
       },
     });
     this.getChats();
@@ -84,6 +101,9 @@ export class ChatsListComponent implements OnDestroy {
               (!chat.im_first && chat.is_deleted_two)
             )
         );
+        if (this.usernameFromForum != '') {
+          this.searchUsers(this.usernameFromForum, true);
+        }
       },
       error: (error) => {
         console.log(error);
@@ -101,10 +121,20 @@ export class ChatsListComponent implements OnDestroy {
     }
   }
 
-  public searchUsers(event: AutoCompleteCompleteEvent): void {
-    this.authService.searchUsers(event.query).subscribe({
+  public searchUsers(query: string, fromForum: boolean = false): void {
+    this.authService.searchUsers(query).subscribe({
       next: (res) => {
-        this.filteredUsers = res.response;
+        if (fromForum) {
+          this.userReceiver = res.response.filter(
+            (user) => user.username == query
+          )[0];
+
+          if (this.userReceiver) {
+            this.createChat(this.userReceiver);
+          }
+        } else {
+          this.filteredUsers = res.response;
+        }
       },
       error: (error) => {
         console.log(error);
@@ -112,8 +142,7 @@ export class ChatsListComponent implements OnDestroy {
     });
   }
 
-  public createChat(event: AutoCompleteSelectEvent): void {
-    const userReceiver: User = event.value;
+  public createChat(userReceiver: User): void {
     const newChat: Chat = {
       id: 0,
       id_user_one: this.user?.id ?? 0,
@@ -147,8 +176,8 @@ export class ChatsListComponent implements OnDestroy {
         chat.username_one == userReceiver.username ||
         chat.username_two == userReceiver.username
     );
-
-    console.log(existChat);
+    console.log(this.chats);
+    this.chats = this.chats.filter((chat) => chat.id != 0);
 
     if (existChat.length) {
       this.idChatSelected = existChat[0].id;
@@ -157,11 +186,9 @@ export class ChatsListComponent implements OnDestroy {
     }
 
     this.idChatSelected = newChat.id;
-
-    console.log(newChat);
-
-    this.chats = this.chats.filter((chat) => chat.id != 0);
+    console.log(this.chats);
     this.chats.unshift(newChat);
+    console.log(this.chats);
 
     this.chatService.setChatSelected(newChat);
   }

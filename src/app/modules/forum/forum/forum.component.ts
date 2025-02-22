@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -7,6 +7,9 @@ import { ForumCategory } from '../../../core/models/forumCategory';
 import { ForumService } from '../../../core/services/forum.service';
 import { QueryPagination } from '../../../core/models/queryPagination';
 import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
+import { SocketService } from '../../../core/services/socket.service';
+import { SessionService } from '../../../core/services/session.service';
+import { User } from '../../../core/models/user';
 
 @Component({
   selector: 'app-forum',
@@ -21,10 +24,11 @@ import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
-export class ForumComponent {
+export class ForumComponent implements OnDestroy {
   public forumCategories: ForumCategory[] = [];
   public totalRows: number = 0;
   public categoriesInfo!: any;
+  public user!: User | undefined;
   public queryPagination: QueryPagination = {
     size: 50,
     page: 0,
@@ -32,10 +36,26 @@ export class ForumComponent {
 
   constructor(
     private readonly router: Router,
-    private readonly forumService: ForumService
+    private readonly forumService: ForumService,
+    private readonly socketService: SocketService,
+    private readonly sessionService: SessionService
   ) {
     this.getCategories(this.queryPagination);
     this.getCategoriesInfo();
+    this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+
+    this.socketService.onForum().subscribe({
+      next: (res) => {
+        this.getCategories(this.queryPagination);
+        this.getCategoriesInfo();
+      },
+    });
+
+    this.socketService.onLogin().subscribe({
+      next: (res) => {
+        this.getCategoriesInfo();
+      },
+    });
   }
 
   private getCategories(query: QueryPagination): void {
@@ -57,15 +77,15 @@ export class ForumComponent {
   }
 
   private getCategoriesInfo(): void {
-    this.forumService.getCategoriesInfo().subscribe(
-      (res) => {
+    this.forumService.getCategoriesInfo().subscribe({
+      next: (res) => {
         this.categoriesInfo = res.response;
         console.log(this.categoriesInfo);
       },
-      (error) => {
+      error: (error) => {
         console.log(error);
-      }
-    );
+      },
+    });
   }
 
   public onPageChange(event: any): void {
@@ -90,10 +110,21 @@ export class ForumComponent {
   }
 
   public goToLastPost(idTopic: number): void {
-    this.router.navigateByUrl(`forum/posts/${idTopic}?opt=last`);
+    const query: QueryPagination = {
+      size: 20,
+      page: 0,
+      order: 'ASC',
+    };
+    this.router.navigate(['forum/posts/' + idTopic], {
+      queryParams: { ...query, opt: 'last' },
+    });
   }
 
   public goToCategory(categoryId: number): void {
     this.router.navigateByUrl(`forum/topics/${categoryId}`);
+  }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 }

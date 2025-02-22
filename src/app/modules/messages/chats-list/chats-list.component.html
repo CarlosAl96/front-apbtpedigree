@@ -5,8 +5,8 @@
     <p-autoComplete
       [(ngModel)]="selectedUser"
       [suggestions]="filteredUsers"
-      (completeMethod)="searchUsers($event)"
-      (onSelect)="createChat($event)"
+      (completeMethod)="searchUsers($event.query)"
+      (onSelect)="createChat($event.value)"
       optionLabel="username"
       class="w-full"
       inputStyleClass="w-full"
@@ -74,7 +74,9 @@
         </div>
       </div>
 
-      <div class="flex flex-column align-items-end justify-content-between gap-1 w-4 cursor-auto">
+      <div
+        class="flex flex-column align-items-end justify-content-between gap-1 w-4 cursor-auto"
+      >
         <span>{{ chat.last_message.created_at | timeFormat }}</span>
 
         <div class="flex justify-content-end w-full">

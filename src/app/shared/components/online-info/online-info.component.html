@@ -1,9 +1,29 @@
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t("onlineInfo.title")}}</div>
+    <div class="header-container">{{ t("onlineInfo.title") }}</div>
   </ng-template>
   <diV>
-    <p class="text-center" [innerHTML]="t('onlineInfo.line1', {guest: loggeds, online: subs})"></p>
-    <p class="text-center" [innerHTML]="t('onlineInfo.line2', {user: user?.username, messages: 24})"></p>
+    <p
+      class="text-center"
+      [innerHTML]="t('onlineInfo.line1', { guest: loggeds, online: subs })"
+    ></p>
+    @if (user) {
+    <p
+      class="text-center"
+      [innerHTML]="t('onlineInfo.line2', { user: user.username })"
+    ></p>
+    }@else {
+
+    <p class="text-center">
+      {{ t("onlineInfo.line3") }}
+      <a
+        class="link ml-1"
+        routerLinkActive="active-link"
+        routerLink="/auth/register"
+        >{{ t("onlineInfo.here") }}</a
+      >
+    </p>
+
+    }
   </diV>
 </p-card>

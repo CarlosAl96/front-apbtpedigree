@@ -12,6 +12,9 @@ import { Pedigree } from '../../../../core/models/pedigree';
 import { environment } from '../../../../../environments/environment.development';
 import { SessionService } from '../../../../core/services/session.service';
 import { User } from '../../../../core/models/user';
+import { DogLog } from '../../../../core/models/dogLog';
+import { PedigreeService } from '../../../../core/services/pedigree.service';
+import { DateHourFormatPipe } from '../../../../core/pipes/date-hour-format.pipe';
 
 @Component({
   selector: 'app-pedigree-view',
@@ -23,6 +26,7 @@ import { User } from '../../../../core/models/user';
     FightColorPipe,
     DateFormatPipe,
     DropdownModule,
+    DateHourFormatPipe,
   ],
   templateUrl: './pedigree-view.component.html',
   styleUrl: './pedigree-view.component.scss',
@@ -36,11 +40,13 @@ export class PedigreeViewComponent implements OnInit {
   public siblings: Pedigree[] = [];
   public urlImg: string = `${environment.uploads_url}pedigrees/`;
   public user!: User | undefined;
+  public dogLogs: DogLog[] = [];
 
   constructor(
     private readonly router: Router,
     private readonly translocoService: TranslocoService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly pedigreeService: PedigreeService
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
@@ -73,6 +79,7 @@ export class PedigreeViewComponent implements OnInit {
     if (this.pedigree) {
       this.siblings = this.pedigree.siblings;
       this.fullBrothersCount = this.getBrothers('full').length;
+      this.getLogs();
     }
   }
 
@@ -137,6 +144,14 @@ export class PedigreeViewComponent implements OnInit {
     }
 
     return [];
+  }
+
+  public getLogs(): void {
+    this.pedigreeService.getLogs(this.pedigree.pedigree.id).subscribe({
+      next: (res) => {
+        this.dogLogs = res.response;
+      },
+    });
   }
 
   public get offspingsWithTitlesBeforeName(): number {

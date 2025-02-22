@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -22,6 +28,7 @@ import { environment } from '../../../../environments/environment.development';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';
+import { SocketService } from '../../../core/services/socket.service';
 
 @Component({
   selector: 'app-posts-list',
@@ -44,10 +51,12 @@ import { ConfirmationService } from 'primeng/api';
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss',
 })
-export class PostsListComponent implements OnInit {
+export class PostsListComponent implements OnInit, OnDestroy {
   @ViewChild('scroll') scroll!: ElementRef;
+  @ViewChild('scrollDown') scrollDown!: ElementRef;
 
   public idTopic: number = 0;
+  public last: boolean = false;
   public modelCategory: number = 0;
   public modelPrevious: string = '';
   public modelSearch: string = '';
@@ -78,7 +87,7 @@ export class PostsListComponent implements OnInit {
   public first: number = 0;
   public totalRows: number = 0;
   public queryPagination: QueryPagination = {
-    size: 10,
+    size: 20,
     page: 0,
     order: 'ASC',
   };
@@ -91,9 +100,18 @@ export class PostsListComponent implements OnInit {
     private readonly translocoService: TranslocoService,
     private readonly messageService: ToastService,
     private readonly sessionService: SessionService,
-    private readonly confirmationService: ConfirmationService
+    private readonly confirmationService: ConfirmationService,
+    private readonly socketService: SocketService
   ) {
     this.getCategories();
+
+    this.socketService.onForum().subscribe({
+      next: (res) => {
+        if (res.id_topic == this.idTopic) {
+          this.getPostsFromTopic(this.idTopic);
+        }
+      },
+    });
 
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
@@ -170,6 +188,9 @@ export class PostsListComponent implements OnInit {
           this.queryPagination.order = params['order'] as string;
           this.modelOrder = this.queryPagination.order;
         }
+        if (params['opt']) {
+          this.last = true;
+        }
       }
     });
   }
@@ -194,7 +215,7 @@ export class PostsListComponent implements OnInit {
   }
 
   private getTopicById(id: number): void {
-    this.forumService.getTopicById(id).subscribe({
+    this.forumService.getTopicById(id, true).subscribe({
       next: (res) => {
         this.topic = res.response;
         this.modelCategory = this.topic.id_categories;
@@ -221,6 +242,18 @@ export class PostsListComponent implements OnInit {
           post.level = this.getUserLevel(post.posts ?? 0);
           post.message = this.wrapBlockquotes(post.message);
         });
+
+        if (this.last) {
+          this.last = false;
+          const lastPage: number =
+            Math.ceil(this.totalRows / this.queryPagination.size) - 1;
+          this.queryPagination.page = lastPage;
+          this.first = lastPage * this.queryPagination.size;
+          this.getPostsFromTopic(idTopic);
+          setTimeout(() => {
+            this.scrollDownFn();
+          }, 200);
+        }
       },
       error: (error) => {
         console.log(error);
@@ -286,7 +319,7 @@ export class PostsListComponent implements OnInit {
   }
 
   public search(): void {
-    this.queryPagination = { size: 10, page: 0 };
+    this.queryPagination = { size: 20, page: 0 };
     this.queryPagination.search = this.modelSearch as string;
     this.router.navigate(['forum/posts/' + this.idTopic], {
       queryParams: this.queryPagination,
@@ -312,7 +345,7 @@ export class PostsListComponent implements OnInit {
     return Array(stars).fill(0);
   }
 
-  getUserLevel(posts: number): string {
+  public getUserLevel(posts: number): string {
     if (posts >= 300) return 'senior';
     if (posts >= 200) return 'advanced';
     if (posts >= 100) return 'mid';
@@ -320,14 +353,27 @@ export class PostsListComponent implements OnInit {
     return 'newbie';
   }
 
-  public getDateInLocale(date: string): string {
+  public getDateInLocale(date: string, hours: boolean): string {
     const dateAux = new Date(date);
 
-    const options: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    };
+    let options: Intl.DateTimeFormatOptions = {};
+
+    if (hours) {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      };
+    } else {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      };
+    }
 
     const formatter = new Intl.DateTimeFormat(this.currentLang, options);
     return formatter.format(dateAux);
@@ -345,6 +391,10 @@ export class PostsListComponent implements OnInit {
     this.scroll.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
+  public scrollDownFn(): void {
+    this.scrollDown.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
   public sendMail(email: string): void {
     window.location.href = `mailto:${email}`;
   }
@@ -359,6 +409,10 @@ export class PostsListComponent implements OnInit {
     this.router.navigateByUrl(
       `forum/posts/new/${this.topic.id}?id_post_reply=${id}`
     );
+  }
+
+  public goToChat(username: string): void {
+    this.router.navigateByUrl(`messages/?user=${username}`);
   }
 
   public isModerator(username: string): boolean {
@@ -398,5 +452,9 @@ export class PostsListComponent implements OnInit {
     last = mid + last;
 
     return last;
+  }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
   }
 }

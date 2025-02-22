@@ -18,6 +18,28 @@
       "producingTitle": "Título de productor"
     }
   },
+  "home": {
+    "welcome": "¡Bienvenido!",
+    "p1": "¡Te damos la bienvenida a nuestro sitio web! Este es el lugar perfecto para explorar y gestionar los pedigrees de perros, acceder a herramientas exclusivas y conectar con una comunidad global de entusiastas, criadores y expertos en el tema. Hemos diseñado este sitio con el objetivo de brindarte una experiencia única, fácil de usar y segura.",
+    "q1": "¿Qué puedes hacer en nuestra plataforma?",
+    "list": {
+      "q1": "1. Explora Pedigrís",
+      "text1": "Accede a una vasta base de datos con más de 800,000 pedigrís de perros, con detalles completos, imágenes y enlaces a generaciones pasadas. Cada pedigree es una puerta abierta al mundo de los linajes y la historia de los perros.",
+      "q2": "2. Añade tus propios Pedigrís",
+      "text2": "Si eres criador o un apasionado de los perros, puedes agregar tus propios pedigrís a la base de datos. Nuestro sistema te ofrece total control sobre la información que ingreses. Puedes decidir quién puede editarla y asegurarte de que nadie pueda modificarla sin tu consentimiento.",
+      "q3": "3. Participa en Foros",
+      "text3": "Únete a nuestros foros donde podrás interactuar con otros usuarios, compartir experiencias y hacer preguntas sobre el mundo de los pedigrís y la cría responsable de perros. ¡Es el espacio perfecto para aprender y crecer juntos!",
+      "q4": "4. Mantén tu privacidad protegida",
+      "text4": "En nuestra plataforma respetamos tu privacidad. La información personal que compartas estará segura y solo se utilizará para fines de facturación y seguridad. Tu identidad está protegida y solo tú decides qué información compartir.",
+      "q5": "5. Conéctate con otros usuarios",
+      "text5": "Nuestro sistema de mensajes privados te permite comunicarte directamente con otros miembros de la comunidad. Ya sea para resolver dudas, compartir información o colaborar en investigaciones, estarás en contacto con una red de usuarios apasionados por el tema.",
+      "q6": "6. Accede a herramientas avanzadas",
+      "text6": "Además de navegar por los pedigrís, disfrutarás de herramientas útiles como el buscador para encontrar pedigrís de manera ágil, y la opción de transferir la propiedad de un pedigree de forma sencilla. "
+    },
+    "q2": "¿Por qué registrarse?",
+    "p2": "Al registrarte, obtienes acceso completo a todas las funcionalidades del sitio. Desde la búsqueda avanzada hasta la posibilidad de agregar y gestionar pedigrís, tu suscripción anual te permite disfrutar de una plataforma completa, profesional y fácil de usar. La suscripción tiene un costo de 30 USD al año y te garantiza acceso a todas las herramientas y recursos que ofrecemos.",
+    "final": "¡Únete hoy y comienza a explorar el fascinante mundo de los pedigrees!"
+  },
   "navbar": {
     "items": {
       "home": "Inicio",
@@ -34,7 +56,9 @@
   "onlineInfo": {
     "title": "¿Quienes están online?",
     "line1": "Hay actualmente, <b>{{guest}}</b> invitado(s) y <b>{{online}}</b> miembro(s) que están en línea.",
-    "line2": "Usted se ha registrado como <b>{{user}}</b>. Tienes <b>{{messages}}</b> mensaje(s)."
+    "line2": "Usted se ha registrado como <b>{{user}}</b>.",
+    "line3": "Eres un usuario Anónimo, puedes registrarte haciendo click",
+    "here": "aquí"
   },
   "buttons": {
     "search": "Buscar",
@@ -60,7 +84,8 @@
     "newPost": "Responder",
     "go": "Ir",
     "quote": "Citar",
-    "send": "Enviar"
+    "send": "Enviar",
+    "changePassword": "Cambiar contraseña"
   },
   "colors": {
     "red": "Rojo",
@@ -75,11 +100,12 @@
   },
   "activeOptions": {
     "alls": "Todos",
-    "active": "Activo",
-    "inactive": "Inactivo",
+    "active": "Activos",
+    "inactive": "Inactivos",
     "forumBanned": "Baneados del foro",
     "activateUser": "Activar usuario",
-    "desactivateUser": "Desactivar usuario"
+    "desactivateUser": "Desactivar usuario",
+    "subscribers": "Suscriptores"
   },
   "footer": {
     "line1": "Todos los logos y marcas registradas en este sitio son propiedad de sus respectivo dueños. Los comentarios son propiedad de sus pósters.",
@@ -90,7 +116,11 @@
     "username": "Nombre de usuario",
     "password": "Contraseña",
     "lostPassword": "¿Perdiste tu contraseña?",
-    "newUser": "¿Eres nuevo? Regístrate!"
+    "newUser": "¿Eres nuevo? Regístrate!",
+    "emailSended": "Hemos enviado un correo electrónico para que puedas cambiar tu contraseña.",
+    "errorUser": "No existe un usuario con ese correo o nombre de usuario.",
+    "errorReset": "Ha ocurrido un error enviando el correo electrónico. Por favor, inténtalo de nuevo.",
+    "errorNewPassword": "Ha ocurrido un error cambiando la contraseña. Por favor, inténtalo de nuevo."
   },
   "register": {
     "fullname": "Nombre completo",
@@ -245,6 +275,7 @@
     "of": "de",
     "all": "Todos",
     "show": "Mostrar",
+    "date": "Fecha",
     "404": "Pedigrí no encontrado",
     "401": "Este pedigrí es privado",
     "emptyMessage": "Aún no has registrado ningún pedigrí",
@@ -360,6 +391,7 @@
     "error": "Error",
     "pedigreeDeletedError": "¡Ha ocurrido un error eliminando el pedigrí!",
     "login": "¡Has iniciado sesión como {{user}}!",
+    "errorLogin": "¡Nombre de usuario o contraseña incorrectos!",
     "register": "¡El usuario ha sido creado exitosamente!",
     "pedigreeCreated": "¡El pedigrí ha sido creado exitosamente!",
     "pedigreeEdited": "¡El pedigrí ha sido actualizado exitosamente!",
@@ -385,7 +417,8 @@
     "deletePost": "¡La publicación ha sido eliminada exitosamente!",
     "deletePostError": "¡Ha ocurrido un error eliminando la publicación!",
     "updatePost": "¡La publicación ha sido actualizada exitosamente!",
-    "updatePostError": "¡Ha ocurrido un error actualizando la publicación!"
+    "updatePostError": "¡Ha ocurrido un error actualizando la publicación!",
+    "passwordChanged": "¡La contraseña ha sido cambiada exitosamente!"
   },
   "errorMessages": {
     "alreadyEmail": "Ya existe una cuenta con este correo electrónico",

@@ -12,6 +12,7 @@ import { Pedigree } from '../models/pedigree';
 import { ResponsePagination } from '../models/responsePagination';
 import { ApiResponse } from '../models/apiResponse';
 import { PedigreeComplete } from '../models/pedigreeComplete';
+import { DogLog } from '../models/dogLog';
 
 @Injectable({
   providedIn: 'root',
@@ -120,7 +121,13 @@ export class PedigreeService {
       .pipe(catchError(this.handleError));
   }
 
+  public getLogs(id: number): Observable<ApiResponse<DogLog[]>> {
+    return this.http
+      .get<ApiResponse<DogLog[]>>(`${this.pedigreesUrl}/${id}/logs`)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
-    return throwError(() => error.error.response || 'Ocurrió un error');
+    return throwError(() => error.error || 'Ocurrió un error');
   }
 }

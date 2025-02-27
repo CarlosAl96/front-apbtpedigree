@@ -13,6 +13,7 @@ export interface User {
   country: string;
   zip_code: string;
   picture: string | null;
+  posts: number;
 
   is_superuser: boolean;
   stateOnline: boolean;
@@ -25,4 +26,8 @@ export interface User {
   last_login: Date | null;
   date_joined: Date;
   payment_at: Date | null;
+
+  show_email: boolean | number;
+  show_phone: boolean | number;
+  show_location: boolean | number;
 }

@@ -46,10 +46,7 @@
             <div class="flex gap-1">
               <span class="description">{{ t("forum.moderators") }}:</span>
               @for (moderator of forumCategory.moderators; track $index) {
-              <a
-                class="link"
-                [routerLink]="'/profile/' + moderator"
-                target="_blank"
+              <a class="link" [routerLink]="'/forum/profile/' + moderator"
                 ><strong>{{ moderator }} </strong>
               </a>
               <strong>
@@ -185,10 +182,7 @@
         </td>
         <td style="width: 60px">{{ topic.replies }}</td>
         <td style="width: 60px">
-          <a
-            class="link"
-            [routerLink]="'/profile/' + topic.author"
-            target="_blank"
+          <a class="link" [routerLink]="'/forum/profile/' + topic.author"
             ><strong>{{ topic.author }} </strong>
           </a>
         </td>
@@ -200,8 +194,7 @@
             <div class="flex align-items-center gap-1">
               <a
                 class="link"
-                target="_blank"
-                [routerLink]="'/profile/' + topic.last_post_info.author"
+                [routerLink]="'/forum/profile/' + topic.last_post_info.author"
                 ><strong>{{ topic.last_post_info.author }}</strong></a
               >
               <i class="pi pi-arrow-right text-xs font-bold"></i>
@@ -519,7 +512,7 @@
         <div class="flex gap-1">
           <span class="description">{{ t("forum.moderators") }}:</span>
           @for (moderator of forumCategory.moderators; track $index) {
-          <a class="link" [routerLink]="'/profile/' + moderator" target="_blank"
+          <a class="link" [routerLink]="'/forum/profile/' + moderator"
             ><strong>{{ moderator }} </strong>
           </a>
           <strong>

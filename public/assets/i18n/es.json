@@ -37,7 +37,7 @@
       "text6": "Además de navegar por los pedigrís, disfrutarás de herramientas útiles como el buscador para encontrar pedigrís de manera ágil, y la opción de transferir la propiedad de un pedigree de forma sencilla. "
     },
     "q2": "¿Por qué registrarse?",
-    "p2": "Al registrarte, obtienes acceso completo a todas las funcionalidades del sitio. Desde la búsqueda avanzada hasta la posibilidad de agregar y gestionar pedigrís, tu suscripción anual te permite disfrutar de una plataforma completa, profesional y fácil de usar. La suscripción tiene un costo de 30 USD al año y te garantiza acceso a todas las herramientas y recursos que ofrecemos.",
+    "p2": "Al registrarte, obtienes acceso completo a todas las funcionalidades del sitio totalmente gratis. También podrás acceder a transmisiones en vivo por profesionales capacitados por un bajo precio.",
     "final": "¡Únete hoy y comienza a explorar el fascinante mundo de los pedigrees!"
   },
   "navbar": {
@@ -55,7 +55,7 @@
   "menu": "Menú",
   "onlineInfo": {
     "title": "¿Quienes están online?",
-    "line1": "Hay actualmente, <b>{{guest}}</b> invitado(s) y <b>{{online}}</b> miembro(s) que están en línea.",
+    "line1": "Hay actualmente, <b>{{guest}}</b> usuarios que están en línea.",
     "line2": "Usted se ha registrado como <b>{{user}}</b>.",
     "line3": "Eres un usuario Anónimo, puedes registrarte haciendo click",
     "here": "aquí"
@@ -151,6 +151,15 @@
     "deleteMessageQuestion": "¿Estás seguro de eliminar este mensaje?",
     "maxSizeExceeded": "El archivo es demasiado grande. Máximo permitido: 250KB"
   },
+  "account": {
+    "personalInfo": "Información personal",
+    "privacy": "Privacidad",
+    "showEmail": "Mostrar mi correo electrónico",
+    "showPhone": "Mostrar mi número de teléfono",
+    "showAddress": "Mostrar mi dirección",
+    "actualPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña"
+  },
   "forum": {
     "index": "APBT Pedigree Página principal del foro",
     "topics": "Temas",
@@ -207,6 +216,11 @@
     "deleteTopicQuestion": "¿Estás seguro de eliminar este tema?",
     "deletePost": "Eliminar publicación",
     "deletePostQuestion": "¿Estás seguro de eliminar esta publicación?",
+    "viewingProfile": "Viendo perfil de {{user}}",
+    "profile": "Perfil",
+    "contactInfo": "Información de contacto",
+    "userInfo": "Todo sobre {{user}}",
+    "sendMessage": "Enviar mensaje",
     "whoOnline": {
       "line1": "Nuestros usuarios han publicado un total de <strong>{{posts}}</strong> artículos",
       "line2": "Tenemos <strong>{{users}}</strong> usuarios registrados",
@@ -392,6 +406,7 @@
     "pedigreeDeletedError": "¡Ha ocurrido un error eliminando el pedigrí!",
     "login": "¡Has iniciado sesión como {{user}}!",
     "errorLogin": "¡Nombre de usuario o contraseña incorrectos!",
+    "errorChangePassword": "¡Contraseña incorrecta!",
     "register": "¡El usuario ha sido creado exitosamente!",
     "pedigreeCreated": "¡El pedigrí ha sido creado exitosamente!",
     "pedigreeEdited": "¡El pedigrí ha sido actualizado exitosamente!",

@@ -1,0 +1,141 @@
+@if (!isLoading && !error404) {
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{ t("navbar.items.forum") }}</div>
+  </ng-template>
+
+  <div class="header-profile">
+    <div class="flex flex-row gap-1">
+      <a class="link title text-xl" [routerLink]="'/forum'">
+        {{ t("forum.index") }}
+      </a>
+      <span class="title text-xl"> &#183;</span>
+      <span class="title text-xl">{{
+        t("forum.viewingProfile", { user: username })
+      }}</span>
+    </div>
+  </div>
+  <div class="border-container">
+    <div class="w-full">
+      <div class="header-profile-secondary">
+        <span class="title-secondary">{{ t("forum.profile") }}</span>
+      </div>
+      <div class="profile-content align-items-center">
+        @if (userToView.picture) {
+        <img class="picture" [src]="urlImg + userToView.picture" />
+        }@else {
+        <img src="./assets/images/profile.png" class="picture" />
+        }
+        <span
+          ><strong>{{
+            t("forum.levels." + getUserLevel(userToView.posts))
+          }}</strong></span
+        >
+      </div>
+
+      <div class="header-profile-secondary mt-2">
+        <span class="title-secondary">{{ t("forum.contactInfo") }}</span>
+      </div>
+      <div class="profile-content">
+        @if(userToView.show_email){
+        <span
+          ><strong>{{ t("login.email") }}: </strong>{{ userToView.email }}</span
+        >
+        } @if(userToView.show_phone){
+        <span
+          ><strong>{{ t("register.phone") }}: </strong
+          >{{ userToView.phone_number }}</span
+        >
+        }
+
+        <div class="flex gap-1 align-items-center">
+          <span
+            ><strong>{{ t("forum.sendMessage") }}: </strong></span
+          >
+          <p-button
+            [rounded]="true"
+            [text]="true"
+            [raised]="true"
+            icon="pi pi-comment"
+            (onClick)="goToChat(username)"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <div class="w-full">
+      <div class="header-profile-secondary">
+        <span class="title-secondary">{{
+          t("forum.userInfo", { user: username })
+        }}</span>
+      </div>
+      <div class="profile-content">
+        <span
+          ><strong>{{ t("register.firstName") }}: </strong
+          >{{ userToView.first_name }}</span
+        >
+        <span
+          ><strong>{{ t("register.lastName") }}: </strong
+          >{{ userToView.last_name }}</span
+        >
+        <span
+          ><strong>{{ t("forum.joined") }}: </strong
+          >{{ getDateInLocale(userToView.date_joined.toString(), false) }}</span
+        >
+        <span
+          ><strong>{{ t("forum.posts") }}: </strong>{{ userToView.posts }}</span
+        >
+        @if(userToView.show_location){
+        <span
+          ><strong>{{ t("forum.location") }}: </strong
+          >{{
+            getLocation(userToView.city, userToView.state, userToView.country)
+          }}</span
+        >
+        }
+      </div>
+    </div>
+  </div>
+  <div class="flex align-items-start justify-content-between mt-5">
+    <div class="flex flex-column gap-3">
+      <div class="flex align-items-center gap-2 w-full">
+        <label>{{ t("forum.jumpTo") }}:</label>
+        <p-dropdown
+          [options]="forumCategories"
+          [(ngModel)]="modelCategory"
+          optionLabel="name"
+          optionValue="id"
+        >
+        </p-dropdown>
+        <button
+          pButton
+          type="button"
+          [label]="t('buttons.go')"
+          class="p-button-primary"
+          (click)="changeCategory()"
+          [disabled]="modelCategory == 0"
+        ></button>
+      </div>
+    </div>
+  </div>
+</p-card>
+} @if (isLoading) {
+<div
+  class="flex align-items-center justify-content-center"
+  style="height: 100vh"
+>
+  <p-progressSpinner
+    styleClass="w-4rem h-4rem"
+    strokeWidth="5"
+    animationDuration=".5s"
+  />
+</div>
+} @if(error404){
+<div
+  class="flex flex-column align-items-center justify-content-center g-5"
+  *transloco="let t"
+  style="height: 100vh"
+>
+  <span class="error-404">404</span>
+  <span>{{ t("yourPedigrees.404") }}</span>
+</div>
+}

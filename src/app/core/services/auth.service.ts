@@ -22,7 +22,7 @@ export class AuthService {
   private registerUrl: string = `${environment.api_url}users/store`;
   private logoutUrl: string = `${environment.api_url}users/logout`;
   private usersInfo: string = `${environment.api_url}usersInfo`;
-  private resertPasswordUrl: string = `${environment.api_url}users/passwordReset`;
+  private resetPasswordUrl: string = `${environment.api_url}users/passwordReset`;
 
   constructor(private http: HttpClient) {}
 
@@ -101,9 +101,15 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  public getUserByUsername(username: string): Observable<ApiResponse<User>> {
+    return this.http
+      .get<ApiResponse<User>>(this.usersUrl + '/' + username + '/getByUsername')
+      .pipe(catchError(this.handleError));
+  }
+
   public resetPassword(request: any): Observable<ApiResponse<any>> {
     return this.http
-      .post<ApiResponse<any>>(this.resertPasswordUrl, request)
+      .post<ApiResponse<any>>(this.resetPasswordUrl, request)
       .pipe(catchError(this.handleError));
   }
 
@@ -112,7 +118,19 @@ export class AuthService {
     token: string
   ): Observable<ApiResponse<any>> {
     return this.http
-      .post<ApiResponse<any>>(this.resertPasswordUrl + '/' + token, request)
+      .post<ApiResponse<any>>(this.resetPasswordUrl + '/' + token, request)
+      .pipe(catchError(this.handleError));
+  }
+
+  public updatePasswordFromMyAccount(
+    request: any,
+    id: number
+  ): Observable<ApiResponse<any>> {
+    return this.http
+      .patch<ApiResponse<any>>(
+        this.usersUrl + '/' + id + '/updatePassword',
+        request
+      )
       .pipe(catchError(this.handleError));
   }
 

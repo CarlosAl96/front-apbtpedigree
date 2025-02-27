@@ -2,9 +2,8 @@
   <div class="w-full flex align-items-center">
     @if (user) { @if (user.picture) {
     <img
-      class="mr-2"
+      class="picture mr-2"
       [src]="user.picture.startsWith('http') ? user.picture : urlImg"
-      height="40px"
     />
     }
     <span class="mr-2">{{ t("header.hello", { name: user.username }) }}</span>

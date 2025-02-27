@@ -35,7 +35,6 @@ import { SocketService } from '../../../core/services/socket.service';
     FormsModule,
     DateHourFormatPipe,
     RouterLink,
-    ButtonModule,
     ConfirmDialogModule,
     PaginatorModule,
     InputTextModule,

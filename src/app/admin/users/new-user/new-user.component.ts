@@ -64,8 +64,7 @@ export class NewUserComponent {
   ) {
     this.formGroup = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
+      password: [''],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', Validators.required],
@@ -103,7 +102,7 @@ export class NewUserComponent {
 
     this.markFormControlsAsDirty(this.formGroup);
 
-    if (this.option == '' && this.formGroup.controls['password'].value) {
+    if (this.option == '' && this.formGroup.controls['password'].value == '') {
       this.loading = false;
       return;
     }
@@ -119,8 +118,6 @@ export class NewUserComponent {
 
       if (this.files.length) {
         formData.append('picture', this.files[0]);
-      } else {
-        formData.append('picture', '');
       }
 
       if (formData.get('type') == '1') {

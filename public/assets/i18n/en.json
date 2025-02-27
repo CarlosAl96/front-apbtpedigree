@@ -37,7 +37,7 @@
       "text6": "In addition to browsing pedigrees, you'll enjoy useful tools such as a quick search tool to find pedigrees efficiently and the option to easily transfer ownership of a pedigree."
     },
     "q2": "Why register?",
-    "p2": "By registering, you gain full access to all the site's features. From advanced search to the ability to add and manage pedigrees, your annual subscription allows you to enjoy a complete, professional, and easy-to-use platform. The subscription costs 30 USD per year and guarantees you access to all the tools and resources we offer.",
+    "p2": "By registering, you get full access to all the functionalities of the site completely free of charge. You will also be able to access live streams by trained professionals for a low price.",
     "final": "Join today and start exploring the fascinating world of pedigrees!"
   },
 
@@ -56,7 +56,7 @@
   "menu": "Menu",
   "onlineInfo": {
     "title": "Who's Online",
-    "line1": "There are currently, <b>{{guest}}</b> guest(s) and <b>{{online}}</b> member(s) that are online.",
+    "line1": "There are currently, <b>{{guest}}</b> users that are online.",
     "line2": "You are logged as <b>{{user}}</b>.",
     "line3": "You are Anonymous user. You can register by clicking",
     "here": "here"
@@ -152,6 +152,15 @@
     "deleteMessageQuestion": "Are you sure to delete this message?",
     "maxSizeExceeded": "The file is too large. Maximum allowed: 250KB"
   },
+  "account": {
+    "personalInfo": "Personal Information",
+    "privacy": "Privacy",
+    "showEmail": "Show email",
+    "showPhone": "Show phone",
+    "showAddress": "Show address",
+    "actualPassword": "Actual Password",
+    "newPassword": "New Password"
+  },
   "forum": {
     "index": "APBT Pedigree Forum Index",
     "topics": "Topics",
@@ -208,6 +217,11 @@
     "deleteTopicQuestion": "Are you sure to delete this topic?",
     "deletePost": "Delete Post",
     "deletePostQuestion": "Are you sure to delete this post?",
+    "viewingProfile": "Viewing profile of {{user}}",
+    "profile": "Profile",
+    "contactInfo": "Contact information",
+    "userInfo": "All about {{user}}",
+    "sendMessage": "Send Message",
     "whoOnline": {
       "line1": "Our users have posted a total of <strong>{{posts}}</strong> articles",
       "line2": "We have <strong>{{users}}</strong> registered users",
@@ -393,6 +407,7 @@
     "pedigreeDeletedError": "An error has occurred in removing the pedigree!",
     "login": "You are logged in as {{user}}!",
     "errorLogin": "Incorrect username or password!",
+    "errorChangePassword": "Incorrect Password!",
     "register": "The user has been successfully created!",
     "pedigreeCreated": "The pedigree has been successfully created!",
     "pedigreeEdited": "The pedigree has been successfully updated!",

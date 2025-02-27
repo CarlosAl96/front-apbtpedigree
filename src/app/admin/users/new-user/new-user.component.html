@@ -34,12 +34,13 @@
 
   <div class="flex gap-3">
     <div class="flex flex-column gap-2 w-full">
-      <label for="password">{{ t("login.password") }}</label>
+      <label for="newPassword">{{ t("login.password") }}</label>
       <p-password
-        id="password"
+        id="newPassword"
         styleClass="w-full"
         inputStyleClass="w-full"
         formControlName="password"
+        autocomplete="new-password"
         [toggleMask]="true"
         [feedback]="false"
       />

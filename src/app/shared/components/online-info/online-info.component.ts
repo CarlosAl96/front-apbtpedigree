@@ -16,7 +16,6 @@ import { SocketService } from '../../../core/services/socket.service';
 })
 export class OnlineInfoComponent {
   public loggeds: number = 0;
-  public subs: number = 0;
   public user!: User | undefined;
 
   constructor(
@@ -38,7 +37,6 @@ export class OnlineInfoComponent {
     this.authService.getUsersLoggedAndSubs().subscribe({
       next: (res) => {
         this.loggeds = res.response.logged;
-        this.subs = res.response.subs;
       },
       error: (error) => {
         console.log(error);

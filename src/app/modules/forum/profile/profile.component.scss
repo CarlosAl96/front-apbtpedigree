@@ -3,13 +3,24 @@
   text-transform: uppercase;
 }
 
-::ng-deep .p-card .p-card-body {
-  padding-top: 0;
+.title {
+  font-weight: 900;
+  color: var(--text-color-secondary) !important;
 }
 
 .title-secondary {
   font-weight: 900;
   font-size: large;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+  &:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
 }
 
 .header-profile {
@@ -37,6 +48,17 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
+}
+
+.separator {
+  border-left: 1px solid var(--surface-ground);
+  height: auto;
+}
+
+.error-404 {
+  font-size: 4rem;
+  font-weight: bolder;
+  color: var(--color-font-primary);
 }
 
 .picture {

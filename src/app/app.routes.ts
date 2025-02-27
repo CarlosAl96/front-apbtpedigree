@@ -61,13 +61,6 @@ export const routes: Routes = [
     canActivate: [adminGuard],
   },
   {
-    path: 'profile',
-    component: LayoutComponent,
-    loadChildren: () =>
-      import('./modules/profile/profile.routes').then((m) => m.PROFILE_ROUTES),
-    canActivate: [noAuthGuard],
-  },
-  {
     path: 'public/pedigree/:id',
     component: PublicPedigreeViewComponent,
   },

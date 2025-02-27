@@ -45,7 +45,6 @@
         <th>{{ t("register.username") }}</th>
         <th>{{ t("login.email") }}</th>
         <th>{{ t("register.phone") }}</th>
-        <th>{{ t("register.subscription") }}</th>
         <th>{{ t("register.lastLogin") }}</th>
         <th>{{ t("users.status") }}</th>
         <th>{{ t("forum.actions") }}</th>
@@ -58,13 +57,6 @@
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.phone_number }}</td>
-        <td>
-          @if( user.subscription ){
-          <i class="pi pi-check" style="color: green"> </i>
-          } @else {
-          <i class="pi pi-times" style="color: red"> </i>
-          }
-        </td>
         <td>
           @if (user.last_login){
           <span>{{ user.last_login | dateHourFormat }}</span>

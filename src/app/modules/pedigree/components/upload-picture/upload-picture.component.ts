@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -34,7 +33,6 @@ export class UploadPictureComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly pedigreeService: PedigreeService,
     private readonly translocoService: TranslocoService,

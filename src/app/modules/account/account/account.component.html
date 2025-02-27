@@ -1,12 +1,261 @@
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t('navbar.items.yourAccount')}}</div>
+    <div class="header-container">{{ t("navbar.items.yourAccount") }}</div>
   </ng-template>
 
-  <div>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga atque ipsa expedita ut harum consequatur rerum
-      accusantium modi voluptatum, eaque facere sequi ducimus molestiae soluta dolore impedit voluptatem suscipit odio!
-    </p>
+  <div class="border-container">
+    <div class="w-full">
+      <div class="header-profile-secondary">
+        <span class="title-secondary">{{ t("forum.profile") }}</span>
+      </div>
+      <div class="profile-content align-items-center">
+        @if (user?.picture && imageSrc == null) {
+        <img class="picture" [src]="urlImg + user?.picture" />
+        } @else if (imageSrc != null) {
+        <img [src]="imageSrc" class="picture" />
+        } @else {
+        <img src="./assets/images/profile.png" class="picture" />
+        }
+
+        <div class="flex justify-content-end w-full gap-2 mt-3">
+          <p-fileUpload
+            mode="basic"
+            [multiple]="false"
+            [chooseLabel]="t('buttons.choose')"
+            chooseIcon="pi pi-upload"
+            (onSelect)="onSelectFile($event)"
+            accept="image/*"
+            maxFileSize="50000000"
+          />
+          <p-button
+            class="btn-primary"
+            (onClick)="updatePicture()"
+            [disabled]="files.length === 0"
+            [loading]="loadingPicture"
+            [label]="t('buttons.save')"
+          />
+        </div>
+      </div>
+
+      <div class="header-profile-secondary mt-2">
+        <span class="title-secondary">{{ t("account.personalInfo") }}</span>
+      </div>
+
+      <form
+        class="profile-content"
+        [formGroup]="formInfo"
+        (ngSubmit)="updateUser($event)"
+      >
+        <span
+          ><strong>{{ t("login.username") }}: </strong
+          >{{ user?.username }}</span
+        >
+        <span
+          ><strong>{{ t("register.firstName") }}: </strong
+          >{{ user?.first_name }}</span
+        >
+        <span
+          ><strong>{{ t("register.lastName") }}: </strong
+          >{{ user?.last_name }}</span
+        >
+        <span
+          ><strong>{{ t("login.email") }}: </strong>{{ user?.email }}</span
+        >
+
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.phone") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.phone_number }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="phone_number" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.street") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.street }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="street" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.city") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.city }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="city" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.state") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.state }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="state" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.country") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.country }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="country" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+
+        <div class="flex align-items-center gap-1">
+          <label
+            ><strong>{{ t("register.zipCode") }}: </strong>
+          </label>
+          <p-inplace>
+            <ng-template pTemplate="display">
+              <span>{{ user?.zip_code }}</span>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <input type="text" formControlName="zip_code" pInputText />
+            </ng-template>
+          </p-inplace>
+        </div>
+
+        <div class="flex justify-content-end mt-3">
+          <p-button
+            class="btn-primary"
+            type="submit"
+            [loading]="loadingChanges"
+            [label]="t('buttons.save')"
+          />
+        </div>
+      </form>
+    </div>
+    <div class="w-full">
+      <div class="header-profile-secondary">
+        <span class="title-secondary">{{ t("buttons.changePassword") }}</span>
+      </div>
+
+      <form
+        class="profile-content"
+        [formGroup]="formPassword"
+        (ngSubmit)="changePassword($event)"
+      >
+        <div class="flex flex-column gap-1 mt-2">
+          <label for="oldPassword"
+            ><strong>{{ t("account.actualPassword") }}</strong></label
+          >
+          <p-password
+            id="oldPassword"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            formControlName="oldPassword"
+            [toggleMask]="true"
+            [feedback]="false"
+          />
+        </div>
+        <div class="flex flex-column gap-1 mt-2">
+          <label for="newPassword"
+            ><strong>{{ t("account.newPassword") }}</strong></label
+          >
+          <p-password
+            id="newPassword"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            formControlName="newPassword"
+            [toggleMask]="true"
+            [feedback]="false"
+          />
+        </div>
+        <div class="flex flex-column gap-1 mt-2">
+          <label for="repeatPassword"
+            ><strong>{{ t("register.password2") }}</strong></label
+          >
+          <p-password
+            id="repeatPassword"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            formControlName="repeatPassword"
+            [toggleMask]="true"
+            [feedback]="false"
+          />
+        </div>
+        <p-messages
+          [(value)]="errorPassword"
+          [enableService]="false"
+          [closable]="false"
+        />
+
+        <div class="flex justify-content-end mt-3">
+          <p-button
+            class="btn-primary"
+            type="submit"
+            [loading]="loadingPassword"
+            [label]="t('buttons.changePassword')"
+          />
+        </div>
+      </form>
+
+      <div class="header-profile-secondary mt-2">
+        <span class="title-secondary">{{ t("account.privacy") }}</span>
+      </div>
+
+      <form
+        class="profile-content"
+        [formGroup]="formPermissions"
+        (ngSubmit)="changePermissions($event)"
+      >
+        <div class="flex align-items-center gap-2">
+          <span
+            ><strong>{{ t("account.showEmail") }}: </strong></span
+          >
+          <p-inputSwitch formControlName="show_email" />
+        </div>
+        <div class="flex align-items-center gap-2">
+          <span
+            ><strong>{{ t("account.showPhone") }}: </strong></span
+          >
+          <p-inputSwitch formControlName="show_phone" />
+        </div>
+        <div class="flex align-items-center gap-2">
+          <span
+            ><strong>{{ t("account.showAddress") }}: </strong></span
+          >
+          <p-inputSwitch formControlName="show_location" />
+        </div>
+        <div class="flex justify-content-end mt-3">
+          <p-button
+            class="btn-primary"
+            type="submit"
+            [loading]="loadingPermissions"
+            [label]="t('buttons.save')"
+          />
+        </div>
+      </form>
+    </div>
   </div>
 </p-card>

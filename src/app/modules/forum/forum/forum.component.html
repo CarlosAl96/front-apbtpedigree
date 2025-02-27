@@ -67,10 +67,7 @@
             <div class="flex gap-1">
               <span class="description">{{ t("forum.moderators") }}</span>
               @for (moderator of category.moderators; track $index) {
-              <a
-                class="link"
-                [routerLink]="'/profile/' + moderator"
-                target="_blank"
+              <a class="link" [routerLink]="'/forum/profile/' + moderator"
                 ><strong>{{ moderator }} </strong>
               </a>
               <strong>
@@ -90,8 +87,9 @@
             <div class="flex align-items-center gap-1">
               <a
                 class="link"
-                target="_blank"
-                [routerLink]="'/profile/' + category.last_post_info.author"
+                [routerLink]="
+                  '/forum/profile/' + category.last_post_info.author
+                "
                 ><strong>{{ category.last_post_info.author }}</strong></a
               >
               <i class="pi pi-arrow-right text-xs font-bold"></i>
@@ -155,8 +153,9 @@
           >{{ t("forum.whoOnline.line3") }}
           <a
             class="link"
-            [routerLink]="'/profile/' + categoriesInfo.lastUsers[0].username"
-            target="_blank"
+            [routerLink]="
+              '/forum/profile/' + categoriesInfo.lastUsers[0].username
+            "
             ><strong>{{ categoriesInfo.lastUsers[0].username }}</strong></a
           ></span
         >
@@ -170,10 +169,7 @@
         <div class="flex gap-1">
           <span>{{ t("forum.whoOnline.line6") }}</span>
           @for (user of categoriesInfo.lastUsers; track $index) {
-          <a
-            class="link"
-            [routerLink]="'/profile/' + user.username"
-            target="_blank"
+          <a class="link" [routerLink]="'/forum/profile/' + user.username"
             ><strong
               >{{ user.username }}@if ($index < categoriesInfo.lastUsers.length
               - 1) {,}</strong

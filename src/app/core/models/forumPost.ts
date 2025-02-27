@@ -24,4 +24,7 @@ export interface ForumPost {
   level?: string;
   stars?: number;
   email?: string;
+  show_email?: boolean;
+  show_phone?: boolean;
+  show_location?: boolean;
 }

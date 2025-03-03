@@ -1,0 +1,65 @@
+<form
+  [formGroup]="formGroup"
+  (ngSubmit)="createOrEdit()"
+  class="flex flex-column gap-2"
+  *transloco="let t"
+>
+  <div class="flex flex-column gap-5">
+    <div class="flex flex-column gap-3 w-full">
+      <label for="title">{{ t("stream.title") }}</label>
+      <input pInputText id="title" formControlName="title" />
+    </div>
+
+    <div class="w-full flex flex-column gap-3">
+      <label for="price">{{ t("stream.price") }} (USD)</label>
+      <p-inputNumber
+        styleClass="w-full"
+        formControlName="price"
+        inputId="price"
+        [minFractionDigits]="2"
+      />
+    </div>
+
+    <div class="flex flex-column gap-3 w-full">
+      <label for="price">{{ t("stream.description") }}</label>
+      <textarea
+        rows="8"
+        id="description"
+        formControlName="description"
+        pInputTextarea
+      >
+      </textarea>
+    </div>
+
+    <div class="flex flex-column gap-2 w-full">
+      <label for="proposed_start_date">{{ t("stream.startDate") }}</label>
+      <p-calendar
+        formControlName="proposed_start_date"
+        inputId="proposed_start_date"
+        styleClass="w-full"
+        [showTime]="true"
+        [hourFormat]="'12'"
+      />
+    </div>
+
+    <div class="flex flex-column gap-2 w-full">
+      <label for="proposed_end_date">{{ t("stream.endDate") }}</label>
+      <p-calendar
+        formControlName="proposed_end_date"
+        inputId="proposed_end_date"
+        styleClass="w-full"
+        [showTime]="true"
+        [hourFormat]="'12'"
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-column align-items-end mt-3">
+    <p-button
+      class="btn-primary"
+      type="submit"
+      [loading]="loading"
+      [label]="t('buttons.save')"
+    />
+  </div>
+</form>

@@ -45,7 +45,6 @@ export class NewPasswordComponent {
   ) {
     this.route.paramMap.subscribe((params) => {
       this.token = params.get('token') as string;
-      console.log(this.token);
     });
 
     this.formGroup = this.formBuilder.group({

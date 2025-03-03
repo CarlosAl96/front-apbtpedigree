@@ -123,9 +123,7 @@ export class NewTopicComponent {
       next: (res) => {
         this.forumCategory = res.response;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -134,9 +132,7 @@ export class NewTopicComponent {
       next: (res) => {
         this.forumCategories = res.response.data;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -144,16 +140,13 @@ export class NewTopicComponent {
     this.forumService.getTopicById(id, false).subscribe({
       next: (res) => {
         this.topic = res.response;
-        console.log(this.topic);
 
         this.formGroup.patchValue({
           subject: this.topic.name,
           message: this.topic.message,
         });
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -167,7 +160,6 @@ export class NewTopicComponent {
 
   public saveTopic(): void {
     this.markFormControlsAsDirty(this.formGroup);
-    console.log(this.formGroup.value);
 
     if (this.formGroup.valid) {
       this.loading = true;

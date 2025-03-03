@@ -42,17 +42,18 @@
 .icon-svg {
   width: 15px;
   height: 15px;
+  margin-right: 0.5rem;
 }
 
+.stream {
+  width: 20px;
+  height: 20px;
+}
 .navbar-item {
   text-decoration: none;
   color: inherit;
   display: flex;
   align-items: center;
-}
-
-.icon-svg {
-  margin-right: 0.5rem;
 }
 
 .navbar-item:hover {

@@ -1,0 +1,27 @@
+.header-container {
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.title {
+  color: var(--text-color-secondary);
+}
+
+.subtitle {
+  font-size: large;
+  font-weight: bold;
+}
+
+.stream-header {
+  background-color: var(--surface-ground);
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.stream-container {
+  border: 1px solid var(--surface-ground);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}

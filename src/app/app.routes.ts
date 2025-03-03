@@ -7,6 +7,7 @@ import { adminGuard } from './core/guards/admin.guard';
 import { PublicPedigreeViewComponent } from './modules/pedigree/components/public-pedigree-view/public-pedigree-view.component';
 import { LayoutAdminComponent } from './shared/layouts/layout-admin/layout-admin.component';
 import { forumBanGuard } from './core/guards/forum-ban.guard';
+import { isPayedGuard } from './core/guards/is-payed.guard';
 
 export const routes: Routes = [
   {
@@ -52,6 +53,13 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/forum/forum.routes').then((m) => m.FORUM_ROUTES),
     canActivate: [noAuthGuard, forumBanGuard],
+  },
+  {
+    path: 'stream',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./modules/stream/stream.routes').then((m) => m.STREAM_ROUTES),
+    canActivate: [noAuthGuard, forumBanGuard, isPayedGuard],
   },
   {
     path: 'admin',

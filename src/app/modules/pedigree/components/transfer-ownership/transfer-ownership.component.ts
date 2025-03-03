@@ -95,7 +95,6 @@ export class TransferOwnershipComponent {
                 this.router.navigate(['/pedigree/my-pedigrees/0']);
               },
               error: (error) => {
-                console.log(error);
                 this.error = [
                   {
                     severity: 'error',

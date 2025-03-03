@@ -234,9 +234,6 @@ export class NewPedigreeComponent implements OnInit {
       modelSearch = this.modelSearchFather;
     }
 
-    console.log(modelSearch);
-    console.log(modelSearchOption);
-
     if (modelSearchOption === 'registeredName') {
       queryPagination.registeredName = modelSearch as string;
     } else if (modelSearchOption === 'dogId') {
@@ -294,8 +291,6 @@ export class NewPedigreeComponent implements OnInit {
 
   public createPedigree(addBrother: boolean): void {
     this.markFormControlsAsDirty(this.formGroup);
-
-    console.log(this.formGroup);
 
     if (this.formGroup.valid) {
       this.loading = true;
@@ -356,8 +351,6 @@ export class NewPedigreeComponent implements OnInit {
 
   public editPedigree(): void {
     this.markFormControlsAsDirty(this.formGroup);
-
-    console.log(this.formGroup);
 
     if (this.formGroup.valid) {
       this.loading = true;

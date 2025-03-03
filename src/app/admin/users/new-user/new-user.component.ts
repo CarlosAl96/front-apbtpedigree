@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -55,7 +54,6 @@ export class NewUserComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly router: Router,
     private readonly authService: AuthService,
     private readonly toastService: ToastService,
     private readonly translocoService: TranslocoService,
@@ -144,8 +142,6 @@ export class NewUserComponent {
           error: (error) => {
             this.loading = false;
 
-            console.log(error.error);
-
             if (error.error == 'email') {
               this.error = [];
               this.errorUsername = [];
@@ -203,8 +199,6 @@ export class NewUserComponent {
           },
           error: (error) => {
             this.loading = false;
-
-            console.log(error.error);
 
             if (error.error == 'email') {
               this.error = [];

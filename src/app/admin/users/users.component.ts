@@ -72,14 +72,12 @@ export class UsersComponent implements OnInit {
         this.translocoService.selectTranslate('activeOptions.active'),
         this.translocoService.selectTranslate('activeOptions.inactive'),
         this.translocoService.selectTranslate('activeOptions.forumBanned'),
-        this.translocoService.selectTranslate('activeOptions.subscribers'),
         this.translocoService.langChanges$,
-      ]).subscribe(([alls, active, inactive, forumBanned, subscribers]) => {
+      ]).subscribe(([alls, active, inactive, forumBanned]) => {
         this.activeOptions = [
           { name: alls, code: 2 },
           { name: active, code: 1 },
           { name: inactive, code: 0 },
-          { name: subscribers, code: 4 },
           { name: forumBanned, code: 3 },
         ];
       });
@@ -115,13 +113,11 @@ export class UsersComponent implements OnInit {
     this.authService.getUsers(query).subscribe({
       next: (res) => {
         this.users = res.response.data;
-        console.log(this.users);
 
         this.totalRows = res.response.totalRows;
         this.isLoading = false;
       },
       error: (error) => {
-        console.log(error);
         this.isLoading = false;
       },
     });
@@ -136,9 +132,9 @@ export class UsersComponent implements OnInit {
     this.onCloseModal();
   }
 
-  public showEditModal(forumCategory: User): void {
+  public showEditModal(user: User): void {
     this.dialogRef = this.dialogService.open(NewUserComponent, {
-      data: forumCategory,
+      data: user,
       header: this.translocoService.translate('buttons.editUser'),
       width: '70rem',
     });

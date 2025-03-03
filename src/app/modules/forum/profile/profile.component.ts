@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.username = params.get('username') as string;
       this.isLoading = true;
-      console.log(this.username);
+
       this.getByUsername();
     });
   }
@@ -64,13 +64,11 @@ export class ProfileComponent implements OnInit {
   private getByUsername(): void {
     this.authService.getUserByUsername(this.username).subscribe({
       next: (res) => {
-        console.log(res);
         this.error404 = false;
         this.isLoading = false;
         this.userToView = res.response;
       },
       error: (error) => {
-        console.log(error);
         this.error404 = true;
         this.isLoading = false;
       },
@@ -83,9 +81,7 @@ export class ProfileComponent implements OnInit {
         this.forumCategories = res.response.data;
         this.modelCategory = this.forumCategories[0].id;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 

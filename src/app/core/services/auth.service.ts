@@ -23,6 +23,7 @@ export class AuthService {
   private logoutUrl: string = `${environment.api_url}users/logout`;
   private usersInfo: string = `${environment.api_url}usersInfo`;
   private resetPasswordUrl: string = `${environment.api_url}users/passwordReset`;
+  private dashboardUrl: string = `${environment.api_url}dashboard`;
 
   constructor(private http: HttpClient) {}
 
@@ -134,6 +135,11 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  public getDashboardData(): Observable<ApiResponse<any>> {
+    return this.http
+      .get<ApiResponse<User>>(this.dashboardUrl)
+      .pipe(catchError(this.handleError));
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }

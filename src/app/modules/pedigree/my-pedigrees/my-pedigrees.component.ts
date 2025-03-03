@@ -62,8 +62,6 @@ export class MyPedigreesComponent implements OnInit {
 
     this.route.paramMap.subscribe((params) => {
       this.idPedigree = Number(params.get('id'));
-
-      console.log(this.idPedigree);
     });
 
     if (this.idPedigree != 0) {
@@ -104,7 +102,6 @@ export class MyPedigreesComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
-        console.log(error);
       },
     });
   }
@@ -126,7 +123,6 @@ export class MyPedigreesComponent implements OnInit {
   }
 
   public onIsResults(event: boolean): void {
-    console.log(event);
     this.isResults = event;
   }
 }

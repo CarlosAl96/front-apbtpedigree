@@ -91,7 +91,6 @@ export class PedigreesComponent {
 
   public onPageChange(page: number): void {
     this.queryPagination.page = page - 1;
-    console.log(this.queryPagination);
     this.router.navigate(['pedigree'], { queryParams: this.queryPagination });
   }
 
@@ -106,7 +105,6 @@ export class PedigreesComponent {
         this.isLoading = false;
       },
       error: (error) => {
-        console.log(error);
         this.isLoading = false;
       },
     });

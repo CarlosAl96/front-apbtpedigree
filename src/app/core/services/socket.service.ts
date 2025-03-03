@@ -45,6 +45,46 @@ export class SocketService {
     });
   }
 
+  onLive(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('live', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onUnlive(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('unlive', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onAnnounce(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('announce', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onReprogramed(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('reprogramed', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onStreamMessage(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('streamMessage', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
   disconnect() {
     this.socket.disconnect();
   }

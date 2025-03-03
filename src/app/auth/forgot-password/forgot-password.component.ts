@@ -44,10 +44,8 @@ export class ForgotPasswordComponent {
 
   public resetPassword(): void {
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
       this.authService.resetPassword(this.formGroup.value).subscribe({
         next: (response) => {
-          console.log(response);
           this.message = [
             {
               severity: 'success',
@@ -56,8 +54,6 @@ export class ForgotPasswordComponent {
           ];
         },
         error: (error) => {
-          console.log(error);
-
           if (error.status === 404) {
             this.message = [
               {

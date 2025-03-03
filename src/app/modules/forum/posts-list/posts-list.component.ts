@@ -208,9 +208,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.forumCategories = res.response.data;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -220,9 +218,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
         this.topic = res.response;
         this.modelCategory = this.topic.id_categories;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -255,9 +251,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
           }, 200);
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 

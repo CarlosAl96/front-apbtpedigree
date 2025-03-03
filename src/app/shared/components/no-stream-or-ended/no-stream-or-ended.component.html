@@ -1,0 +1,17 @@
+<div *transloco="let t">
+  <div class="flex flex-column gap-3">
+    @if(ended){
+    <span class="description">{{ t("stream.streamEndedMessage") }}</span>
+    }@else {
+    <span class="description">{{ t("stream.noStreamAnnounced") }}</span>
+    }
+    <div class="flex w-full justify-content-end">
+      <button
+        pButton
+        [label]="t('buttons.yes')"
+        (click)="accept()"
+        class="p-button-primary"
+      ></button>
+    </div>
+  </div>
+</div>

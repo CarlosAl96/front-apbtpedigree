@@ -21,7 +21,6 @@ export class PublicLinkComponent implements OnInit {
   ngOnInit(): void {
     this.url = `${window.location.origin}/public/pedigree/${this.pedigree.id}`;
     this.html = `<a href="${this.url}">${this.pedigree.fullname}</a>`;
-    console.log(this.url);
   }
 
   public copy(text: string): void {

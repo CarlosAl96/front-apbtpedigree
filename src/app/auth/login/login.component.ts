@@ -12,6 +12,9 @@ import { SessionService } from '../../core/services/session.service';
 import { PasswordModule } from 'primeng/password';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ToastService } from '../../core/services/toast.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { PaymentService } from '../../core/services/payment.service';
+import { StreamPayPopupComponent } from '../../shared/components/stream-pay-popup/stream-pay-popup.component';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +29,7 @@ import { ToastService } from '../../core/services/toast.service';
     TranslocoModule,
     RouterLink,
   ],
+  providers: [DialogService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -40,7 +44,9 @@ export class LoginComponent {
     private readonly authService: AuthService,
     private readonly sessionService: SessionService,
     private readonly toastService: ToastService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly paymentService: PaymentService,
+    private readonly dialogService: DialogService
   ) {
     this.formGroup = this.formBuilder.group({
       username: ['', Validators.required],
@@ -65,6 +71,7 @@ export class LoginComponent {
             }),
           });
           this.router.navigate(['/home']);
+          this.verifyPayment();
           this.loading = false;
         },
         error: () => {
@@ -81,5 +88,28 @@ export class LoginComponent {
       this.formGroup.controls['username'].markAsDirty();
       this.formGroup.controls['password'].markAsDirty();
     }
+  }
+
+  private verifyPayment(repro: boolean = false): void {
+    this.paymentService.verifyPayment().subscribe({
+      next: (res) => {
+        if (
+          res.response.isAdmin ||
+          (res.response.isPaid && res.response.isLive)
+        ) {
+          return;
+        } else {
+          if (repro) {
+            res.response.repro = true;
+          }
+          this.dialogService.open(StreamPayPopupComponent, {
+            data: res.response,
+            header: this.translocoService.translate('stream.streamAnnounced'),
+            width: '50rem',
+          });
+        }
+      },
+      error: (error) => {},
+    });
   }
 }

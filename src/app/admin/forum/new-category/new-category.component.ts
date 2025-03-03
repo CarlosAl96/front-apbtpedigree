@@ -70,7 +70,6 @@ export class NewCategoryComponent {
 
   public saveCategory(): void {
     this.markFormControlsAsDirty(this.formGroup);
-    console.log(this.formGroup.value);
 
     if (this.formGroup.valid) {
       const obj: any = this.formGroup.value;

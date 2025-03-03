@@ -10,8 +10,7 @@ export class DateHourFormatPipe implements PipeTransform {
       return '-';
     }
 
-    const _fecha = fechaISO.replace('Z', '');
-    const fecha = new Date(_fecha);
+    const fecha = new Date(fechaISO);
 
     const formatter = new Intl.DateTimeFormat('es-ES', {
       weekday: 'short',

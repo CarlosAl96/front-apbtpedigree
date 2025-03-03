@@ -99,7 +99,6 @@ export class MenuPedigreesComponent {
 
   public onPageChange(page: number): void {
     this.queryPagination.page = page - 1;
-    console.log(this.queryPagination);
     this.router.navigate(['pedigree/my-pedigrees/' + this.idPedigreeActive], {
       queryParams: this.queryPagination,
     });

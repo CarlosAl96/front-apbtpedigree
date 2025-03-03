@@ -74,9 +74,7 @@ export class ForumComponent implements OnDestroy {
             (category.last_post = this.getLastPostInfo(category.last_post))
         );
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 

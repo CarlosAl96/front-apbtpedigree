@@ -55,8 +55,6 @@ export class ChatsListComponent implements OnDestroy {
     private readonly translocoService: TranslocoService,
     private readonly route: ActivatedRoute
   ) {
-    console.log(this.chats);
-
     this.route.queryParams.subscribe((params) => {
       if (params['user']) {
         this.usernameFromForum = params['user'] as string;
@@ -66,7 +64,6 @@ export class ChatsListComponent implements OnDestroy {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
     this.socketService.onChat().subscribe({
       next: (res) => {
-        console.log(res);
         if (res.id_one == this.user?.id || res.id_two == this.user?.id) {
           this.getChats();
         }
@@ -105,14 +102,11 @@ export class ChatsListComponent implements OnDestroy {
           this.searchUsers(this.usernameFromForum, true);
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
   public setChatActive(chat: Chat) {
-    console.log(chat);
     this.chatService.setChatSelected(chat);
     this.idChatSelected = chat.id;
 
@@ -136,9 +130,7 @@ export class ChatsListComponent implements OnDestroy {
           this.filteredUsers = res.response;
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -176,7 +168,7 @@ export class ChatsListComponent implements OnDestroy {
         chat.username_one == userReceiver.username ||
         chat.username_two == userReceiver.username
     );
-    console.log(this.chats);
+
     this.chats = this.chats.filter((chat) => chat.id != 0);
 
     if (existChat.length) {
@@ -186,9 +178,8 @@ export class ChatsListComponent implements OnDestroy {
     }
 
     this.idChatSelected = newChat.id;
-    console.log(this.chats);
+
     this.chats.unshift(newChat);
-    console.log(this.chats);
 
     this.chatService.setChatSelected(newChat);
   }
@@ -209,9 +200,7 @@ export class ChatsListComponent implements OnDestroy {
             this.chats = this.chats.filter((chat) => chat.id != id);
             this.chatService.resetChatSelected();
           },
-          error: (error) => {
-            console.log(error);
-          },
+          error: (error) => {},
         });
       },
       reject: () => {},

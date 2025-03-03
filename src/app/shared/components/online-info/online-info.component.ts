@@ -27,7 +27,6 @@ export class OnlineInfoComponent {
     this.getUsersLoggedInfo();
     this.socketService.onLogin().subscribe({
       next: (res) => {
-        console.log(res);
         this.getUsersLoggedInfo();
       },
     });
@@ -38,9 +37,7 @@ export class OnlineInfoComponent {
       next: (res) => {
         this.loggeds = res.response.logged;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 }

@@ -1,0 +1,63 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">{{ t("payments.title") }}</div>
+  </ng-template>
+
+  <p-table [value]="payments" styleClass="p-datatable-striped">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h2>{{ t("payments.list") }}</h2>
+        <div class="flex justify-content-end align-items-center w-5 gap-2">
+          <input
+            pInputText
+            type="text"
+            class="w-full"
+            [(ngModel)]="modelSearch"
+            [placeholder]="t('payments.search')"
+            (keyup.enter)="search()"
+          />
+          <p-button
+            label="{{ t('buttons.search') }}"
+            icon="pi pi-search"
+            (onClick)="search()"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>{{ t("payments.idUser") }}</th>
+        <th>{{ t("login.username") }}</th>
+        <th>{{ t("payments.idStream") }}</th>
+        <th>{{ t("stream.title") }}</th>
+        <th>{{ t("payments.amount") }} (USD)</th>
+        <th>{{ t("payments.paymentMethod") }}</th>
+        <th>{{ t("payments.reference") }}</th>
+        <th>{{ t("payments.date") }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-payment>
+      <tr>
+        <td>{{ payment.id }}</td>
+        <td>{{ payment.user_id }}</td>
+        <td>{{ payment.username }}</td>
+        <td>{{ payment.stream_id }}</td>
+        <td>{{ payment.title }}</td>
+        <td>{{ payment.amount }} $</td>
+        <td>{{ payment.payment_method }}</td>
+        <td>{{ payment.transaction_id }}</td>
+        <td>{{ payment.created_at | dateHourFormat }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator
+    #paginator
+    [first]="first"
+    (onPageChange)="onPageChange($event)"
+    [rows]="queryPagination.size"
+    [totalRecords]="totalRows"
+  />
+</p-card>

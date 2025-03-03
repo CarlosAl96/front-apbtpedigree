@@ -70,9 +70,7 @@ export class ForumComponent implements OnDestroy {
           category.moderators = this.getModerators(category.moderators);
         });
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -80,11 +78,8 @@ export class ForumComponent implements OnDestroy {
     this.forumService.getCategoriesInfo().subscribe({
       next: (res) => {
         this.categoriesInfo = res.response;
-        console.log(this.categoriesInfo);
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 

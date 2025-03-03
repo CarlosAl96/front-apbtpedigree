@@ -80,8 +80,6 @@ export class UploadPictureComponent implements OnInit {
 
     formData.append('old_img', this.pedigree.img);
 
-    this.pedigree.img = '';
-
     this.confirmationService.confirm({
       header: this.translocoService.translate(
         'yourPedigrees.uploadDeleteImg.delete'
@@ -96,6 +94,7 @@ export class UploadPictureComponent implements OnInit {
       acceptLabel: this.translocoService.translate('buttons.yes'),
       rejectLabel: this.translocoService.translate('buttons.no'),
       accept: () => {
+        this.pedigree.img = '';
         this.pedigreeService
           .updateCurrentImg(formData, this.pedigree.id)
           .subscribe({

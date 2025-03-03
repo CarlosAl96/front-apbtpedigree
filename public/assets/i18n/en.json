@@ -18,6 +18,14 @@
       "producingTitle": "Producing Title"
     }
   },
+  "dashboard": {
+    "loggeds": "Connected users",
+    "pedigrees": "Total pedigrees",
+    "users": "Registered users",
+    "payments": "Completed payments",
+    "usersChart": "Users registered in the last 12 months",
+    "paymentsChart": "Payments made in the last 12 months"
+  },
   "home": {
     "welcome": "Welcome!",
     "p1": "We welcome you to our website! This is the perfect place to explore and manage dog pedigrees, access exclusive tools, and connect with a global community of enthusiasts, breeders, and experts. We've designed this site with the goal of providing you with a unique, user-friendly, and secure experience.",
@@ -40,7 +48,6 @@
     "p2": "By registering, you get full access to all the functionalities of the site completely free of charge. You will also be able to access live streams by trained professionals for a low price.",
     "final": "Join today and start exploring the fascinating world of pedigrees!"
   },
-
   "navbar": {
     "items": {
       "home": "Home",
@@ -86,7 +93,9 @@
     "go": "Go",
     "quote": "Quote",
     "send": "Send",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "newStream": "New Stream",
+    "editStream": "Edit Stream"
   },
   "colors": {
     "red": "Red",
@@ -285,6 +294,52 @@
     "activateUser": "Are you sure you want to activate this user?",
     "desactivateUser": "Are you sure you want to deactivate this user?"
   },
+  "stream": {
+    "list": "Stream list",
+    "nextStream": "Announced stream",
+    "title": "Title",
+    "price": "Price",
+    "description": "Description",
+    "viewers": "Viewers",
+    "messages": "Messages",
+    "startDate": "Proposed start",
+    "endDate": "Proposed end",
+    "actualStartDate": "Actual start",
+    "actualEndDate": "Actual end",
+    "action": "Actions",
+    "search": "Search streams",
+    "empty": "No stream announced",
+    "reAnnounce": "Reannounce stream",
+    "reAnnounceQuestion": "Are you sure you want to reannounce this stream?",
+    "liveStream": "Start stream",
+    "liveStreamQuestion": "Are you sure you want to start this stream?",
+    "endStream": "End stream",
+    "endStreamQuestion": "Are you sure you want to end this stream?",
+    "streamEnded": "The stream has ended!",
+    "noStreamActive": "No streams announced!",
+    "streamAnnounced": "Don't miss our next stream!",
+    "initDate": "Start date and time",
+    "endDate2": "End date and time",
+    "paid": "Paid",
+    "isPaid": "Your spot is secured! We'll see you at the scheduled time.",
+    "paidMessage": "To participate in this stream, you need to complete the payment. Use the PayPal button to securely process your payment and guarantee your access to the broadcast.",
+    "streamStarted": "The stream has started!",
+    "streamEndedMessage": "Thank you for joining our stream! We hope you enjoyed the experience. Stay tuned for our upcoming events and keep participating. See you in the next stream!",
+    "goStream": "Go to stream",
+    "noStreamAnnounced": "There are currently no announced streams. Stay tuned for our upcoming broadcasts so you don’t miss out. Check back soon!",
+    "reproStream": "The stream has been rescheduled!"
+  },
+  "payments": {
+    "title": "Payments",
+    "list": "Payments list",
+    "search": "Search payments",
+    "idUser": "User ID",
+    "idStream": "Stream ID",
+    "paymentMethod": "Payment method",
+    "amount": "Amount",
+    "reference": "Reference",
+    "date": "Date"
+  },
   "yourPedigrees": {
     "title": "YOUR PEDIGREES",
     "of": "of",
@@ -434,7 +489,13 @@
     "updatePostError": "An error occurred while updating the post!",
     "deletePost": "The post has been successfully deleted!",
     "deletePostError": "An error occurred while deleting the post!",
-    "passwordChanged": "The password has been successfully changed!"
+    "passwordChanged": "The password has been successfully changed!",
+    "streamCreated": "The stream has been successfully created and announced to the users!",
+    "streamCreatedError": "An error occurred while creating the stream!",
+    "streamUpdated": "The stream has been updated successfully!",
+    "streamUpdatedError": "There was an error updating the stream!",
+    "paymentCreated": "The payment has been successfully completed!",
+    "paymentError": "An error occurred while processing the payment!"
   },
   "errorMessages": {
     "alreadyEmail": "An account with this email already exists",

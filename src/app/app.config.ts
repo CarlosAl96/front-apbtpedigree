@@ -7,6 +7,7 @@ import { provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { routes } from './app.routes';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,5 +30,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    DialogService,
   ],
 };

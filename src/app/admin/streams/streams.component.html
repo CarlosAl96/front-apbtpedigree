@@ -1,0 +1,149 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">Streams</div>
+  </ng-template>
+
+  <div class="stream-header">
+    <h2 class="title">{{ t("stream.nextStream") }}</h2>
+  </div>
+
+  <div class="stream-container">
+    @if(streamActive){
+
+    <div class="flex gap-1">
+      <span class="subtitle">{{ t("stream.title") }}:</span
+      ><span>{{ streamActive.title }}</span>
+    </div>
+    <div class="flex gap-1">
+      <span class="subtitle">{{ t("stream.description") }}:</span
+      ><span>{{ streamActive.description }}</span>
+    </div>
+    <div class="flex gap-1">
+      <span class="subtitle">{{ t("stream.price") }}:</span
+      ><span>{{ streamActive.price }} USD</span>
+    </div>
+    <div class="flex gap-1">
+      <span class="subtitle">{{ t("stream.startDate") }}:</span
+      ><span>{{
+        streamActive.proposed_start_date.toString() | dateHourFormat
+      }}</span>
+    </div>
+    <div class="flex gap-1">
+      <span class="subtitle">{{ t("stream.endDate") }}:</span
+      ><span>{{
+        streamActive.proposed_end_date.toString() | dateHourFormat
+      }}</span>
+    </div>
+
+    <div class="flex justify-content-end gap-2 w-full">
+      @if (!streamActive.is_live) {
+      <p-button
+        severity="success"
+        label="{{ t('stream.liveStream') }}"
+        icon="pi pi-play-circle"
+        (onClick)="setLiveStream()"
+      ></p-button>
+
+      <p-button
+        label="{{ t('buttons.editStream') }}"
+        icon="pi pi-pencil"
+        (onClick)="showEditModal(streamActive)"
+      ></p-button>
+      }@else {
+      <p-button
+        severity="danger"
+        label="{{ t('stream.endStream') }}"
+        icon="pi pi-stop-circle"
+        (onClick)="setLiveStream()"
+      ></p-button>
+      }
+    </div>
+    } @else{
+
+    <div class="flex justify-content-center">
+      <span>{{ t("stream.empty") }}</span>
+    </div>
+    <div class="flex justify-content-end w-full">
+      <p-button
+        label="{{ t('buttons.newStream') }}"
+        icon="pi pi-plus"
+        (onClick)="showCreateModal()"
+      ></p-button>
+    </div>
+    }
+  </div>
+
+  <p-table [value]="streams" styleClass="p-datatable-striped">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h2>{{ t("stream.list") }}</h2>
+        <div class="flex w-5 justify-content-end align-items-center gap-2">
+          <input
+            pInputText
+            type="text"
+            class="w-full"
+            [(ngModel)]="modelSearch"
+            [placeholder]="t('stream.search')"
+            (keyup.enter)="search()"
+          />
+          <p-button
+            label="{{ t('buttons.search') }}"
+            icon="pi pi-search"
+            (onClick)="search()"
+          ></p-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>{{ t("stream.title") }}</th>
+        <th>{{ t("stream.description") }}</th>
+        <th>{{ t("stream.price") }}</th>
+        <th>{{ t("stream.viewers") }}</th>
+        <th>{{ t("stream.messages") }}</th>
+        <th>{{ t("stream.startDate") }}</th>
+        <th>{{ t("stream.actualStartDate") }}</th>
+        <th>{{ t("stream.endDate") }}</th>
+        <th>{{ t("stream.actualEndDate") }}</th>
+        <th>{{ t("stream.action") }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-stream>
+      <tr>
+        <td>{{ stream.id }}</td>
+        <td>{{ stream.title }}</td>
+        <td>{{ stream.description }}</td>
+        <td>{{ stream.price + " $" }}</td>
+        <td>{{ stream.user_count }}</td>
+        <td>{{ stream.chat_message_count }}</td>
+        <td>{{ stream.proposed_start_date | dateHourFormat }}</td>
+        <td>{{ stream.actual_start_date | dateHourFormat }}</td>
+        <td>{{ stream.proposed_end_date | dateHourFormat }}</td>
+        <td>{{ stream.actual_end_date | dateHourFormat }}</td>
+
+        <td>
+          <div class="flex gap-1">
+            <p-button
+              severity="warning"
+              icon="pi pi-megaphone"
+              [pTooltip]="t('stream.reAnnounce')"
+              (onClick)="reAnnounceStream(stream.id)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-paginator
+    #paginator
+    [first]="first"
+    (onPageChange)="onPageChange($event)"
+    [rows]="queryPagination.size"
+    [totalRecords]="totalRows"
+  />
+</p-card>
+
+<p-confirmDialog />

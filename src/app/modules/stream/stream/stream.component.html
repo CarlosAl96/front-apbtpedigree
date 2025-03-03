@@ -1,0 +1,40 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">STREAM</div>
+  </ng-template>
+
+  @if(!streamActive){
+  <div
+    class="flex align-items-center justify-content-center"
+    style="height: 100vh"
+  >
+    <p-progressSpinner
+      styleClass="w-4rem h-4rem"
+      strokeWidth="5"
+      animationDuration=".5s"
+    />
+  </div>
+  }@else {
+
+  <div class="flex align-items-start justify-content-between gap-4">
+    <div class="stream-container">
+      <iframe
+        [id]="streamUUID"
+        [src]="streamUrl"
+        title="live"
+        class="stream"
+        scrolling="no"
+        frameBorder="0"
+        allowfullscreen
+        mozallowfullscreen
+        webkitallowfullscreen
+      ></iframe>
+    </div>
+
+    <app-chat
+      class="flex w-full h-full"
+      [ativeStream]="streamActive"
+    ></app-chat>
+  </div>
+  }
+</p-card>

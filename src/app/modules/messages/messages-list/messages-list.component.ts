@@ -61,7 +61,6 @@ export class MessagesListComponent implements OnDestroy {
     private readonly confirmationService: ConfirmationService,
     private readonly translocoService: TranslocoService
   ) {
-    console.log(this.messages);
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
     this.chatService.getChatSelected().subscribe({
@@ -84,8 +83,6 @@ export class MessagesListComponent implements OnDestroy {
 
     this.socketService.onMessage().subscribe({
       next: (res) => {
-        console.log(res);
-
         if (
           (this.chatSelected.id == 0 && res.id_sender == this.user?.id) ||
           (res.id_sender != this.user?.id &&
@@ -106,19 +103,13 @@ export class MessagesListComponent implements OnDestroy {
   public getMessages(query: QueryPagination, is_socket: boolean = false): void {
     if (this.chatSelected.id > 0) {
       this.chatService.markAsViewedChat(this.chatSelected.id).subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (error) => {
-          console.log(error);
-        },
+        next: (res) => {},
+        error: (error) => {},
       });
     }
 
     this.chatService.getMessages(query, this.chatSelected.id).subscribe({
       next: (res) => {
-        console.log(this.messages);
-
         if (query.page == 0 && !is_socket) {
           this.messages = res.response.data.reverse();
         } else {
@@ -133,15 +124,12 @@ export class MessagesListComponent implements OnDestroy {
 
         this.totalRows = res.response.totalRows;
         this.totalPages = Math.ceil(this.totalRows / this.queryPagination.size);
-        console.log(this.totalPages);
 
         if (this.queryPagination.page == 0) {
           this.scrollToBottom();
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -168,8 +156,7 @@ export class MessagesListComponent implements OnDestroy {
       .subscribe({
         next: (res) => {
           this.chatSelected.id = res.response;
-          console.log(res);
-          
+
           this.chatService.setChatSelected(this.chatSelected);
           this.scrollToBottom();
         },
@@ -193,9 +180,7 @@ export class MessagesListComponent implements OnDestroy {
           next: (res) => {
             this.messages = this.messages.filter((message) => message.id != id);
           },
-          error: (error) => {
-            console.log(error);
-          },
+          error: (error) => {},
         });
       },
       reject: () => {},
@@ -245,8 +230,6 @@ export class MessagesListComponent implements OnDestroy {
           behavior: 'smooth',
         });
       }, 100);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 }

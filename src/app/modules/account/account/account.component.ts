@@ -96,9 +96,7 @@ export class AccountComponent implements OnInit {
         this.user = res.response;
         this.setFormValues();
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 

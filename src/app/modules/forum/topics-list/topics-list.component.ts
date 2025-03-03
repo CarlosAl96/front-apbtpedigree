@@ -93,9 +93,6 @@ export class TopicsListComponent implements OnInit, OnDestroy {
 
     this.socketService.onForum().subscribe({
       next: (res) => {
-        console.log(res);
-        console.log(this.idCategory);
-
         if (res.id_category == this.idCategory) {
           this.getTopicsFromCategory(this.idCategory);
         }
@@ -171,9 +168,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
           this.forumCategory.moderators
         );
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -182,9 +177,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.forumCategories = res.response.data;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -199,9 +192,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
           topic.is_popular = this.getIsPopular(topic.views, topic.replies);
         });
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -428,11 +419,8 @@ export class TopicsListComponent implements OnInit, OnDestroy {
   }
 
   public markAllAsViewed(): void {
-    console.log('yeah');
     this.forumService.markAllAsViewed(this.idCategory).subscribe({
       next: (res) => {
-        console.log(res);
-
         this.topics = this.topics.map((topic) => {
           topic.new_posts = false;
           return topic;

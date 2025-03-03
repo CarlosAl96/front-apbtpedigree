@@ -18,6 +18,14 @@
       "producingTitle": "Título de productor"
     }
   },
+  "dashboard": {
+    "loggeds": "Usuarios conectados",
+    "pedigrees": "Total de pedigrís",
+    "users": "Usuarios registrados",
+    "payments": "Pagos realizados",
+    "usersChart": "Usuarios registrados en los últimos 12 meses",
+    "paymentsChart": "Pagos hechos en los últimos 12 meses"
+  },
   "home": {
     "welcome": "¡Bienvenido!",
     "p1": "¡Te damos la bienvenida a nuestro sitio web! Este es el lugar perfecto para explorar y gestionar los pedigrees de perros, acceder a herramientas exclusivas y conectar con una comunidad global de entusiastas, criadores y expertos en el tema. Hemos diseñado este sitio con el objetivo de brindarte una experiencia única, fácil de usar y segura.",
@@ -85,7 +93,9 @@
     "go": "Ir",
     "quote": "Citar",
     "send": "Enviar",
-    "changePassword": "Cambiar contraseña"
+    "changePassword": "Cambiar contraseña",
+    "newStream": "Nuevo stream",
+    "editStream": "Editar stream"
   },
   "colors": {
     "red": "Rojo",
@@ -284,6 +294,52 @@
     "activateUser": "¿Estás seguro que deseas activar a este usuario?",
     "desactivateUser": "¿Estás seguro que deseas desactivar a este usuario?"
   },
+  "stream": {
+    "list": "Lista de streams",
+    "nextStream": "Stream anunciado",
+    "title": "Título",
+    "price": "Precio",
+    "description": "Descripción",
+    "viewers": "Espectadores",
+    "messages": "Mensajes",
+    "startDate": "Inicio propuesto",
+    "endDate": "Fin propuesto",
+    "actualStartDate": "Inicio real",
+    "actualEndDate": "Fin real",
+    "action": "Acciones",
+    "search": "Buscar streams",
+    "empty": "No hay ningun stream anunciado",
+    "reAnnounce": "Reanunciar stream",
+    "reAnnounceQuestion": "¿Estás seguro de reanunciar este stream?",
+    "liveStream": "Empezar stream",
+    "liveStreamQuestion": "¿Estás seguro de empezar este stream?",
+    "endStream": "Finalizar stream",
+    "endStreamQuestion": "¿Estás seguro de finalizar este stream?",
+    "streamEnded": "¡El stream ha finalizado!",
+    "noStreamActive": "¡No hay streams anunciados!",
+    "streamAnnounced": "¡No te pierdas nuestro próximo stream!",
+    "initDate": "Fecha y hora de inicio",
+    "endDate2": "Fecha y hora de finalización",
+    "paid": "Pagado",
+    "isPaid": "¡Ya tienes tu cupo asegurado, te esperamos a la hora indicada!",
+    "paidMessage": "Para participar en este stream, es necesario completar el pago. Utiliza el botón de PayPal para procesar tu pago de manera segura y garantizar tu acceso a la transmisión.",
+    "streamStarted": "¡El stream ha empezado!",
+    "streamEndedMessage": "¡Gracias por participar en nuestro stream! Esperamos que hayas disfrutado la experiencia. Te invitamos a estar atento a nuestros próximos eventos y seguir participando. ¡Nos vemos en el siguiente stream!",
+    "goStream": "Ir al stream",
+    "noStreamAnnounced": "Actualmente no hay streams anunciados. Te invitamos a estar atento a nuestras próximas transmisiones para no perderte ninguna novedad. ¡Vuelve pronto!",
+    "reproStream": "¡El stream ha sido reprogramado!"
+  },
+  "payments": {
+    "title": "Pagos",
+    "list": "Lista de pagos",
+    "search": "Buscar pagos",
+    "idUser": "ID usuario",
+    "idStream": "ID stream",
+    "paymentMethod": "Método de pago",
+    "amount": "Cantidad",
+    "reference": "Referencia",
+    "date": "Fecha"
+  },
   "yourPedigrees": {
     "title": "MIS PEDIGRÍES",
     "of": "de",
@@ -433,7 +489,13 @@
     "deletePostError": "¡Ha ocurrido un error eliminando la publicación!",
     "updatePost": "¡La publicación ha sido actualizada exitosamente!",
     "updatePostError": "¡Ha ocurrido un error actualizando la publicación!",
-    "passwordChanged": "¡La contraseña ha sido cambiada exitosamente!"
+    "passwordChanged": "¡La contraseña ha sido cambiada exitosamente!",
+    "streamCreated": "¡El stream se ha creado exitosamente y ha sido anunciado a los usuarios!",
+    "streamCreatedError": "¡Ha ocurrido un error creando el stream!",
+    "streamUpdated": "¡El stream se ha actualizado correctamente!",
+    "streamUpdatedError": "¡Hubo un error actualizando el stream!",
+    "paymentCreated": "¡Se ha realizado el pago exitosamente!",
+    "payymentError": "¡Ha ocurrido un error realizando el pago!"
   },
   "errorMessages": {
     "alreadyEmail": "Ya existe una cuenta con este correo electrónico",

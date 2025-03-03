@@ -1,0 +1,53 @@
+<div *transloco="let t">
+  <div class="flex flex-column gap-3">
+    @if(isLive){
+    <span class="title started">{{ t("stream.streamStarted") }}</span>
+    } @if(repro){
+    <span class="title started">{{ t("stream.reproStream") }}</span>
+    }
+    <span class="title">{{ stream.title }}</span>
+    <span class="description">{{ stream.description }}</span>
+  </div>
+  <div class="flex align-items-center mt-3 gap-2">
+    <span class="subtitle">{{ t("stream.price") }}:</span
+    ><span>{{ stream.price }} USD</span>
+    @if(isPaid){
+    <p-tag
+      icon="pi pi-verified"
+      severity="success"
+      [value]="t('stream.paid')"
+    />
+    }
+  </div>
+  <div class="flex gap-2">
+    <span class="subtitle">{{ t("stream.initDate") }}:</span
+    ><span>{{ stream.proposed_start_date.toString() | dateHourFormat }}</span>
+  </div>
+  <div class="flex gap-2">
+    <span class="subtitle">{{ t("stream.endDate2") }}:</span
+    ><span>{{ stream.proposed_end_date.toString() | dateHourFormat }}</span>
+  </div>
+
+  <div class="flex flex-column mt-3 gap-5">
+    @if (!isPaid) {
+    <span class="description">{{ t("stream.paidMessage") }}</span>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    }@else {
+    <div
+      class="flex flex-column justify-content-center align-items-center gap-3"
+    >
+      <i class="pi pi-verified success"></i>
+      <span class="subtitle">{{ t("stream.isPaid") }}</span>
+    </div>
+    @if (isLive) {
+    <div class="flex w-full justify-content-end mt-3">
+      <button
+        pButton
+        [label]="t('stream.goStream')"
+        (click)="goToStream()"
+        class="p-button-primary"
+      ></button>
+    </div>
+    } }
+  </div>
+</div>

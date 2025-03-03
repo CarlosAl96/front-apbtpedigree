@@ -1,0 +1,60 @@
+<div class="container" *transloco="let t">
+  <div class="title-container flex flex-column gap-1 w-full">
+    <div class="flex justify-content-center w-full">
+      <span class="title">{{ activeStream?.title }}</span>
+    </div>
+    <span>{{ activeStream?.description }}</span>
+  </div>
+
+  <div class="header">
+    <span>CHAT</span>
+  </div>
+  <div #messageContainer class="messages-container">
+    @for (message of messages; track $index) {
+    <div [class]="message.user_id == user?.id ? 'message active' : 'message'">
+      <span
+        ><strong
+          >{{ message.created_at | timeFormat }} {{ message.username }}</strong
+        >
+        {{ message.message }}</span
+      >
+    </div>
+    }
+  </div>
+
+  @if (showEmojiPicker) {
+  <emoji-mart
+    (emojiSelect)="addEmoji($event)"
+    [style]="{ position: 'absolute', bottom: '90px', rigth: '30rem' }"
+    title="Pick your emoji…"
+    emoji="point_up"
+  ></emoji-mart>
+  }
+
+  <div class="input-container">
+    <p-inputGroup class="input-message w-full gap-2">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-face-smile"
+        (click)="toggleEmojiPicker()"
+      ></button>
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="messageModel"
+        (keyup.enter)="sendMessage()"
+        placeholder="{{ t('messages.messagePlaceholder') }}"
+        (focus)="showEmojiPicker = false"
+      />
+      <button
+        pButton
+        type="button"
+        icon="pi pi-send"
+        label="{{ t('buttons.send') }}"
+        [disabled]="messageModel == ''"
+        (click)="sendMessage()"
+      ></button>
+    </p-inputGroup>
+  </div>
+</div>

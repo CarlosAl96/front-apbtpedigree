@@ -127,9 +127,7 @@ export class NewPostComponent {
       next: (res) => {
         this.forumCategories = res.response.data;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -139,9 +137,7 @@ export class NewPostComponent {
         this.topic = res.response;
         this.modelCategory = this.topic.id_categories;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -161,9 +157,7 @@ export class NewPostComponent {
           });
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -177,7 +171,6 @@ export class NewPostComponent {
 
   public savePost(): void {
     this.markFormControlsAsDirty(this.formGroup);
-    console.log(this.formGroup.value);
 
     if (this.formGroup.valid) {
       this.loading = true;

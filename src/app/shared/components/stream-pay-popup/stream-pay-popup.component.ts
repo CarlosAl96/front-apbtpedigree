@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Stream } from '../../../core/models/stream';
 import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TagModule } from 'primeng/tag';
 import {
   ICreateOrderRequest,
@@ -12,6 +12,10 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment.development';
+import { PaymentService } from '../../../core/services/payment.service';
+import { StreamService } from '../../../core/services/stream.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-stream-pay-popup',
@@ -22,6 +26,7 @@ import { environment } from '../../../../environments/environment.development';
     TagModule,
     NgxPayPalModule,
     ButtonModule,
+    ProgressSpinnerModule,
   ],
   templateUrl: './stream-pay-popup.component.html',
   styleUrl: './stream-pay-popup.component.scss',
@@ -36,7 +41,10 @@ export class StreamPayPopupComponent implements OnInit {
   constructor(
     private readonly refDialog: DynamicDialogRef,
     private readonly config: DynamicDialogConfig,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly paymentService: PaymentService,
+    private readonly toastService: ToastService,
+    private readonly translocoService: TranslocoService
   ) {
     this.stream = this.config.data.stream;
     this.isLive = this.config.data.isLive;
@@ -48,34 +56,62 @@ export class StreamPayPopupComponent implements OnInit {
   }
 
   private initConfig(): void {
-    this.payPalConfig = {
-      currency: 'USD',
-      clientId: environment.paypal_client_id,
-      createOrderOnClient: (data: any) =>
-        <ICreateOrderRequest>{
-          intent: 'CAPTURE',
-          purchase_units: [
-            {
-              amount: {
-                currency_code: 'USD',
-                value: '10.00',
-              },
-            },
-          ],
-        },
-      onApprove: (data, actions) => {
-        console.log('Pago aprobado, capturando...');
-        actions.order?.capture().then((details: any) => {
-          console.log('Pago completado:', details);
-          alert(
-            `Pago realizado con éxito por ${details.payer.name.given_name}`
-          );
-        });
+    this.paymentService.makeOrderPayment(this.stream).subscribe({
+      next: (res) => {
+        this.payPalConfig = {
+          currency: 'USD',
+          fundingSource: 'PAYPAL',
+          clientId: environment.paypal_client_id,
+          createOrderOnServer: (data) => {
+            return res.response.id;
+          },
+          advanced: {
+            commit: 'true',
+          },
+          style: { label: 'paypal', layout: 'vertical' },
+          onApprove: (data, actions) => {
+            actions.order.get().then((details: any) => {
+              console.log(
+                'onApprove - you can get full order details inside onApprove: ',
+                details
+              );
+            });
+          },
+          onClientAuthorization: (data) => {
+            this.paymentService
+              .makePayment({ order: res.response.id, stream: this.stream })
+              .subscribe({
+                next: (data) => {
+                  this.toastService.setMessage({
+                    severity: 'success',
+                    summary: this.translocoService.translate('toast.success'),
+                    detail: this.translocoService.translate(
+                      'toast.paymentCreated'
+                    ),
+                  });
+                  this.isPaid = true;
+                },
+                error: (error) => {
+                  this.toastService.setMessage({
+                    severity: 'error',
+                    summary: this.translocoService.translate('toast.error'),
+                    detail:
+                      this.translocoService.translate('toast.paymentError'),
+                  });
+                },
+              });
+          },
+          onError: (err) => {
+            console.log('OnError', err);
+            this.toastService.setMessage({
+              severity: 'error',
+              summary: this.translocoService.translate('toast.error'),
+              detail: this.translocoService.translate('toast.paymentError'),
+            });
+          },
+        };
       },
-      onError: (err) => {
-        console.error('Error en el pago:', err);
-      },
-    };
+    });
   }
 
   public goToStream(): void {

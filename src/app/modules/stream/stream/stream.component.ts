@@ -16,18 +16,13 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './stream.component.scss',
 })
 export class StreamComponent implements OnInit {
-  public streamUUID: string = environment.stream_uuid;
   public streamUrl!: SafeUrl;
   public streamActive!: Stream | null;
 
   constructor(
     private readonly sanitizer: DomSanitizer,
     private readonly streamService: StreamService
-  ) {
-    this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      environment.stream_url + this.streamUUID
-    );
-  }
+  ) {}
   ngOnInit(): void {
     this.getActiveStream();
   }
@@ -36,6 +31,9 @@ export class StreamComponent implements OnInit {
     this.streamService.getActiveStream().subscribe({
       next: (res) => {
         this.streamActive = res.response;
+        this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          this.streamActive.url
+        );
       },
       error: (error) => {},
     });

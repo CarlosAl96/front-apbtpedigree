@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { SocketService } from '../../core/services/socket.service';
@@ -13,7 +13,7 @@ import { ChartModule } from 'primeng/chart';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent {
   public loggeds: number = 0;
   public users: number = 0;
   public pedigrees: number = 0;
@@ -37,10 +37,6 @@ export class DashboardComponent implements OnDestroy {
         this.getUsersLoggedInfo();
       },
     });
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 
   public getDashboardData(): void {

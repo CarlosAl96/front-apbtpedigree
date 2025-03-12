@@ -31,8 +31,18 @@
   <div class="flex flex-column mt-3 gap-5">
     @if (!isPaid) {
     <span class="description">{{ t("stream.paidMessage") }}</span>
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+    @if(!payPalConfig){
+    <div class="flex align-items-center justify-content-center">
+      <p-progressSpinner
+        styleClass="w-4rem h-4rem"
+        strokeWidth="5"
+        animationDuration=".5s"
+      />
+    </div>
     }@else {
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    } }@else {
     <div
       class="flex flex-column justify-content-center align-items-center gap-3"
     >

@@ -10,7 +10,7 @@ export class SocketService {
   private socket: Socket;
 
   constructor() {
-    this.socket = io(environment.server);
+    this.socket = io(environment.server, {});
   }
 
   onMessage(): Observable<any> {
@@ -31,8 +31,8 @@ export class SocketService {
 
   onForum(): Observable<any> {
     return new Observable((observer) => {
-      this.socket.on('forum', (id) => {
-        observer.next(id);
+      this.socket.on('forum', (ids) => {
+        observer.next(ids);
       });
     });
   }
@@ -83,9 +83,5 @@ export class SocketService {
         observer.next(res);
       });
     });
-  }
-
-  disconnect() {
-    this.socket.disconnect();
   }
 }

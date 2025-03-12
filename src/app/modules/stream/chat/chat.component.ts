@@ -3,8 +3,6 @@ import {
   Component,
   ElementRef,
   Input,
-  OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +37,7 @@ import { NoStreamOrEndedComponent } from '../../../shared/components/no-stream-o
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnDestroy, AfterViewInit {
+export class ChatComponent implements AfterViewInit {
   @Input('ativeStream') activeStream!: Stream | null;
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   public messageModel: string = '';
@@ -77,10 +75,6 @@ export class ChatComponent implements OnDestroy, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.getMessages();
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 
   public getMessages(): void {

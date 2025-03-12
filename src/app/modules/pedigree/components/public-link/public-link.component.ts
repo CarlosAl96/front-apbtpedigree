@@ -28,6 +28,6 @@ export class PublicLinkComponent implements OnInit {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 }

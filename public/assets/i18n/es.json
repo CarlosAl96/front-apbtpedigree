@@ -495,7 +495,7 @@
     "streamUpdated": "¡El stream se ha actualizado correctamente!",
     "streamUpdatedError": "¡Hubo un error actualizando el stream!",
     "paymentCreated": "¡Se ha realizado el pago exitosamente!",
-    "payymentError": "¡Ha ocurrido un error realizando el pago!"
+    "paymentError": "¡Ha ocurrido un error realizando el pago!"
   },
   "errorMessages": {
     "alreadyEmail": "Ya existe una cuenta con este correo electrónico",

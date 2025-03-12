@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -24,7 +24,7 @@ import { User } from '../../../core/models/user';
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
-export class ForumComponent implements OnDestroy {
+export class ForumComponent {
   public forumCategories: ForumCategory[] = [];
   public totalRows: number = 0;
   public categoriesInfo!: any;
@@ -117,9 +117,5 @@ export class ForumComponent implements OnDestroy {
 
   public goToCategory(categoryId: number): void {
     this.router.navigateByUrl(`forum/topics/${categoryId}`);
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 }

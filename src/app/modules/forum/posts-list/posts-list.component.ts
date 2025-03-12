@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -51,7 +45,7 @@ import { SocketService } from '../../../core/services/socket.service';
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss',
 })
-export class PostsListComponent implements OnInit, OnDestroy {
+export class PostsListComponent implements OnInit {
   @ViewChild('scroll') scroll!: ElementRef;
   @ViewChild('scrollDown') scrollDown!: ElementRef;
 
@@ -107,6 +101,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
 
     this.socketService.onForum().subscribe({
       next: (res) => {
+        console.log(res);
         if (res.id_topic == this.idTopic) {
           this.getPostsFromTopic(this.idTopic);
         }
@@ -348,7 +343,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
   }
 
   public getDateInLocale(date: string, hours: boolean): string {
-    const dateAux = new Date(date);
+    const dateAux = new Date(date.replace('Z', ''));
 
     let options: Intl.DateTimeFormatOptions = {};
 
@@ -359,6 +354,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         hour12: true,
       };
     } else {
@@ -366,6 +362,7 @@ export class PostsListComponent implements OnInit, OnDestroy {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
     }
 
@@ -446,9 +443,5 @@ export class PostsListComponent implements OnInit, OnDestroy {
     last = mid + last;
 
     return last;
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 }

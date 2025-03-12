@@ -9,6 +9,7 @@ import { Pedigree } from '../../../../core/models/pedigree';
 import { environment } from '../../../../../environments/environment.development';
 import { PedigreeService } from '../../../../core/services/pedigree.service';
 import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-picture',
@@ -33,6 +34,7 @@ export class UploadPictureComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
+    private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly pedigreeService: PedigreeService,
     private readonly translocoService: TranslocoService,
@@ -120,6 +122,6 @@ export class UploadPictureComponent implements OnInit {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 }

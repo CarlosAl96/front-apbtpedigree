@@ -1,10 +1,8 @@
 export const environment = {
   production: true,
-  server: 'http://localhost:4000',
-  api_url: 'http://localhost:4000/api/v1/',
-  uploads_url: 'http://localhost:4000/uploads/',
-  stream_uuid: 'MK5swwOCLcnU6DFS1701642380699',
-  stream_url: 'https://apbtpedigreestreaming.com:5443/LiveApp/play.html?id=',
+  server: 'https://381l9mk7-4000.use2.devtunnels.ms/',
+  api_url: 'https://381l9mk7-4000.use2.devtunnels.ms/api/v1/',
+  uploads_url: 'https://381l9mk7-4000.use2.devtunnels.ms/uploads/',
   paypal_client_id:
-    'AVVohErniErfF1FLqDKphy7IZN8K7UI-aCluKQdWNcgmp-EWrD-S-iIZ-RiU0JL2Is5AF54Oii84JJQ2',
+    'AZPXa3IIuj7f_yum9HQ-bpxlkoImmByy6MUGXK2G4vBQ_5Bni1LOiVDDwFLldxxyd8TDZhsC_h13erqn',
 };

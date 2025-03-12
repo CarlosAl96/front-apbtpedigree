@@ -49,6 +49,7 @@ export class NewStreamComponent {
     this.formGroup = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
+      url: ['', Validators.required],
       price: [15, Validators.required],
       proposed_start_date: [new Date(), Validators.required],
       proposed_end_date: [new Date(), Validators.required],
@@ -132,6 +133,7 @@ export class NewStreamComponent {
     this.formGroup.patchValue({
       title: this.stream.title,
       description: this.stream.description,
+      url: this.stream.url,
       price: this.stream.price,
       proposed_start_date: new Date(this.stream.proposed_start_date),
       proposed_end_date: new Date(this.stream.proposed_end_date),

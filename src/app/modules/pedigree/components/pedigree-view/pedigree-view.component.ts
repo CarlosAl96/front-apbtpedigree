@@ -90,7 +90,7 @@ export class PedigreeViewComponent implements OnInit {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 
   public onChangeIdPedigree(event: number): void {

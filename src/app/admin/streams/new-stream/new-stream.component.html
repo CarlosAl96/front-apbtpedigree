@@ -31,6 +31,11 @@
       </textarea>
     </div>
 
+    <div class="flex flex-column gap-3 w-full">
+      <label for="url">URL</label>
+      <input pInputText id="url" formControlName="url" />
+    </div>
+
     <div class="flex flex-column gap-2 w-full">
       <label for="proposed_start_date">{{ t("stream.startDate") }}</label>
       <p-calendar

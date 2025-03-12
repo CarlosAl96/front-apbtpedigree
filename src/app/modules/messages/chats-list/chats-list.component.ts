@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { Chat } from '../../../core/models/chat';
@@ -6,18 +6,14 @@ import { TimeFormatPipe } from '../../../core/pipes/time-format.pipe';
 import { User } from '../../../core/models/user';
 import { SessionService } from '../../../core/services/session.service';
 import { ChatService } from '../../../core/services/chat.service';
-import {
-  AutoCompleteCompleteEvent,
-  AutoCompleteModule,
-  AutoCompleteSelectEvent,
-} from 'primeng/autocomplete';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment.development';
 import { SocketService } from '../../../core/services/socket.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { filter } from 'rxjs';
+
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -36,7 +32,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.scss',
 })
-export class ChatsListComponent implements OnDestroy {
+export class ChatsListComponent {
   public user!: User | undefined;
   public userReceiver!: User;
   public usernameFromForum: string = '';
@@ -76,10 +72,6 @@ export class ChatsListComponent implements OnDestroy {
       },
     });
     this.getChats();
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 
   private getChats(): void {

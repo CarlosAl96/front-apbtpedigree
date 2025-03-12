@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ForumCategory } from '../../core/models/forumCategory';
 import { ForumService } from '../../core/services/forum.service';
 import { QueryPagination } from '../../core/models/queryPagination';
@@ -31,7 +31,7 @@ import { SocketService } from '../../core/services/socket.service';
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
-export class ForumComponent implements OnDestroy {
+export class ForumComponent {
   public forumCategories: ForumCategory[] = [];
   public dialogRef!: DynamicDialogRef;
   public totalRows: number = 0;
@@ -204,9 +204,5 @@ export class ForumComponent implements OnDestroy {
       return jsonObject.join(', ');
     }
     return null;
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 }

@@ -58,11 +58,15 @@ export class MyPedigreesComponent implements OnInit {
     private readonly route: ActivatedRoute
   ) {}
   ngOnInit(): void {
+    console.log('id pedigree: ', this.idPedigree);
+
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
-    this.route.paramMap.subscribe((params) => {
-      this.idPedigree = Number(params.get('id'));
-    });
+    if (!this.isFromPedigreeSearch) {
+      this.route.paramMap.subscribe((params) => {
+        this.idPedigree = Number(params.get('id'));
+      });
+    }
 
     if (this.idPedigree != 0) {
       this.getPedigreeById(this.idPedigree);

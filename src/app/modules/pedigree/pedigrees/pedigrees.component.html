@@ -1,10 +1,9 @@
-@if(!isSearching){
-@if(isNewPedigree){
+@if(!isSearching){ @if(isNewPedigree){
 <app-new-pedigree></app-new-pedigree>
 } @else {
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t("pedigrees.tips")}}</div>
+    <div class="header-container">{{ t("pedigrees.tips") }}</div>
   </ng-template>
 
   <div>
@@ -15,49 +14,89 @@
   </div>
 
   <div class="mt-5">
-    <p-button class="btn-primary" [label]="t('buttons.newDog')" (onClick)="goToNewDog()" />
+    <p-button
+      class="btn-primary"
+      [label]="t('buttons.newDog')"
+      (onClick)="goToNewDog()"
+    />
   </div>
 </p-card>
-}
-
-} @else {
-
-@if(idPedigreeSelected === 0){
+} } @else { @if(idPedigreeSelected === 0){
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{ t('pedigrees.results') }}</div>
+    <div class="header-container">{{ t("pedigrees.results") }}</div>
   </ng-template>
 
-  <p-table #dt [value]="pedigrees" styleClass="p-datatable-striped" (onLazyLoad)="customSort($event)" [lazy]="true">
+  <p-table
+    #dt
+    [value]="pedigrees"
+    styleClass="p-datatable-striped"
+    (onLazyLoad)="customSort($event)"
+    [lazy]="true"
+  >
     <ng-template pTemplate="caption">
       <div class="paginator">
-        <p-button icon="pi pi-angle-left" [rounded]="true" [text]="true" [raised]="true" [disabled]="page == 1"
-          (onClick)="onPageChange(page - 1)" />
+        <p-button
+          icon="pi pi-angle-left"
+          [rounded]="true"
+          [text]="true"
+          [raised]="true"
+          [disabled]="page == 1"
+          (onClick)="onPageChange(page - 1)"
+        />
         <p-inputGroup>
-          <p-inputNumber [(ngModel)]="page" mode="decimal" [min]="1" [max]="totalPages" />
+          <p-inputNumber
+            [(ngModel)]="page"
+            mode="decimal"
+            [min]="1"
+            [max]="totalPages"
+          />
           <p-button icon="pi pi-search" (onClick)="onPageChange(page)" />
         </p-inputGroup>
-        <span>{{t("yourPedigrees.of")}}</span>
-        <span>{{totalPages}}</span>
-        <p-button icon="pi pi-angle-right" [rounded]="true" [text]="true" [raised]="true"
-          (onClick)="onPageChange(page + 1)" [disabled]="page == totalPages" />
+        <span>{{ t("yourPedigrees.of") }}</span>
+        <span>{{ totalPages }}</span>
+        <p-button
+          icon="pi pi-angle-right"
+          [rounded]="true"
+          [text]="true"
+          [raised]="true"
+          (onClick)="onPageChange(page + 1)"
+          [disabled]="page == totalPages"
+        />
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
-        <th pSortableColumn="name">{{ t('header.searchOptions.registeredName') }} <p-sortIcon field="name" /></th>
-        <th pSortableColumn="owner">{{ t('header.searchOptions.owner') }} <p-sortIcon field="owner" /></th>
-        <th pSortableColumn="breeder">{{ t('header.searchOptions.breeder') }} <p-sortIcon field="breeder" /></th>
-        <th pSortableColumn="sex">{{ t('yourPedigrees.infoPedigree.sex') }} <p-sortIcon field="sex" /></th>
+        <th pSortableColumn="name">
+          {{ t("header.searchOptions.registeredName") }}
+          <p-sortIcon field="name" />
+        </th>
+        <th pSortableColumn="owner">
+          {{ t("header.searchOptions.owner") }} <p-sortIcon field="owner" />
+        </th>
+        <th pSortableColumn="breeder">
+          {{ t("header.searchOptions.breeder") }} <p-sortIcon field="breeder" />
+        </th>
+        <th pSortableColumn="sex">
+          {{ t("yourPedigrees.infoPedigree.sex") }} <p-sortIcon field="sex" />
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-pedigree>
-      <tr class="row {{{ color: pedigree.fightcolor, fullname: pedigree.fullname } | fightColor}}"
-        (click)="idPedigreeSelected = pedigree.id">
+      <tr
+        class="row {{
+          { color: pedigree.fightcolor, fullname: pedigree.fullname }
+            | fightColor
+        }}"
+        (click)="idPedigreeSelected = pedigree.id"
+      >
         <td>{{ pedigree.id }}</td>
-        <td>{{ pedigree.fullname ? pedigree.fullname : t('yourPedigrees.unknown')
-          }}</td>
+        <td>
+          {{
+            pedigree.fullname ? pedigree.fullname : t("yourPedigrees.unknown")
+          }}
+        </td>
         <td>{{ pedigree.owner }}</td>
         <td>{{ pedigree.breeder }}</td>
         <td>{{ pedigree.sex.toUpperCase() }}</td>
@@ -68,14 +107,18 @@
         @if (isLoading) {
         <td colspan="5">
           <div class="spinner">
-            <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+            <p-progressSpinner
+              styleClass="w-4rem h-4rem"
+              strokeWidth="5"
+              animationDuration=".5s"
+            />
           </div>
         </td>
-        }
-        @else {
+        } @else {
         <td colspan="5">
-          {{ t('pedigrees.emptyMessage') }}
-        </td>}
+          {{ t("pedigrees.emptyMessage") }}
+        </td>
+        }
       </tr>
     </ng-template>
   </p-table>
@@ -83,7 +126,9 @@
 
 } @else {
 
-<app-my-pedigrees [idPedigree]="idPedigreeSelected" [isFromPedigreeSearch]="true"></app-my-pedigrees>
+<app-my-pedigrees
+  [idPedigree]="idPedigreeSelected"
+  [isFromPedigreeSearch]="true"
+></app-my-pedigrees>
 
-}
-}
+} }

@@ -108,7 +108,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public getDateInLocale(date: string, hours: boolean): string {
-    const dateAux = new Date(date);
+    const dateAux = new Date(date.replace('Z', ''));
 
     let options: Intl.DateTimeFormatOptions = {};
 
@@ -119,6 +119,7 @@ export class ProfileComponent implements OnInit {
         year: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         hour12: true,
       };
     } else {
@@ -126,6 +127,7 @@ export class ProfileComponent implements OnInit {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       };
     }
 

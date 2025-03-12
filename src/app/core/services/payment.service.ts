@@ -25,7 +25,11 @@ export class PaymentService {
       .post<ApiResponse<any>>(this.paymentsUrl, request)
       .pipe(catchError(this.handleError));
   }
-
+  public makeOrderPayment(request: any): Observable<ApiResponse<any>> {
+    return this.http
+      .post<ApiResponse<any>>(this.paymentsUrl + '/order', request)
+      .pipe(catchError(this.handleError));
+  }
   public getPayments(
     query: QueryPagination
   ): Observable<ApiResponse<ResponsePagination<Payment[]>>> {

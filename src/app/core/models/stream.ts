@@ -8,6 +8,7 @@ export interface Stream {
   price: number;
   chat_message_count: number;
   title: string;
+  url: string;
   is_live: boolean;
   description: string;
   created_at: Date;

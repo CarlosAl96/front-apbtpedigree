@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { ToastService } from './core/services/toast.service';
@@ -8,6 +8,8 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { PaymentService } from './core/services/payment.service';
 import { StreamPayPopupComponent } from './shared/components/stream-pay-popup/stream-pay-popup.component';
 import { TranslocoService } from '@jsverse/transloco';
+import { User } from './core/models/user';
+import { SessionService } from './core/services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -17,15 +19,20 @@ import { TranslocoService } from '@jsverse/transloco';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
+  public user!: User | undefined;
+
   constructor(
     private readonly toastService: ToastService,
     private readonly messageService: MessageService,
     private readonly dialogService: DialogService,
     private readonly socketService: SocketService,
     private readonly paymentService: PaymentService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly sessionService: SessionService
   ) {
+    this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+
     this.toastService.getMessage().subscribe((message) => {
       if (message.severity != '') {
         this.messageService.add(message);
@@ -34,7 +41,9 @@ export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.verifyPayment();
+      if (this.user) {
+        this.verifyPayment();
+      }
     }, 500);
   }
   ngOnInit(): void {
@@ -43,22 +52,18 @@ export class AppComponent implements OnDestroy, OnInit, AfterViewInit {
         this.verifyPayment();
       },
     });
-
     this.socketService.onAnnounce().subscribe({
       next: (res) => {
         this.verifyPayment();
       },
     });
-
     this.socketService.onReprogramed().subscribe({
       next: (res) => {
         this.verifyPayment(true);
       },
     });
   }
-  ngOnDestroy(): void {
-    this.socketService.disconnect();
-  }
+
   private verifyPayment(repro: boolean = false): void {
     this.paymentService.verifyPayment().subscribe({
       next: (res) => {

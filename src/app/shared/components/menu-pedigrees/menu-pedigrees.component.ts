@@ -84,6 +84,9 @@ export class MenuPedigreesComponent {
   private getPedigrees(query: QueryPaginationPedigree): void {
     this.pedigreeService.getPedigrees(query).subscribe((res) => {
       if (res) {
+
+        console.log(res);
+        
         this.pedigrees = fullnameTransformPedigreeList(res.response.data);
         this.totalRows = res.response.totalRows;
         this.totalPages = Math.ceil(this.totalRows / this.queryPagination.size);

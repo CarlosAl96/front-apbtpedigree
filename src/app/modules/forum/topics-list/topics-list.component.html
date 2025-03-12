@@ -220,8 +220,8 @@
             (onClick)="goToEditTopic(topic.id)"
             severity="primary"
           />
-          } @if(user?.is_superuser ||
-          forumCategory.moderators.includes(user?.username ?? '')){
+          } @if(forumCategory && (user?.is_superuser ||
+          forumCategory.moderators.includes(user?.username ?? ''))){
           <p-button
             [rounded]="true"
             [text]="!topic.sticky"
@@ -283,9 +283,9 @@
               </svg>
             </ng-template>
           </p-button>
-          } @if(user?.is_superuser ||
+          } @if(forumCategory && (user?.is_superuser ||
           forumCategory.moderators.includes(user?.username ?? '') || user?.id ==
-          topic.id_author){
+          topic.id_author)){
           <p-button
             [icon]="
               topic.is_locked

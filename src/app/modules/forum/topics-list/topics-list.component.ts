@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
@@ -43,7 +43,7 @@ import { SocketService } from '../../../core/services/socket.service';
   templateUrl: './topics-list.component.html',
   styleUrl: './topics-list.component.scss',
 })
-export class TopicsListComponent implements OnInit, OnDestroy {
+export class TopicsListComponent implements OnInit {
   public idCategory: number = 0;
   public modelCategory: number = 0;
   public modelPrevious: string = '';
@@ -93,6 +93,8 @@ export class TopicsListComponent implements OnInit, OnDestroy {
 
     this.socketService.onForum().subscribe({
       next: (res) => {
+        console.log(res);
+
         if (res.id_category == this.idCategory) {
           this.getTopicsFromCategory(this.idCategory);
         }
@@ -223,7 +225,7 @@ export class TopicsListComponent implements OnInit, OnDestroy {
       const jsonObject = JSON.parse(moderators);
       return jsonObject;
     }
-    return null;
+    return [];
   }
 
   public goToNewTopic(): void {
@@ -434,9 +436,5 @@ export class TopicsListComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
-  }
-
-  ngOnDestroy() {
-    this.socketService.disconnect();
   }
 }

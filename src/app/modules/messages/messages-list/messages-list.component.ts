@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { TimeFormatPipe } from '../../../core/pipes/time-format.pipe';
@@ -36,7 +36,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   templateUrl: './messages-list.component.html',
   styleUrl: './messages-list.component.scss',
 })
-export class MessagesListComponent implements OnDestroy {
+export class MessagesListComponent {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
   public user!: User | undefined;
@@ -96,10 +96,6 @@ export class MessagesListComponent implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.socketService.disconnect();
-  }
-
   public getMessages(query: QueryPagination, is_socket: boolean = false): void {
     if (this.chatSelected.id > 0) {
       this.chatService.markAsViewedChat(this.chatSelected.id).subscribe({
@@ -150,6 +146,7 @@ export class MessagesListComponent implements OnDestroy {
     this.messageModel = '';
     this.imageBase64 = '';
     this.maxSizeExceeded = false;
+    this.messages.push(message);
 
     this.chatService
       .sendMessage(message, this.chatSelected.im_first ?? false)

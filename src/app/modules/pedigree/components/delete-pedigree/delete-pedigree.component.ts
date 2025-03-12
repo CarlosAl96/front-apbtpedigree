@@ -67,6 +67,6 @@ export class DeletePedigreeComponent {
     });
   }
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 }

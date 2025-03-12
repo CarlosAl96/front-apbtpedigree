@@ -87,6 +87,6 @@ export class ChangePermissionsComponent implements OnInit {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 }

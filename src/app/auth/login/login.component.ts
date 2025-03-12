@@ -62,6 +62,8 @@ export class LoginComponent {
       this.authService.login(this.formGroup.value).subscribe({
         next: (res) => {
           this.error = [];
+          console.log(res);
+          
           this.sessionService.saveSession('USER_TOKEN', res.response.token);
           this.toastService.setMessage({
             severity: 'success',

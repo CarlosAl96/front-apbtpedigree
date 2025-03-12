@@ -178,7 +178,7 @@ export class NewPedigreeComponent implements OnInit {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 
   private getPedigrees(query: QueryPaginationPedigree, option: string): void {

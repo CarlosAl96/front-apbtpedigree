@@ -114,6 +114,6 @@ export class TransferOwnershipComponent {
   }
 
   public goBack(): void {
-    location.reload();
+    this.router.navigateByUrl(this.router.url);
   }
 }

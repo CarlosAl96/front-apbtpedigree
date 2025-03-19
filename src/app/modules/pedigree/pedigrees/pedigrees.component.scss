@@ -32,3 +32,9 @@
 .row:hover {
   background-color: rgba(0, 0, 0, 0.041);
 }
+@media only screen and (min-height: 1080px) {
+  .texts {
+    zoom: 0.6;
+  }
+}
+

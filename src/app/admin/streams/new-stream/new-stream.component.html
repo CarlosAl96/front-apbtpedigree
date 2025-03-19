@@ -10,7 +10,7 @@
       <input pInputText id="title" formControlName="title" />
     </div>
 
-    <div class="w-full flex flex-column gap-3">
+    <div class="w-full flex flex-column gap-2">
       <label for="price">{{ t("stream.price") }} (USD)</label>
       <p-inputNumber
         styleClass="w-full"
@@ -18,9 +18,19 @@
         inputId="price"
         [minFractionDigits]="2"
       />
+
+      <div class="flex gap-2">
+        <label>{{ t("stream.free") }}</label>
+        <p-checkbox
+          [(ngModel)]="isFree"
+          [ngModelOptions]="{ standalone: true }"
+          [binary]="true"
+          (onChange)="onFreeChange($event)"
+        />
+      </div>
     </div>
 
-    <div class="flex flex-column gap-3 w-full">
+    <div class="flex flex-column gap-2 w-full">
       <label for="price">{{ t("stream.description") }}</label>
       <textarea
         rows="8"
@@ -31,7 +41,7 @@
       </textarea>
     </div>
 
-    <div class="flex flex-column gap-3 w-full">
+    <div class="flex flex-column gap-2 w-full">
       <label for="url">URL</label>
       <input pInputText id="url" formControlName="url" />
     </div>

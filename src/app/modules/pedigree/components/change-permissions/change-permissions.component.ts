@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -10,6 +10,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ToastService } from '../../../../core/services/toast.service';
 import { FormsModule } from '@angular/forms';
 import { PedigreeService } from '../../../../core/services/pedigree.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-permissions',
@@ -29,6 +30,13 @@ import { PedigreeService } from '../../../../core/services/pedigree.service';
 export class ChangePermissionsComponent implements OnInit {
   @Input('pedigree') pedigree!: Pedigree;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
 
   public modelPedigreeStatus: boolean = false;
 
@@ -37,7 +45,8 @@ export class ChangePermissionsComponent implements OnInit {
     private readonly toastService: ToastService,
     private readonly router: Router,
     private readonly translocoService: TranslocoService,
-    private readonly pedigreeService: PedigreeService
+    private readonly pedigreeService: PedigreeService,
+    private readonly location: Location
   ) {}
 
   ngOnInit(): void {

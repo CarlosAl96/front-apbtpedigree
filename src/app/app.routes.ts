@@ -8,6 +8,7 @@ import { PublicPedigreeViewComponent } from './modules/pedigree/components/publi
 import { LayoutAdminComponent } from './shared/layouts/layout-admin/layout-admin.component';
 import { forumBanGuard } from './core/guards/forum-ban.guard';
 import { isPayedGuard } from './core/guards/is-payed.guard';
+import { StreamChatComponent } from './modules/stream-chat/stream-chat-page/stream-chat.component';
 
 export const routes: Routes = [
   {
@@ -59,7 +60,16 @@ export const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () =>
       import('./modules/stream/stream.routes').then((m) => m.STREAM_ROUTES),
-    canActivate: [noAuthGuard, forumBanGuard, isPayedGuard],
+    canActivate: [noAuthGuard, isPayedGuard],
+  },
+  {
+    path: 'stream-chat',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./modules/stream-chat/stream-chat.routes').then(
+        (m) => m.CHAT_STREAM_ROUTES
+      ),
+    canActivate: [noAuthGuard],
   },
   {
     path: 'admin',

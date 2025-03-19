@@ -6,13 +6,17 @@
   @if(!streamActive){
   <div
     class="flex align-items-center justify-content-center"
-    style="height: 100vh"
+    style="height: 30rem"
   >
+    @if (!showEmptyMessage) {
     <p-progressSpinner
       styleClass="w-4rem h-4rem"
       strokeWidth="5"
       animationDuration=".5s"
     />
+    }@else {
+    <span class="text-lg">{{ t("stream.noStreamActive") }}</span>
+    }
   </div>
   }@else {
 

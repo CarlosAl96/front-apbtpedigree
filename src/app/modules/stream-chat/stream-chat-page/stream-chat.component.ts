@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -12,19 +6,18 @@ import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { TimeFormatPipe } from '../../../core/pipes/time-format.pipe';
-import { SocketService } from '../../../core/services/socket.service';
 import { StreamMessage } from '../../../core/models/streamMessage';
 import { User } from '../../../core/models/user';
 import { SessionService } from '../../../core/services/session.service';
-import { Stream } from '../../../core/models/stream';
+import { SocketService } from '../../../core/services/socket.service';
 import { StreamService } from '../../../core/services/stream.service';
-import { DialogService } from 'primeng/dynamicdialog';
-import { NoStreamOrEndedComponent } from '../../../shared/components/no-stream-or-ended/no-stream-or-ended.component';
+import { CardModule } from 'primeng/card';
 
 @Component({
-  selector: 'app-chat',
+  selector: 'app-stream-chat',
   standalone: true,
   imports: [
+    CardModule,
     TranslocoModule,
     ButtonModule,
     TimeFormatPipe,
@@ -33,23 +26,21 @@ import { NoStreamOrEndedComponent } from '../../../shared/components/no-stream-o
     PickerComponent,
     FormsModule,
   ],
-  providers: [DialogService],
-  templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+  templateUrl: './stream-chat.component.html',
+  styleUrl: './stream-chat.component.scss',
 })
-export class ChatComponent implements AfterViewInit {
-  @Input('ativeStream') activeStream!: Stream | null;
+export class StreamChatComponent implements AfterViewInit {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
   public user!: User | undefined;
   public messages: StreamMessage[] = [];
+  activeStream: any;
 
   constructor(
     private readonly socketService: SocketService,
     private readonly sessionService: SessionService,
     private readonly streamService: StreamService,
-    private readonly dialogService: DialogService,
     private readonly translocoService: TranslocoService
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
@@ -62,17 +53,8 @@ export class ChatComponent implements AfterViewInit {
         }
       },
     });
-
-    this.socketService.onUnlive().subscribe({
-      next: (res) => {
-        this.dialogService.open(NoStreamOrEndedComponent, {
-          data: { ended: true },
-          header: this.translocoService.translate('stream.streamEnded'),
-          width: '50rem',
-        });
-      },
-    });
   }
+
   ngAfterViewInit(): void {
     this.getMessages();
   }

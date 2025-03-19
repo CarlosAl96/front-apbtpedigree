@@ -65,13 +65,9 @@ export class StreamService {
       .pipe(catchError(this.handleError));
   }
 
-  public getMessages(
-    idStream: number
-  ): Observable<ApiResponse<StreamMessage[]>> {
+  public getMessages(): Observable<ApiResponse<StreamMessage[]>> {
     return this.http
-      .get<ApiResponse<StreamMessage[]>>(
-        this.streamMessagesUrl + '/' + idStream
-      )
+      .get<ApiResponse<StreamMessage[]>>(this.streamMessagesUrl)
       .pipe(catchError(this.handleError));
   }
 

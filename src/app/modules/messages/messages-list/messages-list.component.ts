@@ -193,7 +193,7 @@ export class MessagesListComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
 
-    const maxSize: number = 250 * 1024;
+    const maxSize: number = 250 * 5096;
 
     if (file.size > maxSize) {
       this.maxSizeExceeded = true;

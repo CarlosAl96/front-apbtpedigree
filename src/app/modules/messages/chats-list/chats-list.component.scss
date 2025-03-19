@@ -105,3 +105,9 @@
   width: 15px;
   border-radius: 50%;
 }
+
+@media only screen and (min-height: 1080px) {
+  .chats-container {
+    height: 600px;
+  }
+}

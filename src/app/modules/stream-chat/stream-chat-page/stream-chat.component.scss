@@ -1,7 +1,19 @@
+.header-container {
+  justify-content: center;
+  text-transform: uppercase;
+}
+::ng-deep .p-card .p-card-content {
+  padding: 0;
+}
+
+::ng-deep .p-card .p-card-body {
+  padding: 0;
+}
+
 .container {
   border: 1px solid var(--color-secondary);
   width: 100%;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 180px);
   max-height: 45rem;
   border-radius: 10px;
   display: flex;
@@ -25,31 +37,9 @@
   width: 100%;
 }
 
-.title-container {
-  background-color: var(--color-primary);
-  color: var(--color-font-light);
-  padding: 1rem;
-  border-radius: 10px;
-  height: 10rem;
-  overflow-y: scroll;
-}
-
-.title {
-  font-size: x-large;
-  font-weight: 900;
-}
-
-.input-container {
-  width: 100%;
-  padding: 0.3rem;
-  background-color: var(--surface-200);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
 .messages-container {
   width: 100%;
-  padding: 2rem;
+  padding: 2rem 6rem;
   height: 100%;
   overflow-y: scroll;
   display: flex;
@@ -64,7 +54,8 @@
 }
 
 .message-bubble {
-  padding: 1rem;
+  padding: 1rem 3rem;
+
   width: fit-content;
   display: flex;
   flex-direction: column;
@@ -83,25 +74,24 @@
 
 .left {
   background-color: var(--surface-100);
-  border-radius: 15px;
+  border-radius: 25px;
 }
 
 .right {
   background-color: var(--surface-300);
-  border-radius: 15px;
+  border-radius: 25px;
 }
 
-.chat-avatar {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-}
 .username-head {
   font-size: larger;
   font-weight: 900;
   margin-left: 1rem;
+}
+
+.input-container {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--surface-200);
 }
 
 .time {
@@ -122,7 +112,38 @@
 }
 
 @media only screen and (min-height: 1080px) {
+  .input-container {
+    height: 200px;
+    padding: 0.5rem;
+  }
+
   .container {
-    height: 556.2px;
+    max-height: calc(100vh - 480px);
+  }
+
+  .message {
+    font-size: 4rem;
+  }
+
+  .time {
+    font-size: 3rem;
+  }
+
+  .text-input {
+    font-size: 3rem;
+  }
+
+  ::ng-deep .text-input .p-button-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  ::ng-deep .button-icon {
+    width: 6rem;
+  }
+
+  ::ng-deep .card .p-card.p-component {
+    zoom: 1;
   }
 }

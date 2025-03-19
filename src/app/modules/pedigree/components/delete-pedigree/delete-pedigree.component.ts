@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ConfirmationService } from 'primeng/api';
@@ -8,6 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Pedigree } from '../../../../core/models/pedigree';
 import { ToastService } from '../../../../core/services/toast.service';
 import { PedigreeService } from '../../../../core/services/pedigree.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-delete-pedigree',
@@ -20,13 +21,21 @@ import { PedigreeService } from '../../../../core/services/pedigree.service';
 export class DeletePedigreeComponent {
   @Input('pedigree') pedigree!: Pedigree;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
 
   constructor(
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: ToastService,
     private readonly pedigreeService: PedigreeService,
     private readonly translocoService: TranslocoService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly location: Location
   ) {}
 
   public deletePedigree(): void {

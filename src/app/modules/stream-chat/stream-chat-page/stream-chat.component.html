@@ -1,0 +1,78 @@
+<p-card *transloco="let t">
+  <ng-template pTemplate="header">
+    <div class="header-container">CHAT</div>
+  </ng-template>
+  <div class="container">
+    <div #messageContainer class="messages-container">
+      @for (message of messages; track $index) {
+      <div
+        [class]="
+          message.user_id == user?.id
+            ? 'message-container right-align'
+            : 'message-container left-align'
+        "
+      >
+        <div
+          [class]="
+            message.user_id == user?.id
+              ? 'message-bubble right'
+              : 'message-bubble left'
+          "
+        >
+          <span class="message">
+            <strong> {{ message.username }}</strong>
+          </span>
+          <span class="message">
+            {{ message.message }}
+          </span>
+
+          <div class="flex w-full justify-content-end align-items-center gap-1">
+            <span class="time">{{ message.created_at | timeFormat }}</span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    @if (showEmojiPicker) {
+    <emoji-mart
+      (emojiSelect)="addEmoji($event)"
+      class="emoji"
+      title="Pick your emoji…"
+      emoji="point_up"
+    ></emoji-mart>
+    }
+
+    <!-- [style]="{ position: 'absolute', bottom: '90px', rigth: '30rem' }" -->
+
+    <div class="input-container">
+      <p-inputGroup class="input-message w-full h-full gap-2">
+        <button
+          pButton
+          class="text-input button-icon"
+          type="button"
+          icon="pi pi-face-smile"
+          (click)="toggleEmojiPicker()"
+        ></button>
+        <input
+          pInputText
+          class="text-input"
+          type="text"
+          [(ngModel)]="messageModel"
+          (keyup.enter)="sendMessage()"
+          placeholder="{{ t('messages.messagePlaceholder') }}"
+          (focus)="showEmojiPicker = false"
+        />
+        <button
+          pButton
+          type="button"
+          class="text-input"
+          icon="pi pi-send"
+          label="{{ t('buttons.send') }}"
+          [disabled]="messageModel == ''"
+          (click)="sendMessage()"
+        ></button>
+      </p-inputGroup>
+    </div>
+  </div>
+</p-card>

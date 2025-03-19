@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryPaginationPedigree } from '../../../core/models/queryPaginationPedigree';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-header',
@@ -52,7 +53,8 @@ export class HeaderComponent implements OnInit {
     private readonly sessionService: SessionService,
     private readonly translocoService: TranslocoService,
     public readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly languageService: LanguageService
   ) {
     this.availableLangs =
       this.translocoService.getAvailableLangs() as LangDefinition[];
@@ -60,7 +62,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
-
+    this.activeLang = this.languageService.getSavedLanguage();
     if (this.router.url.startsWith('/pedigree?')) {
       this.route.queryParams.subscribe((params) => {
         if (params['size'] && params['page'] && params['orderBy']) {
@@ -99,6 +101,8 @@ export class HeaderComponent implements OnInit {
       .subscribe(() => {
         this.translocoService.setActiveLang(event.value);
       });
+
+    this.languageService.setLanguage(event.value);
   }
 
   public goToAdmin(): void {

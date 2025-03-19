@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -37,6 +43,7 @@ import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { environment } from '../../../../../environments/environment.development';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-pedigree',
@@ -67,6 +74,13 @@ export class NewPedigreeComponent implements OnInit {
   @Input('pedigree') pedigree!: PedigreeComplete;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
   @ViewChild('fileUpload') fileUpload!: FileUpload;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
 
   public formGroup!: FormGroup;
   public files: any[] = [];
@@ -124,7 +138,8 @@ export class NewPedigreeComponent implements OnInit {
     private readonly router: Router,
     private readonly translocoService: TranslocoService,
     private readonly sessionService: SessionService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly location: Location
   ) {
     this.formGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -134,12 +149,13 @@ export class NewPedigreeComponent implements OnInit {
       owner: ['', []],
       breeder: ['', []],
       callname: ['', []],
-      sex: ['unknown', [Validators.required]],
+      sex: ['unknown'],
+      fightcolor: ['black'],
       registration: ['', []],
       color: ['', []],
-      birthdate: [new Date(), [Validators.required]],
-      conditioned_weight: ['', [Validators.required]],
-      chain_weight: ['', [Validators.required]],
+      birthdate: [new Date()],
+      conditioned_weight: [''],
+      chain_weight: [''],
     });
 
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
@@ -155,6 +171,25 @@ export class NewPedigreeComponent implements OnInit {
           code: 'female',
         },
         { name: this.translocoService.translate('sexs.male'), code: 'male' },
+      ];
+
+      this.colorsOptions = [
+        {
+          name: this.translocoService.translate('colors.black'),
+          code: 'black',
+        },
+        {
+          name: this.translocoService.translate('colors.blue'),
+          code: 'blue',
+        },
+        {
+          name: this.translocoService.translate('colors.red'),
+          code: 'red',
+        },
+        {
+          name: this.translocoService.translate('colors.green'),
+          code: 'green',
+        },
       ];
 
       this.items = [
@@ -432,10 +467,13 @@ export class NewPedigreeComponent implements OnInit {
       owner: this.pedigree.pedigree.owner,
       breeder: this.pedigree.pedigree.breeder,
       callname: this.pedigree.pedigree.callname,
-      sex: this.pedigree.pedigree.sex,
+      sex: this.pedigree.pedigree.sex.toLowerCase(),
       registration: this.pedigree.pedigree.registration,
       color: this.pedigree.pedigree.color,
-      birthdate: new Date(this.pedigree.pedigree.birthdate),
+      fightcolor: this.pedigree.pedigree.fightcolor,
+      birthdate: this.pedigree.pedigree.birthdate
+        ? new Date(this.pedigree.pedigree.birthdate)
+        : null,
       conditioned_weight: this.pedigree.pedigree.conditioned_weight,
       chain_weight: this.pedigree.pedigree.chain_weight,
     });

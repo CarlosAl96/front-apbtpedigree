@@ -2,3 +2,8 @@
   justify-content: center;
   text-transform: uppercase;
 }
+@media only screen and (min-height: 1080px) {
+  .texts {
+    zoom: 0.8;
+  }
+}

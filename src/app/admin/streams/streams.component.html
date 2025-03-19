@@ -20,7 +20,11 @@
     </div>
     <div class="flex gap-1">
       <span class="subtitle">{{ t("stream.price") }}:</span
-      ><span>{{ streamActive.price }} USD</span>
+      ><span>{{
+        streamActive.price == 0
+          ? t("stream.isFree")
+          : streamActive.price + " USD"
+      }}</span>
     </div>
     <div class="flex gap-1">
       <span class="subtitle">{{ t("stream.startDate") }}:</span
@@ -102,7 +106,7 @@
         <th>{{ t("stream.description") }}</th>
         <th>{{ t("stream.price") }}</th>
         <th>{{ t("stream.viewers") }}</th>
-        <th>{{ t("stream.messages") }}</th>
+        <!-- <th>{{ t("stream.messages") }}</th> -->
         <th>{{ t("stream.startDate") }}</th>
         <th>{{ t("stream.actualStartDate") }}</th>
         <th>{{ t("stream.endDate") }}</th>
@@ -115,9 +119,11 @@
         <td>{{ stream.id }}</td>
         <td>{{ stream.title }}</td>
         <td>{{ stream.description }}</td>
-        <td>{{ stream.price + " $" }}</td>
+        <td>
+          {{ stream.price == 0 ? t("stream.isFree") : stream.price + " $" }}
+        </td>
         <td>{{ stream.user_count }}</td>
-        <td>{{ stream.chat_message_count }}</td>
+        <!-- <td>{{ stream.chat_message_count }}</td> -->
         <td>{{ stream.proposed_start_date | dateHourFormat }}</td>
         <td>{{ stream.actual_start_date | dateHourFormat }}</td>
         <td>{{ stream.proposed_end_date | dateHourFormat }}</td>

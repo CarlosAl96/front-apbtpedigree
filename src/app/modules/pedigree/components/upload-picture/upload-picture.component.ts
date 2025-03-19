@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -10,6 +10,7 @@ import { environment } from '../../../../../environments/environment.development
 import { PedigreeService } from '../../../../core/services/pedigree.service';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-upload-picture',
@@ -28,12 +29,20 @@ import { Router } from '@angular/router';
 export class UploadPictureComponent implements OnInit {
   @Input('pedigree') pedigree!: Pedigree;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
 
   public files: any[] = [];
   public urlImg: string = `${environment.uploads_url}pedigrees/`;
   public loading: boolean = false;
 
   constructor(
+    private readonly location: Location,
     private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly pedigreeService: PedigreeService,

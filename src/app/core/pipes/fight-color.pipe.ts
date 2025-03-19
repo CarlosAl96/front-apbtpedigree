@@ -11,8 +11,8 @@ export class FightColorPipe implements PipeTransform {
 
     if (
       color.toLowerCase() === 'red' ||
-      fullname.startsWith('GR') ||
-      fullname.startsWith('CH')
+      fullname.toLowerCase().startsWith('gr') ||
+      fullname.toLowerCase().startsWith('ch')
     ) {
       return 'red';
     } else if (color.toLowerCase() === 'green') {

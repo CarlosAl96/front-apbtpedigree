@@ -58,8 +58,6 @@ export class MyPedigreesComponent implements OnInit {
     private readonly route: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    console.log('id pedigree: ', this.idPedigree);
-
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
     if (!this.isFromPedigreeSearch) {
@@ -96,7 +94,10 @@ export class MyPedigreesComponent implements OnInit {
             this.isPrivate = false;
           }
 
-          if (this.pedigree.pedigree.user_id === this.user?.id) {
+          if (
+            this.pedigree.pedigree.user_id === this.user?.id ||
+            this.user.is_superuser
+          ) {
             this.isEditable = true;
           } else {
             this.isEditable = false;

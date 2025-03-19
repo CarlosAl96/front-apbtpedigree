@@ -11,13 +11,31 @@
   </div>
   <div #messageContainer class="messages-container">
     @for (message of messages; track $index) {
-    <div [class]="message.user_id == user?.id ? 'message active' : 'message'">
-      <span
-        ><strong
-          >{{ message.created_at | timeFormat }} {{ message.username }}</strong
-        >
-        {{ message.message }}</span
+    <div
+      [class]="
+        message.user_id == user?.id
+          ? 'message-container right-align'
+          : 'message-container left-align'
+      "
+    >
+      <div
+        [class]="
+          message.user_id == user?.id
+            ? 'message-bubble right'
+            : 'message-bubble left'
+        "
       >
+        <span class="message">
+          <strong> {{ message.username }}</strong>
+        </span>
+        <span class="message">
+          {{ message.message }}
+        </span>
+
+        <div class="flex w-full justify-content-end align-items-center gap-1">
+          <span class="time">{{ message.created_at | timeFormat }}</span>
+        </div>
+      </div>
     </div>
     }
   </div>

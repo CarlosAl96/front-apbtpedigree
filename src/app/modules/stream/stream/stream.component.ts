@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { ChatComponent } from '../chat/chat.component';
@@ -18,11 +18,16 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class StreamComponent implements OnInit {
   public streamUrl!: SafeUrl;
   public streamActive!: Stream | null;
+  public showEmptyMessage: boolean = false;
+  public userToken: string = '';
 
   constructor(
     private readonly sanitizer: DomSanitizer,
     private readonly streamService: StreamService
   ) {}
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
   ngOnInit(): void {
     this.getActiveStream();
   }
@@ -30,12 +35,15 @@ export class StreamComponent implements OnInit {
   private getActiveStream(): void {
     this.streamService.getActiveStream().subscribe({
       next: (res) => {
+        this.userToken = localStorage.getItem('USER_TOKEN') ?? '';
         this.streamActive = res.response;
         this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          this.streamActive.url
+          environment.api_url + 'stream/proxy/' + this.userToken
         );
       },
-      error: (error) => {},
+      error: (error) => {
+        this.showEmptyMessage = true;
+      },
     });
   }
 }

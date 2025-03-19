@@ -34,6 +34,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export class StreamPayPopupComponent implements OnInit {
   public isLive: boolean = false;
   public isPaid: boolean = false;
+  public isFree: boolean = false;
   public repro: boolean = false;
   public stream: Stream;
   public payPalConfig?: IPayPalConfig;
@@ -49,10 +50,16 @@ export class StreamPayPopupComponent implements OnInit {
     this.stream = this.config.data.stream;
     this.isLive = this.config.data.isLive;
     this.isPaid = this.config.data.isPaid;
+    this.isFree = this.config.data.isFree;
     this.repro = this.config.data.repro;
+
+    console.log(this.config.data);
+    
   }
   ngOnInit(): void {
-    this.initConfig();
+    if (!this.isFree) {
+      this.initConfig();
+    }
   }
 
   private initConfig(): void {

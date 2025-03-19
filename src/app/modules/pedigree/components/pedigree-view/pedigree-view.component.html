@@ -4,11 +4,19 @@
       @if (isFromPedigreeSearch) {
       <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
       }
-      <span class="w-full flex justify-content-center">{{
-        pedigree.pedigree.fullname
-          ? pedigree.pedigree.fullname
-          : t("yourPedigrees.unknown")
-      }}</span>
+      <span
+        class="w-full text-uppercase flex justify-content-center {{
+          {
+            color: pedigree.pedigree.fightcolor,
+            fullname: pedigree.pedigree.fullname
+          } | fightColor
+        }}"
+        >{{
+          pedigree.pedigree.fullname
+            ? pedigree.pedigree.fullname
+            : t("yourPedigrees.unknown")
+        }}</span
+      >
       @if (isFromPedigreeSearch) {
       <div class="w-full"></div>
       }
@@ -168,13 +176,13 @@
 
       @if (pedigree.pedigree.description) {
       <div class="flex flex-column">
-        <span>
+        <!-- <span>
           <strong
             >{{
               t("yourPedigrees.infoPedigree.description").toUpperCase()
             }}:</strong
           >
-        </span>
+        </span> -->
         <span>{{ pedigree.pedigree.description }}</span>
       </div>
       }

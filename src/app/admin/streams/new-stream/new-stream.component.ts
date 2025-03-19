@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -16,15 +17,19 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { StreamService } from '../../../core/services/stream.service';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxChangeEvent, CheckboxModule } from 'primeng/checkbox';
+
 @Component({
   selector: 'app-new-stream',
   standalone: true,
   imports: [
     TranslocoModule,
+    CheckboxModule,
     CardModule,
     InputTextModule,
     ButtonModule,
     ReactiveFormsModule,
+    FormsModule,
     InputTextareaModule,
     CalendarModule,
     InputNumberModule,
@@ -37,6 +42,7 @@ export class NewStreamComponent {
   public loading: boolean = false;
   public stream!: Stream;
   public option: string = '';
+  public isFree: boolean = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -76,7 +82,13 @@ export class NewStreamComponent {
     this.markFormControlsAsDirty(this.formGroup);
 
     if (this.formGroup.valid) {
-      this.streamService.createStream(this.formGroup.value).subscribe({
+      const obj: any = this.formGroup.value;
+
+      if (this.isFree) {
+        obj.price = 0;
+      }
+
+      this.streamService.createStream(obj).subscribe({
         next: (res) => {
           this.loading = false;
           this.toastService.setMessage({
@@ -103,29 +115,30 @@ export class NewStreamComponent {
     this.markFormControlsAsDirty(this.formGroup);
 
     if (this.formGroup.valid) {
-      this.streamService
-        .updateStream(this.formGroup.value, this.stream.id)
-        .subscribe({
-          next: (res) => {
-            this.loading = false;
-            this.toastService.setMessage({
-              severity: 'success',
-              summary: this.translocoService.translate('toast.success'),
-              detail: this.translocoService.translate('toast.streamUpdated'),
-            });
-            this.refDialog.close();
-          },
-          error: (error) => {
-            this.toastService.setMessage({
-              severity: 'error',
-              summary: this.translocoService.translate('toast.error'),
-              detail: this.translocoService.translate(
-                'toast.streamUpdatedError'
-              ),
-            });
-            this.loading = false;
-          },
-        });
+      const obj: any = this.formGroup.value;
+
+      if (this.isFree) {
+        obj.price = 0;
+      }
+      this.streamService.updateStream(obj, this.stream.id).subscribe({
+        next: (res) => {
+          this.loading = false;
+          this.toastService.setMessage({
+            severity: 'success',
+            summary: this.translocoService.translate('toast.success'),
+            detail: this.translocoService.translate('toast.streamUpdated'),
+          });
+          this.refDialog.close();
+        },
+        error: (error) => {
+          this.toastService.setMessage({
+            severity: 'error',
+            summary: this.translocoService.translate('toast.error'),
+            detail: this.translocoService.translate('toast.streamUpdatedError'),
+          });
+          this.loading = false;
+        },
+      });
     }
   }
 
@@ -139,7 +152,24 @@ export class NewStreamComponent {
       proposed_end_date: new Date(this.stream.proposed_end_date),
     });
 
-    this.formGroup.controls['price'].disable();
+    if (this.stream.price == 0) {
+      this.formGroup.controls['price'].disable();
+      this.isFree = true;
+    }
+  }
+
+  public onFreeChange(event: CheckboxChangeEvent) {
+    if (event.checked) {
+      this.formGroup.patchValue({
+        price: 0,
+      });
+      this.formGroup.controls['price'].disable();
+    } else {
+      this.formGroup.patchValue({
+        price: 15,
+      });
+      this.formGroup.controls['price'].enable();
+    }
   }
 
   private markFormControlsAsDirty(formGroup: FormGroup): void {

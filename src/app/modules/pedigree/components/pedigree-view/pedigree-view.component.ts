@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
@@ -15,6 +22,7 @@ import { User } from '../../../../core/models/user';
 import { DogLog } from '../../../../core/models/dogLog';
 import { PedigreeService } from '../../../../core/services/pedigree.service';
 import { DateHourFormatPipe } from '../../../../core/pipes/date-hour-format.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pedigree-view',
@@ -34,6 +42,13 @@ import { DateHourFormatPipe } from '../../../../core/pipes/date-hour-format.pipe
 export class PedigreeViewComponent implements OnInit {
   @Input('pedigree') pedigree!: PedigreeComplete;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
   @Output() idPedigree: EventEmitter<number> = new EventEmitter<number>();
   public filterOptions: DropOption[] = [];
   public fullBrothersCount: number = 0;
@@ -44,6 +59,7 @@ export class PedigreeViewComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
+    private readonly location: Location,
     private readonly translocoService: TranslocoService,
     private readonly sessionService: SessionService,
     private readonly pedigreeService: PedigreeService

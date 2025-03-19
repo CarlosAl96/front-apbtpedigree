@@ -159,7 +159,7 @@
     "deleteChatQuestion": "Are you sure to delete this chat?",
     "deleteMessage": "Delete Message",
     "deleteMessageQuestion": "Are you sure to delete this message?",
-    "maxSizeExceeded": "The file is too large. Maximum allowed: 250KB"
+    "maxSizeExceeded": "The file is too large. Maximum allowed: 2MB"
   },
   "account": {
     "personalInfo": "Personal Information",
@@ -310,6 +310,8 @@
     "search": "Search streams",
     "empty": "No stream announced",
     "reAnnounce": "Reannounce stream",
+    "free": "Mark as free",
+    "isFree": "Free",
     "reAnnounceQuestion": "Are you sure you want to reannounce this stream?",
     "liveStream": "Start stream",
     "liveStreamQuestion": "Are you sure you want to start this stream?",
@@ -420,6 +422,7 @@
         "owner": "Owner",
         "sex": "Sex",
         "color": "Color",
+        "fightcolor": "Fight Color",
         "registrationNumber": "Registration Number",
         "birthdate": "Birthdate",
         "conditioned_weight": "Conditioned Weight",
@@ -503,6 +506,7 @@
     "errorRegister": "An error occurred while creating the account, please try again",
     "noMatchPassword": "Both passwords must match",
     "errorNewPedigree": "An error occurred when saving the pedigree",
-    "errorChangeOwner": "An error has occurred, the user <strong>{{user}}</strong> was not found"
+    "errorEditPedigree": "An error occurred while editing the Pedigree!",
+    "errorChangeOwner": "An error has occurred, the user {{user}} was not found"
   }
 }

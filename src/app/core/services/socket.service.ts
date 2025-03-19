@@ -84,4 +84,8 @@ export class SocketService {
       });
     });
   }
+
+  public disconnect(): void {
+    this.socket.disconnect();
+  }
 }

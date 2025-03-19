@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +19,7 @@ import { Pedigree } from '../../../../core/models/pedigree';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-transfer-ownership',
@@ -40,12 +41,20 @@ import { SessionService } from '../../../../core/services/session.service';
 export class TransferOwnershipComponent {
   @Input('pedigree') pedigree!: Pedigree;
   @Input('isFromPedigreeSearch') isFromPedigreeSearch: boolean = false;
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: any) {
+    if (this.isFromPedigreeSearch) {
+      this.goBack();
+      this.location.forward();
+    }
+  }
 
   public formGroup!: FormGroup;
   public user!: User | undefined;
   public error!: Message[];
 
   constructor(
+    private readonly location: Location,
     private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly translocoService: TranslocoService,
@@ -99,7 +108,8 @@ export class TransferOwnershipComponent {
                   {
                     severity: 'error',
                     detail: this.translocoService.translate(
-                      'errorMessages.errorChangeOwner'
+                      'errorMessages.errorChangeOwner',
+                      { user: this.formGroup.value.username }
                     ),
                   },
                 ];

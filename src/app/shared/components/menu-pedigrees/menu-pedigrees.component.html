@@ -1,37 +1,63 @@
 <p-card styleClass="h-full" *transloco="let t">
   <ng-template pTemplate="header">
-    <div class="header-container">{{t("yourPedigrees.title")}}</div>
+    <div class="header-container">{{ t("yourPedigrees.title") }}</div>
   </ng-template>
 
   @if (isLoading) {
   <div class="flex w-full align-items-center justify-content-center">
-    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="5" animationDuration=".5s" />
+    <p-progressSpinner
+      styleClass="w-4rem h-4rem"
+      strokeWidth="5"
+      animationDuration=".5s"
+    />
   </div>
-  } @else {
-  @if (pedigrees.length>0) {
+  } @else { @if (pedigrees.length>0) {
   <div class="paginator mb-3">
-    <p-button icon="pi pi-angle-left" [rounded]="true" [text]="true" [raised]="true" [disabled]="page == 1"
-      (onClick)="onPageChange(page - 1)" />
+    <p-button
+      icon="pi pi-angle-left"
+      [rounded]="true"
+      [text]="true"
+      [raised]="true"
+      [disabled]="page == 1"
+      (onClick)="onPageChange(page - 1)"
+    />
     <p-inputGroup>
-      <p-inputNumber [(ngModel)]="page" mode="decimal" [min]="1" [max]="totalPages" />
+      <p-inputNumber
+        [(ngModel)]="page"
+        mode="decimal"
+        [min]="1"
+        [max]="totalPages"
+      />
       <p-button icon="pi pi-search" (onClick)="onPageChange(page)" />
     </p-inputGroup>
-    <span>{{t("yourPedigrees.of")}}</span>
-    <span>{{totalPages}}</span>
-    <p-button icon="pi pi-angle-right" [rounded]="true" [text]="true" [raised]="true" (onClick)="onPageChange(page + 1)"
-      [disabled]="page == totalPages" />
+    <span>{{ t("yourPedigrees.of") }}</span>
+    <span>{{ totalPages }}</span>
+    <p-button
+      icon="pi pi-angle-right"
+      [rounded]="true"
+      [text]="true"
+      [raised]="true"
+      (onClick)="onPageChange(page + 1)"
+      [disabled]="page == totalPages"
+    />
   </div>
 
   <diV class="flex flex-column">
     @for (pedigree of pedigrees; track $index) {
     <span
-      class="{{pedigree.id == idPedigreeActive ? 'link-dog active' : 'link-dog'}} {{{ color: pedigree.fightcolor, fullname: pedigree.fullname } | fightColor}}"
-      (click)="onClickPedigree(pedigree.id)">{{ pedigree.fullname ? pedigree.fullname : t('yourPedigrees.unknown')
-      }}</span>
+      class="{{
+        pedigree.id == idPedigreeActive ? 'link-dog active' : 'link-dog'
+      }} {{
+        { color: pedigree.fightcolor, fullname: pedigree.fullname } | fightColor
+      }}"
+      (click)="onClickPedigree(pedigree.id)"
+      >{{
+        pedigree.fullname ? pedigree.fullname : t("yourPedigrees.unknown")
+      }}</span
+    >
     }
   </diV>
   } @else {
-  <span>{{t("yourPedigrees.emptyMessage")}}</span>
-  }
-  }
+  <span>{{ t("yourPedigrees.emptyMessage") }}</span>
+  } }
 </p-card>

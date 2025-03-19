@@ -10,14 +10,20 @@
   </div>
   <div class="flex align-items-center mt-3 gap-2">
     <span class="subtitle">{{ t("stream.price") }}:</span
-    ><span>{{ stream.price }} USD</span>
-    @if(isPaid){
+    ><span>{{ stream.price == 0 ? "" : stream.price + " USD" }}</span>
+    @if(isPaid){ @if (isFree) {
+    <p-tag
+      icon="pi pi-verified"
+      severity="success"
+      [value]="t('stream.isFree')"
+    />
+    }@else {
     <p-tag
       icon="pi pi-verified"
       severity="success"
       [value]="t('stream.paid')"
     />
-    }
+    } }
   </div>
   <div class="flex gap-2">
     <span class="subtitle">{{ t("stream.initDate") }}:</span
@@ -42,14 +48,14 @@
     </div>
     }@else {
     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-    } }@else {
+    } }@else { @if (isFree) {
     <div
       class="flex flex-column justify-content-center align-items-center gap-3"
     >
       <i class="pi pi-verified success"></i>
       <span class="subtitle">{{ t("stream.isPaid") }}</span>
     </div>
-    @if (isLive) {
+    } @if (isLive) {
     <div class="flex w-full justify-content-end mt-3">
       <button
         pButton

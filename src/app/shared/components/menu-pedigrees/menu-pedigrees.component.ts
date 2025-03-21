@@ -84,9 +84,8 @@ export class MenuPedigreesComponent {
   private getPedigrees(query: QueryPaginationPedigree): void {
     this.pedigreeService.getPedigrees(query).subscribe((res) => {
       if (res) {
-
         console.log(res);
-        
+
         this.pedigrees = fullnameTransformPedigreeList(res.response.data);
         this.totalRows = res.response.totalRows;
         this.totalPages = Math.ceil(this.totalRows / this.queryPagination.size);
@@ -102,15 +101,17 @@ export class MenuPedigreesComponent {
 
   public onPageChange(page: number): void {
     this.queryPagination.page = page - 1;
-    this.router.navigate(['pedigree/my-pedigrees/' + this.idPedigreeActive], {
-      queryParams: this.queryPagination,
-    });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/pedigree/my-pedigrees/${this.idPedigreeActive}?${queryString}`;
   }
 
   public onClickPedigree(id: number): void {
     this.idPedigreeActive = id;
-    this.router.navigate(['pedigree/my-pedigrees/' + this.idPedigreeActive], {
-      queryParams: this.queryPagination,
-    });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/pedigree/my-pedigrees/${this.idPedigreeActive}?${queryString}`;
   }
 }

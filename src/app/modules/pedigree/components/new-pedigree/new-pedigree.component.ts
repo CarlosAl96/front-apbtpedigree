@@ -213,7 +213,7 @@ export class NewPedigreeComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.router.navigateByUrl(this.router.url);
+    window.history.back();
   }
 
   private getPedigrees(query: QueryPaginationPedigree, option: string): void {
@@ -366,7 +366,7 @@ export class NewPedigreeComponent implements OnInit {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             this.files = [];
           } else {
-            this.router.navigate(['/pedigree/my-pedigrees/0']);
+            window.location.href = '/pedigree/my-pedigrees/0';
           }
         },
         error: (error) => {

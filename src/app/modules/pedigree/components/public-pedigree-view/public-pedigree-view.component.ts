@@ -116,7 +116,7 @@ export class PublicPedigreeViewComponent implements OnInit {
     const url = this.router.serializeUrl(
       this.router.createUrlTree(['public/pedigree', event])
     );
-    this.router.navigateByUrl(url);
+    window.location.href = url;
   }
 
   public tabActive: string = 'pedigree';

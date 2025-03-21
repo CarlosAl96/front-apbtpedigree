@@ -3,7 +3,7 @@
     <div class="header-container">Dashboard</div>
   </ng-template>
 
-  <div class="flex justify-content-between px-5 gap-5">
+  <div class="flex justify-content-between gap-5">
     <div class="card">
       <span class="title">{{ t("dashboard.users") }}</span>
       <h2 class="text-center">{{ users }}</h2>
@@ -22,31 +22,27 @@
     </div>
   </div>
 
-  <div class="flex justify-content-between gap-5 p-5">
-    <div class="card c-chart">
+  <div class="flex w-full justify-content-between mt-5 gap-5">
+    <div class="c-chart">
       <span class="title">{{ t("dashboard.usersChart") }}</span>
-      <div class="flex align-items-center w-full h-full">
-        <p-chart
-          type="line"
-          class="chart"
-          height="24rem"
-          [data]="chartDataUsers"
-          [options]="chartDataUsersOptions"
-        />
-      </div>
+      <p-chart
+        type="line"
+        class="chart"
+        height="24rem"
+        [data]="chartDataUsers"
+        [options]="chartDataUsersOptions"
+      />
     </div>
 
-    <div class="card c-chart">
+    <div class="c-chart">
       <span class="title">{{ t("dashboard.paymentsChart") }}</span>
-      <div class="flex align-items-center w-full h-full">
-        <p-chart
-          type="bar"
-          class="chart"
-          height="24rem"
-          [data]="chartDataPayments"
-          [options]="chartDataPaymentsOptions"
-        />
-      </div>
+      <p-chart
+        type="bar"
+        class="chart"
+        height="24rem"
+        [data]="chartDataPayments"
+        [options]="chartDataPaymentsOptions"
+      />
     </div>
   </div>
 </p-card>

@@ -101,7 +101,8 @@ export class TransferOwnershipComponent {
                     'toast.pedigreeEdited'
                   ),
                 });
-                this.router.navigate(['/pedigree/my-pedigrees/0']);
+
+                window.location.href = '/pedigree/my-pedigrees/0';
               },
               error: (error) => {
                 this.error = [
@@ -124,6 +125,6 @@ export class TransferOwnershipComponent {
   }
 
   public goBack(): void {
-    this.router.navigateByUrl(this.router.url);
+    window.history.back();
   }
 }

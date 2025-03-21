@@ -5,19 +5,17 @@
 
   @if(topic){
   <div class="flex align-items-end gap-1">
-    <a class="link" [routerLink]="'/forum'">
+    <a class="link" [href]="'/forum'">
       {{ t("forum.index") }}
     </a>
     <span class="title"> &#183;</span>
-    <a class="link" [routerLink]="'/forum/topics/' + topic.id_categories">{{
+    <a class="link" [href]="'/forum/topics/' + topic.id_categories">{{
       topic.category_name
     }}</a>
 
     <span class="title">
       &#183;
-      <a class="link" [routerLink]="'/forum/posts/' + topic.id">{{
-        topic.name
-      }}</a>
+      <a class="link" [href]="'/forum/posts/' + topic.id">{{ topic.name }}</a>
     </span>
 
     <span class="title">

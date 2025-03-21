@@ -9,7 +9,7 @@
       <div class="flex flex-column justify-content-center">
         <div class="flex align-items-center justify-content-between">
           <div class="flex flex-row gap-1 w-full">
-            <a class="link text-xl" [routerLink]="'/forum'">
+            <a class="link text-xl" [href]="'/forum'">
               {{ t("forum.index") }}
             </a>
             <span class="title text-xl"> &#183;</span>
@@ -46,7 +46,7 @@
             <div class="flex gap-1">
               <span class="description">{{ t("forum.moderators") }}:</span>
               @for (moderator of forumCategory.moderators; track $index) {
-              <a class="link" [routerLink]="'/forum/profile/' + moderator"
+              <a class="link" [href]="'/forum/profile/' + moderator"
                 ><strong>{{ moderator }} </strong>
               </a>
               <strong>
@@ -172,7 +172,7 @@
           <div class="flex flex-column gap-2">
             @if(!topic.is_locked || user?.is_superuser ||
             forumCategory.moderators.includes(user?.username ?? '')){
-            <a class="link title" [routerLink]="'/forum/posts/' + topic.id">{{
+            <a class="link title" [href]="'/forum/posts/' + topic.id">{{
               topic.name
             }}</a>
             } @else {
@@ -182,7 +182,7 @@
         </td>
         <td style="width: 60px">{{ topic.replies }}</td>
         <td style="width: 60px">
-          <a class="link" [routerLink]="'/forum/profile/' + topic.author"
+          <a class="link" [href]="'/forum/profile/' + topic.author"
             ><strong>{{ topic.author }} </strong>
           </a>
         </td>
@@ -194,7 +194,7 @@
             <div class="flex align-items-center gap-1">
               <a
                 class="link"
-                [routerLink]="'/forum/profile/' + topic.last_post_info.author"
+                [href]="'/forum/profile/' + topic.last_post_info.author"
                 ><strong>{{ topic.last_post_info.author }}</strong></a
               >
               <i class="pi pi-arrow-right text-xs font-bold"></i>
@@ -512,7 +512,7 @@
         <div class="flex gap-1">
           <span class="description">{{ t("forum.moderators") }}:</span>
           @for (moderator of forumCategory.moderators; track $index) {
-          <a class="link" [routerLink]="'/forum/profile/' + moderator"
+          <a class="link" [href]="'/forum/profile/' + moderator"
             ><strong>{{ moderator }} </strong>
           </a>
           <strong>

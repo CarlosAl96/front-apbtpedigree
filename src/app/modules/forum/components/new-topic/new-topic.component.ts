@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { ForumService } from '../../../../core/services/forum.service';
@@ -21,7 +21,6 @@ import { DateHourFormatPipe } from '../../../../core/pipes/date-hour-format.pipe
 import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
 import { ForumTopic } from '../../../../core/models/forumTopic';
-import { SocketService } from '../../../../core/services/socket.service';
 
 @Component({
   selector: 'app-new-topic',
@@ -35,7 +34,7 @@ import { SocketService } from '../../../../core/services/socket.service';
     FormsModule,
     InputTextModule,
     EditorModule,
-    RouterLink,
+
     DialogModule,
     DateHourFormatPipe,
   ],
@@ -179,7 +178,7 @@ export class NewTopicComponent {
             summary: this.translocoService.translate('toast.success'),
             detail: this.translocoService.translate('toast.createdTopic'),
           });
-          this.router.navigateByUrl('/forum/topics/' + this.forumCategory.id);
+          window.location.href = '/forum/topics/' + this.forumCategory.id;
         },
         error: (error) => {
           this.messageService.setMessage({
@@ -212,7 +211,7 @@ export class NewTopicComponent {
             summary: this.translocoService.translate('toast.success'),
             detail: this.translocoService.translate('toast.updateTopic'),
           });
-          this.router.navigateByUrl('/forum/topics/' + this.forumCategory.id);
+          window.location.href = '/forum/topics/' + this.forumCategory.id;
         },
         error: (error) => {
           this.messageService.setMessage({
@@ -228,7 +227,7 @@ export class NewTopicComponent {
 
   public changeCategory(): void {
     if (this.modelCategory > 0) {
-      this.router.navigateByUrl(`forum/topics/${this.modelCategory}`);
+      window.location.href = '/forum/topics/' + this.modelCategory;
     }
   }
 
@@ -272,6 +271,6 @@ export class NewTopicComponent {
   }
 
   public cancel(): void {
-    this.router.navigateByUrl('/forum/topics/' + this.forumCategory.id);
+    window.location.href = '/forum/topics/' + this.forumCategory.id;
   }
 }

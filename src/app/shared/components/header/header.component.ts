@@ -106,11 +106,11 @@ export class HeaderComponent implements OnInit {
   }
 
   public goToAdmin(): void {
-    this.router.navigate(['admin']);
+    window.location.href = '/admin';
   }
 
   public goToUserMode(): void {
-    this.router.navigate(['']);
+    window.location.href = '/';
   }
 
   public search(): void {
@@ -132,6 +132,9 @@ export class HeaderComponent implements OnInit {
       this.queryPagination.userId = Number(this.modelSearch);
     }
 
-    this.router.navigate(['pedigree'], { queryParams: this.queryPagination });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/pedigree/0?${queryString}`;
   }
 }

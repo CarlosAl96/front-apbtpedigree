@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { ForumService } from '../../../../core/services/forum.service';
@@ -36,7 +36,6 @@ import { SocketService } from '../../../../core/services/socket.service';
     FormsModule,
     InputTextModule,
     EditorModule,
-    RouterLink,
     DialogModule,
     DateHourFormatPipe,
   ],
@@ -192,7 +191,8 @@ export class NewPostComponent {
             summary: this.translocoService.translate('toast.success'),
             detail: this.translocoService.translate('toast.createdPost'),
           });
-          this.router.navigateByUrl('/forum/posts/' + this.topic.id);
+
+          window.location.href = '/forum/posts/' + this.topic.id;
         },
         error: (error) => {
           this.messageService.setMessage({
@@ -225,7 +225,8 @@ export class NewPostComponent {
             summary: this.translocoService.translate('toast.success'),
             detail: this.translocoService.translate('toast.updatePost'),
           });
-          this.router.navigateByUrl('/forum/posts/' + this.topic.id);
+
+          window.location.href = '/forum/posts/' + this.topic.id;
         },
         error: (error) => {
           this.messageService.setMessage({
@@ -241,7 +242,7 @@ export class NewPostComponent {
 
   public changeCategory(): void {
     if (this.modelCategory > 0) {
-      this.router.navigateByUrl(`forum/topics/${this.modelCategory}`);
+      window.location.href = '/forum/topics/' + this.modelCategory;
     }
   }
 
@@ -303,6 +304,6 @@ export class NewPostComponent {
   }
 
   public cancel(): void {
-    this.router.navigateByUrl('/forum/posts/' + this.topic.id);
+    window.location.href = '/forum/posts/' + this.topic.id;
   }
 }

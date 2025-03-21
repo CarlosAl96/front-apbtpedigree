@@ -130,7 +130,9 @@
     "emailSended": "Hemos enviado un correo electrónico para que puedas cambiar tu contraseña.",
     "errorUser": "No existe un usuario con ese correo o nombre de usuario.",
     "errorReset": "Ha ocurrido un error enviando el correo electrónico. Por favor, inténtalo de nuevo.",
-    "errorNewPassword": "Ha ocurrido un error cambiando la contraseña. Por favor, inténtalo de nuevo."
+    "errorNewPassword": "Ha ocurrido un error cambiando la contraseña. Por favor, inténtalo de nuevo.",
+    "sessionClosed": "¡Tu sesión ha terminado porque iniciaste sesión desde otro dispositivo.!",
+    "sessionEnded": "Sesión terminada"
   },
   "register": {
     "fullname": "Nombre completo",

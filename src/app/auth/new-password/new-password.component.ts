@@ -79,7 +79,7 @@ export class NewPasswordComponent {
               summary: this.translocoService.translate('toast.success'),
               detail: this.translocoService.translate('toast.passwordChanged'),
             });
-            this.router.navigate(['/auth']);
+            window.location.href = '/auth';
             this.loading = false;
           },
           error: () => {

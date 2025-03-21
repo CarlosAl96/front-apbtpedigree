@@ -67,6 +67,14 @@ export class ForumService {
       .pipe(catchError(this.handleError));
   }
 
+  public updateOrder(option: string, id: number): Observable<any> {
+    return this.http
+      .patch<any>(this.forumCategoriesUrl + '/' + id + '/order', {
+        option: option,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   public lockOrUnlockCategory(id: number): Observable<any> {
     return this.http
       .patch<any>(this.forumCategoriesUrl + '/' + id + '/lock', {})

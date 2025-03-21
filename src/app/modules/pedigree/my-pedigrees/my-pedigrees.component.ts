@@ -73,6 +73,12 @@ export class MyPedigreesComponent implements OnInit {
     if (this.isNewPedigree) {
       this.tabActive = 'newDog';
     }
+
+    this.route.queryParams.subscribe((params) => {
+      if (params['tab']) {
+        this.tabActive = params['tab'] as string;
+      }
+    });
   }
 
   private getPedigreeById(id: number): void {
@@ -112,7 +118,13 @@ export class MyPedigreesComponent implements OnInit {
   }
 
   public changeTab(tab: string) {
-    this.tabActive = tab;
+    //this.tabActive = tab;
+    const currentParams = new URLSearchParams(this.route.snapshot.queryParams);
+    currentParams.set('tab', tab);
+
+    window.location.href = `${
+      this.router.url.split('?')[0]
+    }?${currentParams.toString()}`;
   }
 
   public back(): void {

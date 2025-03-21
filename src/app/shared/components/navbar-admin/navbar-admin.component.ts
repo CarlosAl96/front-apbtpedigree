@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { environment } from '../../../../environments/environment.development';
 import { SessionService } from '../../../core/services/session.service';
@@ -10,7 +10,7 @@ import { User } from '../../../core/models/user';
 @Component({
   selector: 'app-navbar-admin',
   standalone: true,
-  imports: [TranslocoModule, RouterLinkActive, RouterLink],
+  imports: [TranslocoModule],
   templateUrl: './navbar-admin.component.html',
   styleUrl: './navbar-admin.component.scss',
 })
@@ -59,9 +59,8 @@ export class NavbarAdminComponent {
     this.authService.logout(id).subscribe({
       next: (res) => {
         this.sessionService.deleteSession();
-        this.router.navigate(['/home']);
         this.user = undefined;
-        location.reload();
+        window.location.href = '/auth';
       },
     });
   }

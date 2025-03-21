@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
@@ -14,13 +14,7 @@ import { User } from '../../../core/models/user';
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [
-    TranslocoModule,
-    CardModule,
-    TableModule,
-    DateHourFormatPipe,
-    RouterLink,
-  ],
+  imports: [TranslocoModule, CardModule, TableModule, DateHourFormatPipe],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
@@ -110,12 +104,15 @@ export class ForumComponent {
       page: 0,
       order: 'ASC',
     };
-    this.router.navigate(['forum/posts/' + idTopic], {
-      queryParams: { ...query, opt: 'last' },
-    });
+
+    const queryString = new URLSearchParams({
+      ...query,
+      opt: 'last',
+    } as any).toString();
+    window.location.href = `/forum/posts/${idTopic}?${queryString}`;
   }
 
   public goToCategory(categoryId: number): void {
-    this.router.navigateByUrl(`forum/topics/${categoryId}`);
+    window.location.href = '/forum/topics/' + categoryId;
   }
 }

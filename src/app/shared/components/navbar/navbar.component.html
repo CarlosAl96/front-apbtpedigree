@@ -10,23 +10,30 @@
     <span class="link" (click)="logout()">{{ t("header.logout") }}</span>
     } @else {
     <a
-      class="link mr-1"
-      routerLinkActive="active-link"
-      routerLink="/auth/login"
+      [class]="
+        this.router.url == '/auth/login' ? 'link mr-1 active-link' : 'link mr-1'
+      "
+      href="/auth/login"
       >{{ t("header.login") }}</a
     >
     {{ "/" }}
     <a
-      class="link ml-1"
-      routerLinkActive="active-link"
-      routerLink="/auth/register"
+      [class]="
+        this.router.url == '/auth/register'
+          ? 'link ml-1 active-link'
+          : 'link ml-1'
+      "
+      href="/auth/register"
       >{{ t("header.register") }}</a
     >
     }
   </div>
   <ul class="navbar-list w-full">
     <li>
-      <a routerLink="/home" class="navbar-item" routerLinkActive="active">
+      <a
+        href="/home"
+        [class]="router.url == '/home' ? 'navbar-item active' : 'navbar-item'"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
@@ -41,9 +48,11 @@
     </li>
     <li>
       <a
-        routerLink="/pedigree"
+        href="/pedigree/0"
         [class]="
-          router.url == '/pedigree' || router.url.startsWith('/pedigree?')
+          router.url == '/pedigree' ||
+          (router.url.startsWith('/pedigree/') &&
+            !router.url.startsWith('/pedigree/my-pedigrees/'))
             ? 'navbar-item active'
             : 'navbar-item'
         "
@@ -62,7 +71,7 @@
     </li>
     <li>
       <a
-        routerLink="/pedigree/my-pedigrees/0"
+        href="/pedigree/my-pedigrees/0"
         [class]="
           router.url.startsWith('/pedigree/my-pedigrees/')
             ? 'navbar-item active'
@@ -82,7 +91,12 @@
       >
     </li>
     <li>
-      <a routerLink="/account" class="navbar-item" routerLinkActive="active">
+      <a
+        href="/account"
+        [class]="
+          router.url == '/account' ? 'navbar-item active' : 'navbar-item'
+        "
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
@@ -96,7 +110,12 @@
       >
     </li>
     <li>
-      <a routerLink="/messages" class="navbar-item" routerLinkActive="active">
+      <a
+        href="/messages"
+        [class]="
+          router.url == '/messages' ? 'navbar-item active' : 'navbar-item'
+        "
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
@@ -111,7 +130,10 @@
     </li>
     @if(!user?.forum_ban){
     <li>
-      <a routerLink="/forum" class="navbar-item" routerLinkActive="active">
+      <a
+        href="/forum"
+        [class]="router.url == '/forum' ? 'navbar-item active' : 'navbar-item'"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 640 512"
@@ -126,7 +148,11 @@
     </li>
     }
     <li>
-      <a routerLink="/stream" class="navbar-item" routerLinkActive="active">
+      <a
+        href="/stream"
+        href="/stream"
+        [class]="router.url == '/stream' ? 'navbar-item active' : 'navbar-item'"
+      >
         <svg
           class="icon-svg stream"
           viewBox="0 0 24 24"
@@ -144,9 +170,10 @@
     </li>
     <li>
       <a
-        routerLink="/stream-chat"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/stream-chat"
+        [class]="
+          router.url == '/stream-chat' ? 'navbar-item active' : 'navbar-item'
+        "
       >
         <svg
           class="icon-svg stream"

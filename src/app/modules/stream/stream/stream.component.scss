@@ -23,11 +23,28 @@
   max-width: 60vw;
 }
 
+.container-stream-chat {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: start;
+}
+
 @media only screen and (min-height: 1080px) {
+  .stream-container {
+    width: 100%;
+  }
   .stream {
     height: auto;
-    width: 60vw;
+    max-width: 100vw;
+    width: 100%;
     aspect-ratio: 16 / 9;
+  }
+
+  .container-stream-chat {
+    display: flex;
+    flex-direction: column;
   }
 
   ::ng-deep .card .p-card.p-component {

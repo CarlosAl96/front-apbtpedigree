@@ -40,6 +40,6 @@ export class PublicLinkComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.router.navigateByUrl(this.router.url);
+    window.history.back();
   }
 }

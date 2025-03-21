@@ -70,6 +70,20 @@
               icon="pi pi-trash"
               (onClick)="deleteCategory(category.id)"
             ></p-button>
+            <p-button
+              [text]="true"
+              [raised]="true"
+              icon="pi pi-arrow-up"
+              (onClick)="changeOrderCategory('up', category.id)"
+              [disabled]="category.num_order == 0"
+            ></p-button>
+            <p-button
+              [text]="true"
+              [raised]="true"
+              icon="pi pi-arrow-down"
+              (onClick)="changeOrderCategory('down', category.id)"
+              [disabled]="category.num_order == forumCategories.length - 1"
+            ></p-button>
           </div>
         </td>
       </tr>

@@ -21,6 +21,6 @@ export class SessionService {
 
   deleteSession() {
     localStorage.clear();
-    this.router.navigate(['']);
+    //window.location.href = '';
   }
 }

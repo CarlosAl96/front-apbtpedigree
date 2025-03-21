@@ -63,6 +63,7 @@ export class ForumComponent {
       next: (res) => {
         this.forumCategories = res.response.data;
         this.totalRows = res.response.totalRows;
+        console.log(res);
 
         this.forumCategories.map((category) => {
           category.last_post_info = this.getLastPostInfo(category.last_post);
@@ -204,5 +205,17 @@ export class ForumComponent {
       return jsonObject.join(', ');
     }
     return null;
+  }
+
+  public changeOrderCategory(option: string, id: number): void {
+    this.forumService.updateOrder(option, id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.getCategories(this.queryPagination);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

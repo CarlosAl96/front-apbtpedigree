@@ -3,7 +3,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { MessagesModule } from 'primeng/messages';
@@ -27,7 +27,6 @@ import { StreamPayPopupComponent } from '../../shared/components/stream-pay-popu
     MessagesModule,
     PasswordModule,
     TranslocoModule,
-    RouterLink,
   ],
   providers: [DialogService],
   templateUrl: './login.component.html',
@@ -63,7 +62,7 @@ export class LoginComponent {
         next: (res) => {
           this.error = [];
           console.log(res);
-          
+
           this.sessionService.saveSession('USER_TOKEN', res.response.token);
           this.toastService.setMessage({
             severity: 'success',
@@ -72,7 +71,7 @@ export class LoginComponent {
               user: this.formGroup.controls['username'].value,
             }),
           });
-          this.router.navigate(['/home']);
+          window.location.href = '/home';
           this.verifyPayment();
           this.loading = false;
         },

@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { ForumCategory } from '../../../core/models/forumCategory';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ForumService } from '../../../core/services/forum.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
@@ -22,7 +22,6 @@ import { Subscription } from 'rxjs';
     DropdownModule,
     ButtonModule,
     FormsModule,
-    RouterLink,
     ProgressSpinnerModule,
   ],
   templateUrl: './profile.component.html',
@@ -86,12 +85,12 @@ export class ProfileComponent implements OnInit {
   }
 
   public goToChat(username: string): void {
-    this.router.navigateByUrl(`messages/?user=${username}`);
+    window.location.href = `/messages/?user=${username}`;
   }
 
   public changeCategory(): void {
     if (this.modelCategory > 0) {
-      this.router.navigateByUrl(`forum/topics/${this.modelCategory}`);
+      window.location.href = `/forum/topics/${this.modelCategory}`;
     }
   }
 

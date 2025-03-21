@@ -109,7 +109,7 @@ export class RegisterComponent {
             summary: this.translocoService.translate('toast.success'),
             detail: this.translocoService.translate('toast.register'),
           });
-          this.router.navigate(['/auth']);
+          window.location.href = '/auth';
         },
         error: (error) => {
           this.loading = false;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SessionService } from '../../../core/services/session.service';
 import { User } from '../../../core/models/user';
@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment.development';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [TranslocoModule, RouterLinkActive, RouterLink],
+  imports: [TranslocoModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -59,9 +59,8 @@ export class NavbarComponent implements OnInit {
     this.authService.logout(id).subscribe({
       next: (res) => {
         this.sessionService.deleteSession();
-        this.router.navigate(['/home']);
         this.user = undefined;
-        location.reload();
+        window.location.href = '/auth';
       },
     });
   }

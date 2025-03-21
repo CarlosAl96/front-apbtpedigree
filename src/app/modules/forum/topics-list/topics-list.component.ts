@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -34,7 +34,6 @@ import { SocketService } from '../../../core/services/socket.service';
     ReactiveFormsModule,
     FormsModule,
     DateHourFormatPipe,
-    RouterLink,
     ConfirmDialogModule,
     PaginatorModule,
     InputTextModule,
@@ -200,16 +199,18 @@ export class TopicsListComponent implements OnInit {
 
   public changeCategory(): void {
     if (this.modelCategory > 0) {
-      this.router.navigateByUrl(`forum/topics/${this.modelCategory}`);
+      window.location.href = `/forum/topics/${this.modelCategory}`;
     }
   }
 
   public changePreviousOption(): void {
     this.queryPagination.previous = this.modelPrevious;
     this.queryPagination.page = 0;
-    this.router.navigate(['forum/topics/' + this.idCategory], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/topics/${this.idCategory}?${queryString}`;
   }
 
   public getLastPostInfo(lastPost: string): any {
@@ -229,7 +230,7 @@ export class TopicsListComponent implements OnInit {
   }
 
   public goToNewTopic(): void {
-    this.router.navigateByUrl(`forum/topics/new/${this.forumCategory.id}`);
+    window.location.href = `/forum/topics/new/${this.forumCategory.id}`;
   }
 
   public goToLastPost(idTopic: number): void {
@@ -238,15 +239,15 @@ export class TopicsListComponent implements OnInit {
       page: 0,
       order: 'ASC',
     };
-    this.router.navigate(['forum/posts/' + idTopic], {
-      queryParams: { ...query, opt: 'last' },
-    });
+    const queryString = new URLSearchParams({
+      ...query,
+      opt: 'last',
+    } as any).toString();
+    window.location.href = `/forum/posts/${idTopic}?${queryString}`;
   }
 
   public goToEditTopic(idTopic: number): void {
-    this.router.navigateByUrl(
-      `forum/topics/new/${this.forumCategory.id}?opt=edit&id=${idTopic}`
-    );
+    window.location.href = `/forum/topics/new/${this.forumCategory.id}?opt=edit&id=${idTopic}`;
   }
 
   public setSticky(idTopic: number, value: boolean): void {
@@ -388,9 +389,10 @@ export class TopicsListComponent implements OnInit {
               summary: this.translocoService.translate('toast.success'),
               detail: this.translocoService.translate('toast.deleteTopic'),
             });
-            this.router.navigate(['forum/topics/' + this.idCategory], {
-              queryParams: this.queryPagination,
-            });
+            const queryString = new URLSearchParams(
+              this.queryPagination as any
+            ).toString();
+            window.location.href = `/forum/topics/${this.idCategory}?${queryString}`;
           },
           error: (error) => {
             this.messageService.setMessage({
@@ -407,17 +409,19 @@ export class TopicsListComponent implements OnInit {
 
   public onPageChange(event: any): void {
     this.queryPagination.page = event.page;
-    this.router.navigate(['forum/topics/' + this.idCategory], {
-      queryParams: this.queryPagination,
-    });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/topics/${this.idCategory}?${queryString}`;
   }
 
   public search(): void {
     this.queryPagination = { size: 50, page: 0 };
     this.queryPagination.search = this.modelSearch as string;
-    this.router.navigate(['forum/topics/' + this.idCategory], {
-      queryParams: this.queryPagination,
-    });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/topics/${this.idCategory}?${queryString}`;
   }
 
   public markAllAsViewed(): void {

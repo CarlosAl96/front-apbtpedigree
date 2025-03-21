@@ -3,25 +3,34 @@
     <div class="header-container">{{ t("menu") }}</div>
   </ng-template>
   <ul class="navbar-list w-full">
-    <li class="navbar-item" routerLinkActive="active">
-      <a routerLink="/home"> {{ t("navbar.items.home") }}</a>
+    <li [class]="router.url == '/home' ? 'navbar-item active' : 'navbar-item'">
+      <a href="/home"> {{ t("navbar.items.home") }}</a>
     </li>
 
     <li
-      [class]="router.url == '/pedigree' ? 'navbar-item active' : 'navbar-item'"
+      [class]="
+        router.url.startsWith('/pedigree') &&
+        !router.url.startsWith('/pedigree/my-pedigrees/')
+          ? 'navbar-item active'
+          : 'navbar-item'
+      "
     >
-      <a routerLink="/pedigree"> {{ t("navbar.items.pedigrees") }}</a>
+      <a href="/pedigree/0"> {{ t("navbar.items.pedigrees") }}</a>
     </li>
 
-    <li class="navbar-item" routerLinkActive="active">
-      <a routerLink="/account"> {{ t("navbar.items.yourAccount") }}</a>
+    <li
+      [class]="router.url == '/account' ? 'navbar-item active' : 'navbar-item'"
+    >
+      <a href="/account"> {{ t("navbar.items.yourAccount") }}</a>
     </li>
 
-    <li class="navbar-item" routerLinkActive="active">
-      <a routerLink="/messages"> {{ t("navbar.items.messages") }}</a>
+    <li
+      [class]="router.url == '/messages' ? 'navbar-item active' : 'navbar-item'"
+    >
+      <a href="/messages"> {{ t("navbar.items.messages") }}</a>
     </li>
-    <li class="navbar-item" routerLinkActive="active">
-      <a routerLink="/forum"> {{ t("navbar.items.forum") }}</a>
+    <li [class]="router.url == '/forum' ? 'navbar-item active' : 'navbar-item'">
+      <a href="/forum"> {{ t("navbar.items.forum") }}</a>
     </li>
   </ul>
 </p-card>

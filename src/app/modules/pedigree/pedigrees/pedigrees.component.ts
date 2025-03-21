@@ -55,6 +55,10 @@ export class PedigreesComponent {
     private readonly route: ActivatedRoute,
     private readonly loadingService: LoadingService
   ) {
+    this.route.paramMap.subscribe((params) => {
+      this.idPedigreeSelected = Number(params.get('id'));
+    });
+
     this.route.queryParams.subscribe((params) => {
       if (params['size'] && params['page'] && params['orderBy']) {
         this.queryPagination.size = Number(params['size']);
@@ -91,7 +95,10 @@ export class PedigreesComponent {
 
   public onPageChange(page: number): void {
     this.queryPagination.page = page - 1;
-    this.router.navigate(['pedigree'], { queryParams: this.queryPagination });
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/pedigree/0?${queryString}`;
   }
 
   private getPedigrees(query: QueryPaginationPedigree): void {
@@ -112,6 +119,14 @@ export class PedigreesComponent {
 
   public goToNewDog(): void {
     this.isNewPedigree = true;
+  }
+
+  public goToPedigree(id: number): void {
+    this.idPedigreeSelected = id;
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = '/pedigree/' + id + '?' + queryString;
   }
 
   public customSort(event: TableLazyLoadEvent): void {

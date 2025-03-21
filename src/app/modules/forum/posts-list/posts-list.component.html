@@ -9,13 +9,13 @@
         <div class="flex align-items-center justify-content-between">
           @if(topic){
           <div class="flex align-items-end gap-1">
-            <a class="link text-xl" [routerLink]="'/forum'">
+            <a class="link text-xl" [href]="'/forum'">
               {{ t("forum.index") }}
             </a>
             <span class="title"> &#183;</span>
             <a
               class="link text-xl"
-              [routerLink]="'/forum/topics/' + topic.id_categories"
+              [href]="'/forum/topics/' + topic.id_categories"
               >{{ topic.category_name }}</a
             >
           </div>
@@ -75,7 +75,7 @@
             >
               <a
                 class="link title"
-                [routerLink]="'/forum/profile/' + post.username"
+                [href]="'/forum/profile/' + post.username"
                 >{{ post.username }}</a
               >
               <div class="flex justify-content-end gap-2">

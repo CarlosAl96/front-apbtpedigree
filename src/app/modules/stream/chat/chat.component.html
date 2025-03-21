@@ -50,15 +50,17 @@
   }
 
   <div class="input-container">
-    <p-inputGroup class="input-message w-full gap-2">
+    <p-inputGroup class="input-message h-full w-full gap-2">
       <button
         pButton
+        class="text-input button-icon"
         type="button"
         icon="pi pi-face-smile"
         (click)="toggleEmojiPicker()"
       ></button>
       <input
         pInputText
+        class="text-input"
         type="text"
         [(ngModel)]="messageModel"
         (keyup.enter)="sendMessage()"
@@ -68,6 +70,7 @@
       <button
         pButton
         type="button"
+        class="text-input"
         icon="pi pi-send"
         label="{{ t('buttons.send') }}"
         [disabled]="messageModel == ''"

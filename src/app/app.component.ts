@@ -17,6 +17,8 @@ import { TranslocoService } from '@jsverse/transloco';
 import { User } from './core/models/user';
 import { SessionService } from './core/services/session.service';
 import { LanguageService } from './core/services/language.service';
+import { AuthService } from './core/services/auth.service';
+import { SessionClosedComponent } from './shared/components/session-closed/session-closed.component';
 
 @Component({
   selector: 'app-root',
@@ -37,6 +39,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly paymentService: PaymentService,
     private readonly translocoService: TranslocoService,
     private readonly sessionService: SessionService,
+    private readonly authService: AuthService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly languageService: LanguageService
@@ -62,24 +65,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, 500);
   }
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      console.log(Number(params.get('id')));
-    });
-    this.router.events.subscribe((event) => {
-      if (
-        event instanceof NavigationEnd &&
-        window.matchMedia('(min-height: 1080px)').matches
-      ) {
-        if (this.router.url.includes('/pedigree/my-pedigrees/')) {
-          if (this.router.url == '/pedigree/my-pedigrees/0') {
-            this.resetZoom();
-          }
-        } else {
-          this.resetZoom();
-        }
-      }
-    });
-
     this.socketService.onLive().subscribe({
       next: (res) => {
         this.verifyPayment();
@@ -93,6 +78,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.socketService.onReprogramed().subscribe({
       next: (res) => {
         this.verifyPayment(true);
+      },
+    });
+    this.socketService.onLogin().subscribe({
+      next: (res) => {
+        if (res.id == this.user?.id) {
+          this.authService.getSessionStatus().subscribe({
+            next: (res) => {
+              console.log(res);
+            },
+            error: (error) => {
+              console.log(error);
+              this.dialogService.open(SessionClosedComponent, {
+                header: this.translocoService.translate('login.sessionEnded'),
+                width: '50rem',
+              });
+            },
+          });
+        }
       },
     });
   }
@@ -117,30 +120,5 @@ export class AppComponent implements OnInit, AfterViewInit {
       },
       error: (error) => {},
     });
-  }
-
-  private resetZoom(): void {
-    const reloaded = sessionStorage.getItem('reloaded');
-    if (!reloaded) {
-      sessionStorage.setItem('reloaded', 'true');
-      location.reload();
-    } else {
-      sessionStorage.removeItem('reloaded');
-    }
-    const viewportMeta = document.querySelector('meta[name="viewport"]');
-
-    if (viewportMeta) {
-      viewportMeta.setAttribute(
-        'content',
-        'width=device-width, initial-scale=0.1, maximum-scale=1.0, user-scalable=no'
-      );
-
-      setTimeout(() => {
-        viewportMeta.setAttribute(
-          'content',
-          'width=device-width, initial-scale=0.1, maximum-scale=1.0, user-scalable=yes'
-        );
-      }, 500);
-    }
   }
 }

@@ -24,7 +24,7 @@ export class NoStreamOrEndedComponent {
 
   public accept(): void {
     if (this.ended) {
-      this.router.navigate(['home']);
+      window.location.href = '/home';
     }
     this.refDialog.close();
   }

@@ -9,4 +9,5 @@ export interface ForumCategory {
   last_post_info?: any;
   is_locked: boolean;
   new_posts?: boolean;
+  num_order: number;
 }

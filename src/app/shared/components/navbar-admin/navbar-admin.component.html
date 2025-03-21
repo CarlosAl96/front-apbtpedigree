@@ -10,16 +10,20 @@
     <span class="link" (click)="logout()">{{ t("header.logout") }}</span>
     } @else {
     <a
-      class="link mr-1"
-      routerLinkActive="active-link"
-      routerLink="/auth/login"
+      [class]="
+        this.router.url == 'auth/login' ? 'link mr-1 active-link' : 'link mr-1'
+      "
+      href="/auth/login"
       >{{ t("header.login") }}</a
     >
     {{ "/" }}
     <a
-      class="link ml-1"
-      routerLinkActive="active-link"
-      routerLink="/auth/register"
+      [class]="
+        this.router.url == 'auth/register'
+          ? 'link ml-1 active-link'
+          : 'link ml-1'
+      "
+      href="/auth/register"
       >{{ t("header.register") }}</a
     >
     }
@@ -27,9 +31,12 @@
   <ul class="navbar-list w-full">
     <li>
       <a
-        routerLink="/admin/dashboard"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/admin/dashboard"
+        [class]="
+          this.router.url == '/admin/dashboard'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
       >
         <i class="pi pi-objects-column icon-svg"></i>
         {{ t("navbar.items.dashboard") }}</a
@@ -37,9 +44,12 @@
     </li>
     <li>
       <a
-        routerLink="/admin/users"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/admin/users"
+        [class]="
+          this.router.url == '/admin/users'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
       >
         <i class="pi pi-users icon-svg"></i>
         {{ t("navbar.items.users") }}</a
@@ -47,9 +57,12 @@
     </li>
     <li>
       <a
-        routerLink="/admin/forum"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/admin/forum"
+        [class]="
+          this.router.url == '/admin/forum'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -65,9 +78,12 @@
     </li>
     <li>
       <a
-        routerLink="/admin/streams"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/admin/streams"
+        [class]="
+          this.router.url == '/admin/streams'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
       >
         <svg
           class="icon-svg stream"
@@ -86,9 +102,12 @@
     </li>
     <li>
       <a
-        routerLink="/admin/payments"
-        class="navbar-item"
-        routerLinkActive="active"
+        href="/admin/payments"
+        [class]="
+          this.router.url == '/admin/payments'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
       >
         <i class="pi pi-money-bill icon-svg"></i>
         {{ t("payments.title") }}</a

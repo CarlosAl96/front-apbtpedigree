@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -39,7 +39,6 @@ import { SocketService } from '../../../core/services/socket.service';
     PaginatorModule,
     InputTextModule,
     ConfirmDialogModule,
-    RouterLink,
   ],
   providers: [ConfirmationService],
   templateUrl: './posts-list.component.html',
@@ -268,9 +267,10 @@ export class PostsListComponent implements OnInit {
               summary: this.translocoService.translate('toast.success'),
               detail: this.translocoService.translate('toast.deletePost'),
             });
-            this.router.navigate(['forum/posts/' + this.idTopic], {
-              queryParams: this.queryPagination,
-            });
+            const queryString = new URLSearchParams(
+              this.queryPagination as any
+            ).toString();
+            window.location.href = `/forum/posts/${this.idTopic}?${queryString}`;
           },
           error: (error) => {
             this.messageService.setMessage({
@@ -287,7 +287,7 @@ export class PostsListComponent implements OnInit {
 
   public changeCategory(): void {
     if (this.modelCategory > 0) {
-      this.router.navigateByUrl(`forum/topics/${this.modelCategory}`);
+      window.location.href = '/forum/topics/' + this.modelCategory;
     }
   }
 
@@ -295,24 +295,30 @@ export class PostsListComponent implements OnInit {
     this.queryPagination.previous = this.modelPrevious;
     this.queryPagination.order = this.modelOrder;
     this.queryPagination.page = 0;
-    this.router.navigate(['forum/posts/' + this.idTopic], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/posts/${this.idTopic}?${queryString}`;
   }
 
   public onPageChange(event: any): void {
     this.queryPagination.page = event.page;
-    this.router.navigate(['forum/posts/' + this.idTopic], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/posts/${this.idTopic}?${queryString}`;
   }
 
   public search(): void {
     this.queryPagination = { size: 20, page: 0 };
     this.queryPagination.search = this.modelSearch as string;
-    this.router.navigate(['forum/posts/' + this.idTopic], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/forum/posts/${this.idTopic}?${queryString}`;
   }
 
   private getLocation(city: string, state: string, country: string): string {
@@ -371,11 +377,11 @@ export class PostsListComponent implements OnInit {
   }
 
   public goToNewTopic(): void {
-    this.router.navigateByUrl(`forum/topics/new/${this.topic.id_categories}`);
+    window.location.href = `/forum/topics/new/${this.topic.id_categories}`;
   }
 
   public goToNewPost(): void {
-    this.router.navigateByUrl(`forum/posts/new/${this.topic.id}`);
+    window.location.href = `/forum/posts/new/${this.topic.id}`;
   }
 
   public scrollUp(): void {
@@ -391,19 +397,15 @@ export class PostsListComponent implements OnInit {
   }
 
   public goToEdit(id: number): void {
-    this.router.navigateByUrl(
-      `forum/posts/new/${this.topic.id}?opt=edit&id=${id}`
-    );
+    window.location.href = `/forum/posts/new/${this.topic.id}?opt=edit&id=${id}`;
   }
 
   public goToQuote(id: number): void {
-    this.router.navigateByUrl(
-      `forum/posts/new/${this.topic.id}?id_post_reply=${id}`
-    );
+    window.location.href = `/forum/posts/new/${this.topic.id}?id_post_reply=${id}`;
   }
 
   public goToChat(username: string): void {
-    this.router.navigateByUrl(`messages/?user=${username}`);
+    window.location.href = `/messages/?user=${username}`;
   }
 
   public isModerator(username: string): boolean {

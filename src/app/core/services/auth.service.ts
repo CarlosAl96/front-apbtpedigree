@@ -18,6 +18,7 @@ import { ResponsePagination } from '../models/responsePagination';
 })
 export class AuthService {
   private usersUrl: string = `${environment.api_url}users`;
+  private sessionStatusUrl: string = `${environment.api_url}sessionStatus`;
   private loginUrl: string = `${environment.api_url}users/auth`;
   private registerUrl: string = `${environment.api_url}users/store`;
   private logoutUrl: string = `${environment.api_url}users/logout`;
@@ -140,6 +141,13 @@ export class AuthService {
       .get<ApiResponse<User>>(this.dashboardUrl)
       .pipe(catchError(this.handleError));
   }
+
+  public getSessionStatus(): Observable<ApiResponse<any>> {
+    return this.http
+      .get<ApiResponse<any>>(this.sessionStatusUrl)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => error);
   }

@@ -130,7 +130,9 @@
     "emailSended": "An email has been sent to your email address with instructions to reset your password.",
     "errorUser": "There is no user with that email or username.",
     "errorReset": "An error occurred sending the email. Please try again.",
-    "errorNewPassword": "An error occurred while changing the password. Please try again."
+    "errorNewPassword": "An error occurred while changing the password. Please try again.",
+    "sessionClosed": "Your session has ended because you logged in from another device!",
+    "sessionEnded": "Session Ended"
   },
   "register": {
     "fullname": "Fullname",

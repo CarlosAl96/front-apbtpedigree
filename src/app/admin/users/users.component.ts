@@ -271,22 +271,28 @@ export class UsersComponent implements OnInit {
   public search(): void {
     this.queryPagination = { orderBy: 'id ASC', size: 50, page: 0 };
     this.queryPagination.search = this.modelSearch as string;
-    this.router.navigate(['admin/users'], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/admin/users?${queryString}`;
   }
 
-  public onChangeActiveOptions(event: DropdownChangeEvent) {
+  public onChangeActiveOptions(event: DropdownChangeEvent): void {
     this.queryPagination.active = event.value;
-    this.router.navigate(['admin/users'], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/admin/users?${queryString}`;
   }
 
   public onPageChange(event: any): void {
     this.queryPagination.page = event.page;
-    this.router.navigate(['admin/users'], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/admin/users?${queryString}`;
   }
 }

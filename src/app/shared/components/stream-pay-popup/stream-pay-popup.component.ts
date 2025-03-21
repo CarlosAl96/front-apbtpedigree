@@ -54,7 +54,6 @@ export class StreamPayPopupComponent implements OnInit {
     this.repro = this.config.data.repro;
 
     console.log(this.config.data);
-    
   }
   ngOnInit(): void {
     if (!this.isFree) {
@@ -123,6 +122,6 @@ export class StreamPayPopupComponent implements OnInit {
 
   public goToStream(): void {
     this.refDialog.close();
-    this.router.navigate(['stream']);
+    window.location.href = '/stream';
   }
 }

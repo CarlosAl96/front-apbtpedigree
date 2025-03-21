@@ -234,14 +234,19 @@ export class StreamsComponent implements OnInit {
   public search(): void {
     this.queryPagination = { size: 50, page: 0 };
     this.queryPagination.search = this.modelSearch as string;
-    this.router.navigate(['admin/streams'], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/admin/streams?${queryString}`;
   }
+
   public onPageChange(event: any): void {
     this.queryPagination.page = event.page;
-    this.router.navigate(['admin/streams'], {
-      queryParams: this.queryPagination,
-    });
+
+    const queryString = new URLSearchParams(
+      this.queryPagination as any
+    ).toString();
+    window.location.href = `/admin/streams?${queryString}`;
   }
 }

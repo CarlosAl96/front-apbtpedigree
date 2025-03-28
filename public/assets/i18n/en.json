@@ -407,6 +407,8 @@
       "text2": "To add a link to this pedigree on your website, copy the HTML code and paste it into the webpage where you want the link to appear."
     },
     "newPedigree": {
+      "searchSire": "Search sire",
+      "searchDam": "Search dam",
       "step1": "Finding parents",
       "step2": "Pedigree Information",
       "textStep1": "For each pedigree in the database we know who its parents are by storing their identification numbers in their file. For this reason, the parents must first be entered in the database. If the parents are not in the database, you cannot know who their parents are and the dog will be shown as a dog with unknown parents. If you know that the parents are already in the database, either because you have entered them yourself or someone else has, use the search forms below to find and select the parents. Otherwise, just go to the next step without selecting any or click on \"Mark as unknown\".",

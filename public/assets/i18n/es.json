@@ -407,6 +407,8 @@
       "text2": "Para añadir un enlace al pedigree en tu sitio web, copia el código HTML y pégalo en la página donde deseas que aparezca el enlace."
     },
     "newPedigree": {
+      "searchSire": "Buscar padre",
+      "searchDam": "Buscar madre",
       "step1": "Seleccionar padres",
       "step2": "Información del pedigrí",
       "textStep1": "De cada pedigrí en la base de datos se sabe quiénes son sus padres al guardar los números de identificación de éstos en su ficha. Por esta razón, los padres deben ser introducidos primero en la base de datos. Si los padres no están en la base de datos, no se puede saber quiénes son sus padres y el perro se mostrará como un perro con padres desconocidos. Si sabe que los padres ya están en la base de datos, bien porque los ha introducido usted mismo o porque lo ha hecho otra persona, utilice los formularios de búsqueda que aparecen a continuación para encontrar y seleccionar a los padres. De lo contrario, sólo tiene que pasar al siguiente paso sin seleccionar ninguno o hacer clic en \"Marcar como desconocido\".",

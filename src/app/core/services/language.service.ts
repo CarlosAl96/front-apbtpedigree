@@ -13,6 +13,6 @@ export class LanguageService {
   }
 
   getSavedLanguage(): string {
-    return localStorage.getItem('apbt-lang') || 'es';
+    return localStorage.getItem('apbt-lang') || 'en';
   }
 }

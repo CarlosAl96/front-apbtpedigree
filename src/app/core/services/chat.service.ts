@@ -46,6 +46,7 @@ export class ChatService {
   private chatSelected = new BehaviorSubject<Chat>(this.chatEmpty);
 
   private getChatsUrl: string = `${environment.api_url}chat/get`;
+  private getChatsCountUrl: string = `${environment.api_url}chat/getChatsCount`;
   private deleteChatUrl: string = `${environment.api_url}chat/delete/`;
   private viewedChatUrl: string = `${environment.api_url}chat/view/`;
   private deleteMessageUrl: string = `${environment.api_url}message/delete/`;
@@ -68,6 +69,12 @@ export class ChatService {
   public getChats(): Observable<ApiResponse<Chat[]>> {
     return this.http
       .get<ApiResponse<Chat[]>>(this.getChatsUrl)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getChatsCountUnviewed(): Observable<ApiResponse<number>> {
+    return this.http
+      .get<ApiResponse<number>>(this.getChatsCountUrl)
       .pipe(catchError(this.handleError));
   }
 

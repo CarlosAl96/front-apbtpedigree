@@ -41,74 +41,85 @@
     <p [innerHTML]="t('yourPedigrees.newPedigree.note')"></p>
   </div>
 
-  <div class="flex flex-row justify-content-between gap-2 mt-5">
-    <div class="w-full">
-      <div class="flex gap-2">
-        <label
-          ><strong>{{
-            t("yourPedigrees.sire").toUpperCase() + ":"
-          }}</strong></label
-        >
-        <span
-          class=" {{
-            {
-              color: selectedFather.fightcolor,
-              fullname: selectedFather.fullname
-            } | fightColor
-          }}"
-          >{{
-            selectedFather.id == 0
-              ? t("yourPedigrees.unknown")
-              : selectedFather.fullname
-          }}</span
-        >
-      </div>
-      <div class="flex align-items-center gap-2">
-        <label>{{ t("yourPedigrees.newPedigree.markAsUnknown") }}</label>
-        <p-button
-          icon="pi pi-times"
-          size="small"
-          [rounded]="true"
-          [text]="true"
-          severity="danger"
-          (onClick)="setUnknown('father')"
-        />
-      </div>
+  <div class="flex flex-column justify-content-between gap-2 mt-5">
+    <div
+      class="flex flex-row align-items-center justify-content-start gap-2 w-full"
+    >
+      <label>{{ t("yourPedigrees.newPedigree.searchSire") }}:</label>
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="modelSearchFather"
+        [placeholder]="t('header.search')"
+        (keyup.enter)="search('father')"
+      />
+      <label>{{ t("header.by") }}</label>
+      <p-dropdown
+        [options]="searchOptions"
+        [(ngModel)]="modelSearchOptionFather"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div>
+            {{ t("header.searchOptions." + modelSearchOptionFather) }}
+          </div>
+        </ng-template>
+        <ng-template let-searchOption pTemplate="item">
+          <div>{{ t("header.searchOptions." + searchOption) }}</div>
+        </ng-template>
+      </p-dropdown>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-search"
+        [label]="t('buttons.search')"
+        class="p-button-primary"
+        (click)="search('father')"
+        [disabled]="modelSearchFather == ''"
+      ></button>
     </div>
 
-    <div class="w-full">
-      <div class="flex gap-2">
-        <label
-          ><strong>{{
-            t("yourPedigrees.dam").toUpperCase() + ":"
-          }}</strong></label
-        >
-        <span
-          class=" {{
-            {
-              color: selectedMother.fightcolor,
-              fullname: selectedMother.fullname
-            } | fightColor
-          }}"
-          >{{
-            selectedMother.id == 0
-              ? t("yourPedigrees.unknown")
-              : selectedMother.fullname
-          }}</span
-        >
-      </div>
-      <div class="flex align-items-center gap-2">
-        <label>{{ t("yourPedigrees.newPedigree.markAsUnknown") }}</label>
-        <p-button
-          icon="pi pi-times"
-          size="small"
-          [rounded]="true"
-          [text]="true"
-          severity="danger"
-          (onClick)="setUnknown('mother')"
-        />
-      </div>
+    <div
+      class="flex flex-row align-items-center justify-content-start gap-2 w-full my-3"
+    >
+      <label>{{ t("yourPedigrees.newPedigree.searchDam") }}:</label>
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="modelSearchMother"
+        [placeholder]="t('header.search')"
+        (keyup.enter)="search('mother')"
+      />
+      <label>{{ t("header.by") }}</label>
+      <p-dropdown
+        [options]="searchOptions"
+        [(ngModel)]="modelSearchOptionMother"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div>
+            {{ t("header.searchOptions." + modelSearchOptionMother) }}
+          </div>
+        </ng-template>
+        <ng-template let-searchOption pTemplate="item">
+          <div>{{ t("header.searchOptions." + searchOption) }}</div>
+        </ng-template>
+      </p-dropdown>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-search"
+        [label]="t('buttons.search')"
+        class="p-button-primary"
+        (click)="search('mother')"
+        [disabled]="modelSearchMother == ''"
+      ></button>
     </div>
+
+    <p-button
+      label="{{ t('buttons.next') }}"
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      (onClick)="active = 1"
+    />
   </div>
 
   <div class="flex justify-content-between gap-2 mt-3">
@@ -116,39 +127,39 @@
       <div class="header-container">
         <span>{{ t("yourPedigrees.sire").toUpperCase() }}</span>
       </div>
-      <div
-        class="flex flex-row align-items-center justify-content-center gap-2 w-full"
-      >
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="modelSearchFather"
-          [placeholder]="t('header.search')"
-          (keyup.enter)="search('father')"
-        />
-        <label>{{ t("header.by") }}</label>
-        <p-dropdown
-          [options]="searchOptions"
-          [(ngModel)]="modelSearchOptionFather"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div>
-              {{ t("header.searchOptions." + modelSearchOptionFather) }}
-            </div>
-          </ng-template>
-          <ng-template let-searchOption pTemplate="item">
-            <div>{{ t("header.searchOptions." + searchOption) }}</div>
-          </ng-template>
-        </p-dropdown>
-        <button
-          pButton
-          type="button"
-          icon="pi pi-search"
-          [label]="t('buttons.search')"
-          class="p-button-primary"
-          (click)="search('father')"
-          [disabled]="modelSearchFather == ''"
-        ></button>
+
+      <div class="w-full px-5 py-2">
+        <div class="flex gap-2">
+          <label
+            ><strong>{{
+              t("yourPedigrees.sire").toUpperCase() + ":"
+            }}</strong></label
+          >
+          <span
+            class=" {{
+              {
+                color: selectedFather.fightcolor,
+                fullname: selectedFather.fullname
+              } | fightColor
+            }}"
+            >{{
+              selectedFather.id == 0
+                ? t("yourPedigrees.unknown")
+                : selectedFather.fullname
+            }}</span
+          >
+        </div>
+        <div class="flex align-items-center gap-2">
+          <label>{{ t("yourPedigrees.newPedigree.markAsUnknown") }}</label>
+          <p-button
+            icon="pi pi-times"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            severity="danger"
+            (onClick)="setUnknown('father')"
+          />
+        </div>
       </div>
 
       <p-table
@@ -248,39 +259,39 @@
       <div class="header-container">
         <span>{{ t("yourPedigrees.dam").toUpperCase() }}</span>
       </div>
-      <div
-        class="flex flex-row align-items-center justify-content-center gap-2 w-full"
-      >
-        <input
-          pInputText
-          type="text"
-          [(ngModel)]="modelSearchMother"
-          [placeholder]="t('header.search')"
-          (keyup.enter)="search('mother')"
-        />
-        <label>{{ t("header.by") }}</label>
-        <p-dropdown
-          [options]="searchOptions"
-          [(ngModel)]="modelSearchOptionMother"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div>
-              {{ t("header.searchOptions." + modelSearchOptionMother) }}
-            </div>
-          </ng-template>
-          <ng-template let-searchOption pTemplate="item">
-            <div>{{ t("header.searchOptions." + searchOption) }}</div>
-          </ng-template>
-        </p-dropdown>
-        <button
-          pButton
-          type="button"
-          icon="pi pi-search"
-          [label]="t('buttons.search')"
-          class="p-button-primary"
-          (click)="search('mother')"
-          [disabled]="modelSearchMother == ''"
-        ></button>
+
+      <div class="w-full px-5 py-2">
+        <div class="flex gap-2">
+          <label
+            ><strong>{{
+              t("yourPedigrees.dam").toUpperCase() + ":"
+            }}</strong></label
+          >
+          <span
+            class=" {{
+              {
+                color: selectedMother.fightcolor,
+                fullname: selectedMother.fullname
+              } | fightColor
+            }}"
+            >{{
+              selectedMother.id == 0
+                ? t("yourPedigrees.unknown")
+                : selectedMother.fullname
+            }}</span
+          >
+        </div>
+        <div class="flex align-items-center gap-2">
+          <label>{{ t("yourPedigrees.newPedigree.markAsUnknown") }}</label>
+          <p-button
+            icon="pi pi-times"
+            size="small"
+            [rounded]="true"
+            [text]="true"
+            severity="danger"
+            (onClick)="setUnknown('mother')"
+          />
+        </div>
       </div>
 
       <p-table

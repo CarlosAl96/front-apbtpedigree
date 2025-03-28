@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   public user!: User | undefined;
   public availableLangs: any[] = [];
   private subscription: Subscription | null = null;
-  public activeLang: string = 'es';
+  public activeLang: string = 'en';
   public modelSearch: string = '';
   public modelSearchOption: string = 'registeredName';
   public queryPagination: QueryPaginationPedigree = {

@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
         ],
         reRenderOnLangChange: true,
         fallbackLang: 'en',
-        defaultLang: 'es',
+        defaultLang: 'en',
         missingHandler: {
           useFallbackTranslation: false,
         },

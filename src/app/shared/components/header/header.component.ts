@@ -63,7 +63,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
     this.activeLang = this.languageService.getSavedLanguage();
-    if (this.router.url.startsWith('/pedigree?')) {
+    if (
+      this.router.url.startsWith('/pedigree') &&
+      !this.router.url.startsWith('/pedigree/my-pedigrees/')
+    ) {
       this.route.queryParams.subscribe((params) => {
         if (params['size'] && params['page'] && params['orderBy']) {
           if (params['registeredName']) {
@@ -135,6 +138,6 @@ export class HeaderComponent implements OnInit {
     const queryString = new URLSearchParams(
       this.queryPagination as any
     ).toString();
-    window.location.href = `/pedigree/0?${queryString}`;
+    window.location.href = `/pedigree?${queryString}`;
   }
 }

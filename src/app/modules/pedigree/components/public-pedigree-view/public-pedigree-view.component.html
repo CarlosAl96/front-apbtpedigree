@@ -3,8 +3,9 @@
   <p-card styleClass="h-full" *transloco="let t">
     <ng-template pTemplate="header">
       <div class="header-container">
-        <span
-          class="flex text-uppercase justify-content-center w-full {{
+        <a
+          [href]="router.url"
+          class="flex text-uppercase justify-content-center w-full link-dog {{
             {
               color: pedigree.pedigree.fightcolor,
               fullname: pedigree.pedigree.fullname
@@ -14,7 +15,7 @@
             pedigree.pedigree.fullname
               ? pedigree.pedigree.fullname
               : t("yourPedigrees.unknown")
-          }}</span
+          }}</a
         >
       </div>
       <div class="menu-pedigree">
@@ -223,9 +224,17 @@
                   | fightColor
               }} parent-link"
               (click)="onChangeIdPedigree(parent.id)"
-              ><strong>{{
-                parent.fullname ? parent.fullname : t("yourPedigrees.unknown")
-              }}</strong></span
+              >{{
+                parent.fullname
+                  ? ($index == 0
+                      ? "(" + t("yourPedigrees.sire").toUpperCase() + ") "
+                      : "(" + t("yourPedigrees.dam").toUpperCase() + ") ") +
+                    parent.fullname
+                  : ($index == 0
+                      ? "(" + t("yourPedigrees.sire").toUpperCase() + ") "
+                      : "(" + t("yourPedigrees.dam").toUpperCase() + ") ") +
+                    t("yourPedigrees.unknown")
+              }}</span
             >
             } @else {
             <span class="unknown"
@@ -571,7 +580,7 @@
         >
       </div>
       <div>
-        @for (parent of pedigree.generation1; track $index) { @if(parent!=null){
+        <!-- @for (parent of pedigree.generation1; track $index) { @if(parent!=null){
 
         <div
           class="w-full flex justify-content-between align-items-center gap-2 mt-2"
@@ -669,6 +678,36 @@
           </div>
           <div class="w-full flex justify-content-start">
             <div [class]="'bar bar-625 ' + colors3[$index]"></div>
+          </div>
+        </div>
+        } } -->
+
+        @for (parent of pedigreeStatistics; track $index) { @if(parent!=null){
+
+        <div
+          class="w-full flex justify-content-between align-items-center gap-2 mt-2"
+        >
+          <div
+            class="w-full flex justify-content-end"
+            (click)="onChangeIdPedigree(parent.id)"
+          >
+            <span
+              class="{{
+                { color: parent.fightcolor, fullname: parent.fullname }
+                  | fightColor
+              }} parent-link"
+            >
+              {{
+                parent.fullname ? parent.fullname : t("yourPedigrees.unknown")
+              }}
+              {{ parent.percentStatistic + "%" }}
+            </span>
+          </div>
+          <div class="w-full flex justify-content-start">
+            <div
+              [class]="'bar ' + colors[$index]"
+              [style]="{ width: (parent.percentStatistic ?? 0) * 5 + 'px' }"
+            ></div>
           </div>
         </div>
         } }

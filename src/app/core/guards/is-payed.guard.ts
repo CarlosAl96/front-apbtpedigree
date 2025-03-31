@@ -1,4 +1,4 @@
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { PaymentService } from '../services/payment.service';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -11,6 +11,7 @@ export const isPayedGuard: CanActivateFn = (route, state) => {
   const paymentService = inject(PaymentService);
   const dialogService = inject(DialogService);
   const translocoService = inject(TranslocoService);
+  const router = inject(Router);
 
   return paymentService.verifyPayment().pipe(
     map((res) => {
@@ -20,21 +21,30 @@ export const isPayedGuard: CanActivateFn = (route, state) => {
       ) {
         return true;
       } else {
-        dialogService.open(StreamPayPopupComponent, {
-          data: res.response,
-          header: translocoService.translate('stream.streamAnnounced'),
-          width: '50rem',
-        });
+        router.navigate(['/home']);
+        setTimeout(() => {
+          dialogService.open(StreamPayPopupComponent, {
+            data: res.response,
+            header: translocoService.translate('stream.streamAnnounced'),
+            width: '50rem',
+          });
+        }, 300);
+
         return false;
       }
     }),
     tap({
       error: () => {
-        dialogService.open(NoStreamOrEndedComponent, {
-          data: { ended: false },
-          header: translocoService.translate('stream.noStreamActive'),
-          width: '50rem',
-        });
+        router.navigate(['/home']);
+        setTimeout(() => {
+          dialogService.open(NoStreamOrEndedComponent, {
+            data: { ended: false },
+            header: translocoService.translate('stream.noStreamActive'),
+            width: '50rem',
+          });
+        }, 300);
+
+        return false;
       },
     })
   );

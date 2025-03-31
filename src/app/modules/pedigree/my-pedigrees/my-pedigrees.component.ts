@@ -40,9 +40,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './my-pedigrees.component.scss',
 })
 export class MyPedigreesComponent implements OnInit {
-  @Input() idPedigree!: number;
-  @Input() isFromPedigreeSearch: boolean = false;
-  @Input() isNewPedigree: boolean = false;
+  public isFromPedigreeSearch: boolean = false;
+  public isNewPedigree: boolean = false;
+  public idPedigree!: number;
+
   public pedigree!: PedigreeComplete;
   public user!: User | undefined;
   public tabActive: string = 'details';
@@ -64,6 +65,16 @@ export class MyPedigreesComponent implements OnInit {
       this.route.paramMap.subscribe((params) => {
         this.idPedigree = Number(params.get('id'));
       });
+    }
+
+    console.log(this.router.url);
+
+    if (this.router.url == '/pedigree/new') {
+      this.isNewPedigree = true;
+    }
+
+    if (this.router.url.includes('/view')) {
+      this.isFromPedigreeSearch = true;
     }
 
     if (this.idPedigree != 0) {
@@ -118,7 +129,6 @@ export class MyPedigreesComponent implements OnInit {
   }
 
   public changeTab(tab: string) {
-    //this.tabActive = tab;
     const currentParams = new URLSearchParams(this.route.snapshot.queryParams);
     currentParams.set('tab', tab);
 
@@ -135,7 +145,14 @@ export class MyPedigreesComponent implements OnInit {
     this.idPedigree = event;
 
     if (this.idPedigree != 0) {
-      this.getPedigreeById(this.idPedigree);
+      const currentQueryParams = this.route.snapshot.queryParams;
+      const queryString = new URLSearchParams(currentQueryParams).toString();
+
+      if (this.isFromPedigreeSearch) {
+        window.location.href = `/pedigree/view/${this.idPedigree}`;
+      } else {
+        window.location.href = `/pedigree/my-pedigrees/${this.idPedigree}?${queryString}`;
+      }
     }
   }
 

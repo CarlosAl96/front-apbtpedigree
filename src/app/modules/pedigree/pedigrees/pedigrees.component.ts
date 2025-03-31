@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -12,8 +12,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoadingService } from '../../../core/services/loading.service';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { FightColorPipe } from '../../../core/pipes/fight-color.pipe';
-import { MyPedigreesComponent } from '../my-pedigrees/my-pedigrees.component';
-import { NewPedigreeComponent } from '../components/new-pedigree/new-pedigree.component';
 import { fullnameTransformPedigreeList } from '../../../shared/utils/fullname-transform';
 
 @Component({
@@ -28,8 +26,6 @@ import { fullnameTransformPedigreeList } from '../../../shared/utils/fullname-tr
     ProgressSpinnerModule,
     InputGroupModule,
     FightColorPipe,
-    MyPedigreesComponent,
-    NewPedigreeComponent,
   ],
   templateUrl: './pedigrees.component.html',
   styleUrl: './pedigrees.component.scss',
@@ -41,8 +37,6 @@ export class PedigreesComponent {
   public page: number = 1;
   public isSearching: boolean = false;
   public isLoading: boolean = true;
-  public isNewPedigree: boolean = false;
-  public idPedigreeSelected: number = 0;
   public queryPagination: QueryPaginationPedigree = {
     orderBy: 'id ASC',
     size: 50,
@@ -55,10 +49,6 @@ export class PedigreesComponent {
     private readonly route: ActivatedRoute,
     private readonly loadingService: LoadingService
   ) {
-    this.route.paramMap.subscribe((params) => {
-      this.idPedigreeSelected = Number(params.get('id'));
-    });
-
     this.route.queryParams.subscribe((params) => {
       if (params['size'] && params['page'] && params['orderBy']) {
         this.queryPagination.size = Number(params['size']);
@@ -98,7 +88,7 @@ export class PedigreesComponent {
     const queryString = new URLSearchParams(
       this.queryPagination as any
     ).toString();
-    window.location.href = `/pedigree/0?${queryString}`;
+    window.location.href = `/pedigree?${queryString}`;
   }
 
   private getPedigrees(query: QueryPaginationPedigree): void {
@@ -109,6 +99,9 @@ export class PedigreesComponent {
         this.pedigrees = fullnameTransformPedigreeList(res.response.data);
         this.totalRows = res.response.totalRows;
         this.totalPages = Math.ceil(this.totalRows / this.queryPagination.size);
+
+        console.log('pedigrees', this.pedigrees);
+
         this.isLoading = false;
       },
       error: (error) => {
@@ -118,15 +111,11 @@ export class PedigreesComponent {
   }
 
   public goToNewDog(): void {
-    this.isNewPedigree = true;
+    window.location.href = '/pedigree/new';
   }
 
   public goToPedigree(id: number): void {
-    this.idPedigreeSelected = id;
-    const queryString = new URLSearchParams(
-      this.queryPagination as any
-    ).toString();
-    window.location.href = '/pedigree/' + id + '?' + queryString;
+    window.location.href = '/pedigree/view/' + id;
   }
 
   public customSort(event: TableLazyLoadEvent): void {
@@ -135,7 +124,10 @@ export class PedigreesComponent {
         event.sortOrder == 1 ? 'ASC' : 'DESC'
       }`;
       this.queryPagination.page = 0;
-      this.getPedigrees(this.queryPagination);
+      const queryString = new URLSearchParams(
+        this.queryPagination as any
+      ).toString();
+      window.location.href = `/pedigree?${queryString}`;
     }
   }
 }

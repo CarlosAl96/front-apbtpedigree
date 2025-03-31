@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--color-font-dark);
+}
+
 .paginator {
   width: 500px;
   display: flex;
@@ -37,4 +41,3 @@
     zoom: 0.6;
   }
 }
-

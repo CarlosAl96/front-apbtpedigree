@@ -71,6 +71,8 @@ export class LoginComponent {
               user: this.formGroup.controls['username'].value,
             }),
           });
+
+          this.sessionService.setIsLogin(true);
           window.location.href = '/home';
           this.verifyPayment();
           this.loading = false;

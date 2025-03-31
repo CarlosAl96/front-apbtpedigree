@@ -139,6 +139,22 @@
   color: black;
 }
 
+.link-dog {
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link-dog:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
 .unknown {
   font-weight: 900;
   font-size: smaller;

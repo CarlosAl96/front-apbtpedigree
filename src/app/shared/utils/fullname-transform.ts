@@ -77,6 +77,17 @@ export const fullnameTransformPedigreeList = (pedigrees: Pedigree[]) => {
       pedigree.afterNameTitles
     );
 
+    pedigree.father_fullname = buildFullName(
+      pedigree.father_beforeNameTitles,
+      pedigree.father_name,
+      pedigree.father_beforeNameTitles
+    );
+    pedigree.mother_fullname = buildFullName(
+      pedigree.mother_beforeNameTitles,
+      pedigree.mother_name,
+      pedigree.mother_afterNameTitle
+    );
+
     return pedigree;
   });
 

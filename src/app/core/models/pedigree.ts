@@ -39,4 +39,6 @@ export interface Pedigree {
   mother_name?: string;
   mother_beforeNameTitles?: string;
   mother_afterNameTitle?: string;
+
+  percentStatistic?: number;
 }

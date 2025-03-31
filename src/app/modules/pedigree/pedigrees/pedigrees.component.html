@@ -1,6 +1,4 @@
-@if(!isSearching){ @if(isNewPedigree){
-<app-new-pedigree></app-new-pedigree>
-} @else {
+@if(!isSearching){
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
     <div class="header-container">{{ t("pedigrees.tips") }}</div>
@@ -21,7 +19,8 @@
     />
   </div>
 </p-card>
-} } @else { @if(idPedigreeSelected === 0){
+} @else {
+
 <p-card *transloco="let t">
   <ng-template pTemplate="header">
     <div class="header-container">{{ t("pedigrees.results") }}</div>
@@ -30,7 +29,7 @@
   <p-table
     #dt
     [value]="pedigrees"
-    styleClass="p-datatable-striped"
+    styleClass="p-datatable-gridlines"
     (onLazyLoad)="customSort($event)"
     [lazy]="true"
   >
@@ -69,17 +68,14 @@
       <tr>
         <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
         <th pSortableColumn="name">
-          {{ t("header.searchOptions.registeredName") }}
+          {{ t("header.searchOptions.registeredName").toUpperCase() }}
           <p-sortIcon field="name" />
         </th>
-        <th pSortableColumn="owner">
-          {{ t("header.searchOptions.owner") }} <p-sortIcon field="owner" />
+        <th>
+          {{ t("yourPedigrees.sire").toUpperCase() }}
         </th>
-        <th pSortableColumn="breeder">
-          {{ t("header.searchOptions.breeder") }} <p-sortIcon field="breeder" />
-        </th>
-        <th pSortableColumn="sex">
-          {{ t("yourPedigrees.infoPedigree.sex") }} <p-sortIcon field="sex" />
+        <th>
+          {{ t("yourPedigrees.dam").toUpperCase() }}
         </th>
       </tr>
     </ng-template>
@@ -97,9 +93,8 @@
             pedigree.fullname ? pedigree.fullname : t("yourPedigrees.unknown")
           }}
         </td>
-        <td>{{ pedigree.owner }}</td>
-        <td>{{ pedigree.breeder }}</td>
-        <td>{{ pedigree.sex.toUpperCase() }}</td>
+        <td>{{ pedigree.father_fullname }}</td>
+        <td>{{ pedigree.mother_fullname }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -124,11 +119,4 @@
   </p-table>
 </p-card>
 
-} @else {
-
-<app-my-pedigrees
-  [idPedigree]="idPedigreeSelected"
-  [isFromPedigreeSearch]="true"
-></app-my-pedigrees>
-
-} }
+}

@@ -4,8 +4,9 @@
       @if (isFromPedigreeSearch) {
       <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
       }
-      <span
-        class="w-full text-uppercase flex justify-content-center {{
+      <a
+        [href]="router.url"
+        class="flex text-uppercase justify-content-center w-full link-dog {{
           {
             color: pedigree.pedigree.fightcolor,
             fullname: pedigree.pedigree.fullname
@@ -15,7 +16,7 @@
           pedigree.pedigree.fullname
             ? pedigree.pedigree.fullname
             : t("yourPedigrees.unknown")
-        }}</span
+        }}</a
       >
       @if (isFromPedigreeSearch) {
       <div class="w-full"></div>
@@ -176,13 +177,6 @@
 
       @if (pedigree.pedigree.description) {
       <div class="flex flex-column">
-        <!-- <span>
-          <strong
-            >{{
-              t("yourPedigrees.infoPedigree.description").toUpperCase()
-            }}:</strong
-          >
-        </span> -->
         <span>{{ pedigree.pedigree.description }}</span>
       </div>
       }
@@ -580,7 +574,7 @@
       >
     </div>
     <div>
-      @for (parent of pedigree.generation1; track $index) { @if(parent!=null){
+      @for (parent of pedigreeStatistics; track $index) { @if(parent!=null){
 
       <div
         class="w-full flex justify-content-between align-items-center gap-2 mt-2"
@@ -596,80 +590,14 @@
             }} parent-link"
           >
             {{ parent.fullname ? parent.fullname : t("yourPedigrees.unknown") }}
-            50%
+            {{ parent.percentStatistic + "%" }}
           </span>
         </div>
         <div class="w-full flex justify-content-start">
-          <div [class]="'bar bar-50 ' + colors[$index]"></div>
-        </div>
-      </div>
-      } } @for (parent of pedigree.generation2; track $index) {
-      @if(parent!=null){
-      <div
-        class="w-full flex justify-content-between align-items-center gap-2 mt-2"
-      >
-        <div
-          class="w-full flex justify-content-end"
-          (click)="onChangeIdPedigree(parent.id)"
-        >
-          <span
-            class="{{
-              { color: parent.fightcolor, fullname: parent.fullname }
-                | fightColor
-            }} parent-link"
-          >
-            {{ parent.fullname ? parent.fullname : t("yourPedigrees.unknown") }}
-            25%
-          </span>
-        </div>
-        <div class="w-full flex justify-content-start">
-          <div [class]="'bar bar-25 ' + colors1[$index]"></div>
-        </div>
-      </div>
-      } } @for (parent of pedigree.generation3; track $index) {
-      @if(parent!=null){
-      <div
-        class="w-full flex justify-content-between align-items-center gap-2 mt-2"
-      >
-        <div
-          class="w-full flex justify-content-end"
-          (click)="onChangeIdPedigree(parent.id)"
-        >
-          <span
-            class="{{
-              { color: parent.fightcolor, fullname: parent.fullname }
-                | fightColor
-            }} parent-link"
-          >
-            {{ parent.fullname ? parent.fullname : t("yourPedigrees.unknown") }}
-            12.5%
-          </span>
-        </div>
-        <div class="w-full flex justify-content-start">
-          <div [class]="'bar bar-125 ' + colors2[$index]"></div>
-        </div>
-      </div>
-      } } @for (parent of pedigree.generation4; track $index) {
-      @if(parent!=null){
-      <div
-        class="w-full flex justify-content-between align-items-center gap-2 mt-2"
-      >
-        <div
-          class="w-full flex justify-content-end"
-          (click)="onChangeIdPedigree(parent.id)"
-        >
-          <span
-            class="{{
-              { color: parent.fightcolor, fullname: parent.fullname }
-                | fightColor
-            }} parent-link"
-          >
-            {{ parent.fullname ? parent.fullname : t("yourPedigrees.unknown") }}
-            6.25%
-          </span>
-        </div>
-        <div class="w-full flex justify-content-start">
-          <div [class]="'bar bar-625 ' + colors3[$index]"></div>
+          <div
+            [class]="'bar ' + colors[$index]"
+            [style]="{ width: (parent.percentStatistic ?? 0) * 5 + 'px' }"
+          ></div>
         </div>
       </div>
       } }

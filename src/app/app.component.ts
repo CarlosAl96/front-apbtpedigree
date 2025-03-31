@@ -30,7 +30,7 @@ import { SessionClosedComponent } from './shared/components/session-closed/sessi
 })
 export class AppComponent implements OnInit, AfterViewInit {
   public user!: User | undefined;
-
+  public isLogin: boolean = false;
   constructor(
     private readonly toastService: ToastService,
     private readonly messageService: MessageService,
@@ -58,13 +58,18 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (this.user) {
-        this.verifyPayment();
-      }
-    }, 500);
+    // setTimeout(() => {
+    //   if (this.user) {
+    //     this.verifyPayment();
+    //   }
+    // }, 500);
   }
   ngOnInit(): void {
+    this.sessionService.getIsLogin().subscribe({
+      next: (res) => {
+        this.isLogin = res;
+      },
+    });
     this.socketService.onLive().subscribe({
       next: (res) => {
         this.verifyPayment();
@@ -89,10 +94,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             },
             error: (error) => {
               console.log(error);
-              this.dialogService.open(SessionClosedComponent, {
-                header: this.translocoService.translate('login.sessionEnded'),
-                width: '50rem',
-              });
+              if (!this.isLogin) {
+                this.dialogService.open(SessionClosedComponent, {
+                  header: this.translocoService.translate('login.sessionEnded'),
+                  width: '50rem',
+                });
+              }
             },
           });
         }
@@ -122,3 +129,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 }
+
+/*
+NOTA PARA EL PRÓXIMO DESARROLLADOR:
+
+Todo lo raro que veas en la navegación y el viewport es por caprichos del cliente.
+Hubo que cambiar el uso de router para navegar y usar href solo porque queria que en mobile el zoom se reiniciara cada vez que cambiara de pagina.
+El cliente no quiere que el zoom se mantenga en mobile, por lo que se optó por usar href para navegar entre páginas y así reiniciar el viewport.
+*/

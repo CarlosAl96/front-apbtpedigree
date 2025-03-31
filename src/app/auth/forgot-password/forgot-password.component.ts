@@ -30,6 +30,7 @@ import { MessagesModule } from 'primeng/messages';
 export class ForgotPasswordComponent {
   public formGroup!: FormGroup;
   public loading: boolean = false;
+  public disabled: boolean = false;
   public message!: Message[];
 
   constructor(
@@ -44,6 +45,8 @@ export class ForgotPasswordComponent {
 
   public resetPassword(): void {
     if (this.formGroup.valid) {
+      this.loading = true;
+      this.disabled = true;
       this.authService.resetPassword(this.formGroup.value).subscribe({
         next: (response) => {
           this.message = [
@@ -52,6 +55,11 @@ export class ForgotPasswordComponent {
               detail: this.translocoService.translate('login.emailSended'),
             },
           ];
+          this.loading = false;
+          setTimeout(() => {
+            this.disabled = true;
+            window.location.href = '/auth/login';
+          }, 5000);
         },
         error: (error) => {
           if (error.status === 404) {
@@ -71,6 +79,8 @@ export class ForgotPasswordComponent {
               },
             ];
           }
+          this.disabled = false;
+          this.loading = false;
         },
       });
     }

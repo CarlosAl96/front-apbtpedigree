@@ -53,24 +53,11 @@ export class PedigreeViewComponent implements OnInit {
   public filterOptions: DropOption[] = [];
   public fullBrothersCount: number = 0;
   public siblings: Pedigree[] = [];
+  public pedigreeStatistics: Pedigree[] = [];
   public urlImg: string = `${environment.uploads_url}pedigrees/`;
   public user!: User | undefined;
   public dogLogs: DogLog[] = [];
-  public colors: string[] = ['color-1', 'color-2'];
-  public colors1: string[] = ['color-3', 'color-4', 'color-5', 'color-6'];
-  public colors2: string[] = [
-    'color-7',
-    'color-8',
-    'color-1',
-    'color-2',
-    'color-3',
-    'color-4',
-    'color-5',
-    'color-6',
-  ];
-  public colors3: string[] = [
-    'color-7',
-    'color-8',
+  public colors: string[] = [
     'color-1',
     'color-2',
     'color-3',
@@ -85,10 +72,28 @@ export class PedigreeViewComponent implements OnInit {
     'color-4',
     'color-5',
     'color-6',
+    'color-7',
+    'color-8',
+    'color-1',
+    'color-2',
+    'color-3',
+    'color-4',
+    'color-5',
+    'color-6',
+    'color-7',
+    'color-8',
+    'color-1',
+    'color-2',
+    'color-3',
+    'color-4',
+    'color-5',
+    'color-6',
+    'color-7',
+    'color-8',
   ];
 
   constructor(
-    private readonly router: Router,
+    public readonly router: Router,
     private readonly location: Location,
     private readonly translocoService: TranslocoService,
     private readonly sessionService: SessionService,
@@ -125,6 +130,7 @@ export class PedigreeViewComponent implements OnInit {
     if (this.pedigree) {
       this.siblings = this.pedigree.siblings;
       this.fullBrothersCount = this.getBrothers('full').length;
+      this.setPercentStatictics();
       this.getLogs();
     }
   }
@@ -152,6 +158,78 @@ export class PedigreeViewComponent implements OnInit {
       this.router.createUrlTree(['public/pedigree', this.pedigree.pedigree.id])
     );
     window.open(url, '_blank');
+  }
+
+  public setPercentStatictics(): void {
+    const generations: Pedigree[] = [
+      ...this.pedigree.generation1,
+      ...this.pedigree.generation2,
+      ...this.pedigree.generation3,
+      ...this.pedigree.generation4,
+    ];
+
+    for (const pedigree of generations) {
+      if (
+        pedigree &&
+        !this.pedigreeStatistics.filter((ped) => {
+          return ped.id === pedigree.id;
+        }).length
+      ) {
+        const countGenerations1: number = this.pedigree.generation1.filter(
+          (ped) => {
+            if (ped) {
+              return ped.id === pedigree.id;
+            } else {
+              return false;
+            }
+          }
+        ).length;
+
+        const countGenerations2: number = this.pedigree.generation2.filter(
+          (ped) => {
+            if (ped) {
+              return ped.id === pedigree.id;
+            } else {
+              return false;
+            }
+          }
+        ).length;
+        const countGenerations3: number = this.pedigree.generation3.filter(
+          (ped) => {
+            if (ped) {
+              return ped.id === pedigree.id;
+            } else {
+              return false;
+            }
+          }
+        ).length;
+        const countGenerations4: number = this.pedigree.generation4.filter(
+          (ped) => {
+            if (ped) {
+              return ped.id === pedigree.id;
+            } else {
+              return false;
+            }
+          }
+        ).length;
+
+        pedigree.percentStatistic =
+          countGenerations1 * 50 +
+          countGenerations2 * 25 +
+          countGenerations3 * 12.5 +
+          countGenerations4 * 6.25;
+
+        if (pedigree.percentStatistic > 100) {
+          pedigree.percentStatistic = 100;
+        }
+
+        this.pedigreeStatistics.push(pedigree);
+      }
+    }
+
+    this.pedigreeStatistics.sort((a, b) => {
+      return (b.percentStatistic || 0) - (a.percentStatistic || 0);
+    });
   }
 
   public getBrothers(option: string): Pedigree[] {

@@ -12,7 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -135,7 +135,7 @@ export class NewPedigreeComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly pedigreeService: PedigreeService,
-    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly translocoService: TranslocoService,
     private readonly sessionService: SessionService,
     private readonly toastService: ToastService,
@@ -366,7 +366,9 @@ export class NewPedigreeComponent implements OnInit {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             this.files = [];
           } else {
-            window.location.href = '/pedigree/my-pedigrees/0';
+            setTimeout(() => {
+              window.location.href = '/pedigree/my-pedigrees/0';
+            }, 1000);
           }
         },
         error: (error) => {
@@ -421,7 +423,13 @@ export class NewPedigreeComponent implements OnInit {
               detail: this.translocoService.translate('toast.pedigreeEdited'),
             });
 
-            location.reload();
+            setTimeout(() => {
+              const currentParams = this.route.snapshot.queryParams;
+              const updatedParams = { ...currentParams, tab: 'details' };
+              const queryString = new URLSearchParams(updatedParams).toString();
+
+              window.location.href = `${window.location.pathname}?${queryString}`;
+            }, 1000);
           },
           error: (error) => {
             this.loading = false;

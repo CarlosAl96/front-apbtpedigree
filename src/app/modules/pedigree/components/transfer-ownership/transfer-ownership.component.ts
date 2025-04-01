@@ -102,7 +102,9 @@ export class TransferOwnershipComponent {
                   ),
                 });
 
-                window.location.href = '/pedigree/my-pedigrees/0';
+                setTimeout(() => {
+                  window.location.href = '/pedigree/my-pedigrees/0';
+                }, 1000);
               },
               error: (error) => {
                 this.error = [

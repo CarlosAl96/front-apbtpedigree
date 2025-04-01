@@ -9,7 +9,7 @@ import { Pedigree } from '../../../../core/models/pedigree';
 import { environment } from '../../../../../environments/environment.development';
 import { PedigreeService } from '../../../../core/services/pedigree.service';
 import { ConfirmationService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -43,7 +43,7 @@ export class UploadPictureComponent implements OnInit {
 
   constructor(
     private readonly location: Location,
-    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly toastService: ToastService,
     private readonly pedigreeService: PedigreeService,
     private readonly translocoService: TranslocoService,
@@ -77,7 +77,13 @@ export class UploadPictureComponent implements OnInit {
               detail: this.translocoService.translate('toast.pedigreeEdited'),
             });
 
-            location.reload();
+            setTimeout(() => {
+              const currentParams = this.route.snapshot.queryParams;
+              const updatedParams = { ...currentParams, tab: 'details' };
+              const queryString = new URLSearchParams(updatedParams).toString();
+
+              window.location.href = `${window.location.pathname}?${queryString}`;
+            }, 1000);
           },
           error: () => {
             this.loading = false;
@@ -116,6 +122,16 @@ export class UploadPictureComponent implements OnInit {
                 summary: this.translocoService.translate('toast.success'),
                 detail: this.translocoService.translate('toast.pedigreeEdited'),
               });
+
+              setTimeout(() => {
+                const currentParams = this.route.snapshot.queryParams;
+                const updatedParams = { ...currentParams, tab: 'details' };
+                const queryString = new URLSearchParams(
+                  updatedParams
+                ).toString();
+
+                window.location.href = `${window.location.pathname}?${queryString}`;
+              }, 1000);
             },
             error: () => {
               this.loading = false;

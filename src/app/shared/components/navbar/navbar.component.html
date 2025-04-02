@@ -138,7 +138,9 @@
     <li>
       <a
         href="/forum"
-        [class]="router.url == '/forum' ? 'navbar-item active' : 'navbar-item'"
+        [class]="
+          router.url.includes('/forum') ? 'navbar-item active' : 'navbar-item'
+        "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

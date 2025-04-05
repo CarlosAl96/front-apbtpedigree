@@ -123,10 +123,10 @@
         </strong>
         <span>{{ pedigree.pedigree.chain_weight }}</span>
       </span>
-      } @if (user?.username) {
+      } @if (pedigree.pedigree.entered_by_name) {
       <span>
         <strong>{{ t("yourPedigrees.infoPedigree.enteredBy") }}: </strong>
-        <span>{{ user?.username }}</span>
+        <span>{{ pedigree.pedigree.entered_by_name }}</span>
       </span>
       } @if (pedigree.pedigree.registration) {
       <span>

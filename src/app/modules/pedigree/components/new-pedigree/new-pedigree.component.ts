@@ -347,7 +347,9 @@ export class NewPedigreeComponent implements OnInit {
       }
 
       this.pedigreeService.createPedigree(formData).subscribe({
-        next: () => {
+        next: (res) => {
+          console.log(res);
+
           this.loading = false;
           this.error = [];
           this.toastService.setMessage({
@@ -367,7 +369,11 @@ export class NewPedigreeComponent implements OnInit {
             this.files = [];
           } else {
             setTimeout(() => {
-              window.location.href = '/pedigree/my-pedigrees/0';
+              window.location.href = `/pedigree/my-pedigrees/${
+                res.response.insertId
+              }?orderBy=id ASC&page=0&size=50&userId=${
+                this.user?.id ?? 0
+              }&tab=details`;
             }, 1000);
           }
         },
@@ -512,6 +518,8 @@ export class NewPedigreeComponent implements OnInit {
       registration: '',
       father_id: 0,
       mother_id: 0,
+      entered_by: 0,
+      entered_by_name: '',
       user_id: 0,
       private: false,
       changePermissions: '',

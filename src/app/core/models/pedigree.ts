@@ -18,6 +18,8 @@ export interface Pedigree {
   father_id: number;
   mother_id: number;
   user_id: number;
+  entered_by: number;
+  entered_by_name: string;
 
   status: string;
   fightcolor: string;

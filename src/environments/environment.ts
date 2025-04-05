@@ -7,5 +7,5 @@ export const environment = {
   // api_url: 'http://localhost:4000/api/v1/',
   // uploads_url: 'http://localhost:4000/uploads/',
   paypal_client_id:
-    'AZPXa3IIuj7f_yum9HQ-bpxlkoImmByy6MUGXK2G4vBQ_5Bni1LOiVDDwFLldxxyd8TDZhsC_h13erqn',
+    'AVVohErniErfF1FLqDKphy7IZN8K7UI-aCluKQdWNcgmp-EWrD-S-iIZ-RiU0JL2Is5AF54Oii84JJQ2',
 };

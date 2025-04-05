@@ -22,7 +22,10 @@ import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
 import { ForumTopic } from '../../../../core/models/forumTopic';
 import { ForumPost } from '../../../../core/models/forumPost';
-import { SocketService } from '../../../../core/services/socket.service';
+import MagicUrl from 'quill-magic-url';
+import Quill from 'quill';
+
+Quill.register('modules/magicUrl', MagicUrl);
 
 @Component({
   selector: 'app-new-post',
@@ -61,6 +64,17 @@ export class NewPostComponent {
   public option: string = '';
   public now: Date = new Date();
   public editorToolbar = {
+    magicUrl: {
+      urlRegularExpression:
+        /\b((https?|http):\/\/|www\.)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?\b/g,
+      globalRegularExpression:
+        /\b((https?|http):\/\/|www\.)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?\b/g,
+      mailRegularExpression: /\b[\w.-]+@[\w.-]+\.\w+\b/g,
+      triggerChar: [' ', '\n', '\t', ',', '.', ';'],
+      globalMatch: true,
+      addTargetToLink: true,
+      defaultProtocol: 'https',
+    },
     toolbar: {
       container: [
         ['bold', 'italic', 'underline'],

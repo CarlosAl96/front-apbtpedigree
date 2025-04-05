@@ -4,16 +4,11 @@ import { Stream } from '../../../core/models/stream';
 import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { TagModule } from 'primeng/tag';
-import {
-  ICreateOrderRequest,
-  IPayPalConfig,
-  NgxPayPalModule,
-} from 'ngx-paypal';
+import { IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment.development';
 import { PaymentService } from '../../../core/services/payment.service';
-import { StreamService } from '../../../core/services/stream.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
@@ -66,13 +61,17 @@ export class StreamPayPopupComponent implements OnInit {
       next: (res) => {
         this.payPalConfig = {
           currency: 'USD',
-          fundingSource: 'PAYPAL',
+
           clientId: environment.paypal_client_id,
           createOrderOnServer: (data) => {
             return res.response.id;
           },
           advanced: {
             commit: 'true',
+            extraQueryParams: [
+              { name: 'enable-funding', value: 'card' },
+              { name: 'disable-funding', value: 'paylater' },
+            ],
           },
           style: { label: 'paypal', layout: 'vertical' },
           onApprove: (data, actions) => {

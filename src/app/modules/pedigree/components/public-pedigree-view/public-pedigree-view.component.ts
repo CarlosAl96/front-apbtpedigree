@@ -37,6 +37,7 @@ export class PublicPedigreeViewComponent implements OnInit {
   public pedigree!: PedigreeComplete;
   public filterOptions: DropOption[] = [];
   public fullBrothersCount: number = 0;
+  public foot: string = '';
   public siblings: Pedigree[] = [];
   public pedigreeStatistics: Pedigree[] = [];
   public isLoading: boolean = false;
@@ -119,6 +120,8 @@ export class PublicPedigreeViewComponent implements OnInit {
           code: 'full',
         },
       ];
+
+      this.foot = this.translocoService.translate('footer.foot');
     }, 1000);
   }
 

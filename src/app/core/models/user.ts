@@ -22,6 +22,7 @@ export interface User {
   is_active: boolean;
   is_enabled: boolean;
   forum_ban: boolean;
+  stream_chat_ban: boolean;
   subscription: boolean;
   last_login: Date | null;
   date_joined: Date;

@@ -95,6 +95,24 @@
               [pTooltip]="t('users.forumBan')"
               (onClick)="forumBan(user.id, user.forum_ban)"
             ></p-button>
+            } @if (user.stream_chat_ban) {
+            <p-button
+              severity="success"
+              icon="pi pi-comment"
+              [pTooltip]="t('messages.chatBan')"
+              (onClick)="
+                banUserChat(user.username, user.id, user.stream_chat_ban)
+              "
+            ></p-button>
+            } @else {
+            <p-button
+              severity="warning"
+              icon="pi pi-comment"
+              [pTooltip]="t('messages.chatUnban')"
+              (onClick)="
+                banUserChat(user.username, user.id, user.stream_chat_ban)
+              "
+            ></p-button>
             } @if (user.is_enabled) {
             <p-button
               severity="danger"

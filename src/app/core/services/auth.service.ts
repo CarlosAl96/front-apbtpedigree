@@ -25,6 +25,7 @@ export class AuthService {
   private usersInfo: string = `${environment.api_url}usersInfo`;
   private resetPasswordUrl: string = `${environment.api_url}users/passwordReset`;
   private dashboardUrl: string = `${environment.api_url}dashboard`;
+  private chatBanUrl: string = `${environment.api_url}checkChatBan`;
 
   constructor(private http: HttpClient) {}
 
@@ -88,6 +89,15 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  public streamChatBan(request: any, id: number): Observable<ApiResponse<any>> {
+    return this.http
+      .patch<ApiResponse<any>>(
+        this.usersUrl + '/' + id + '/streamChatBan',
+        request
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   public disableOrEnableUser(
     request: any,
     id: number
@@ -145,6 +155,12 @@ export class AuthService {
   public getSessionStatus(): Observable<ApiResponse<any>> {
     return this.http
       .get<ApiResponse<any>>(this.sessionStatusUrl)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getChatBanStatus(id: number): Observable<ApiResponse<boolean>> {
+    return this.http
+      .get<ApiResponse<boolean>>(this.chatBanUrl + '/' + id)
       .pipe(catchError(this.handleError));
   }
 

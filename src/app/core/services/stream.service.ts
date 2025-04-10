@@ -77,6 +77,12 @@ export class StreamService {
       .pipe(catchError(this.handleError));
   }
 
+  public deleteMessage(id: number): Observable<any> {
+    return this.http
+      .delete<any>(this.streamMessagesUrl + '/' + id)
+      .pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(() => error.error || 'Ocurrió un error');
   }

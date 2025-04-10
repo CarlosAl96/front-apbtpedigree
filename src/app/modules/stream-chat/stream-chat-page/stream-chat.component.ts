@@ -12,6 +12,9 @@ import { SessionService } from '../../../core/services/session.service';
 import { SocketService } from '../../../core/services/socket.service';
 import { StreamService } from '../../../core/services/stream.service';
 import { CardModule } from 'primeng/card';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-stream-chat',
@@ -25,7 +28,9 @@ import { CardModule } from 'primeng/card';
     InputGroupModule,
     PickerComponent,
     FormsModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
   templateUrl: './stream-chat.component.html',
   styleUrl: './stream-chat.component.scss',
 })
@@ -33,6 +38,7 @@ export class StreamChatComponent implements AfterViewInit {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
+  public chatBan: boolean = false;
   public user!: User | undefined;
   public messages: StreamMessage[] = [];
   activeStream: any;
@@ -41,9 +47,19 @@ export class StreamChatComponent implements AfterViewInit {
     private readonly socketService: SocketService,
     private readonly sessionService: SessionService,
     private readonly streamService: StreamService,
+    private readonly authService: AuthService,
+    private readonly confirmationService: ConfirmationService,
     private readonly translocoService: TranslocoService
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+
+    if (this.user) {
+      this.authService.getChatBanStatus(this.user.id).subscribe({
+        next: (res) => {
+          this.chatBan = res.response;
+        },
+      });
+    }
 
     this.socketService.onStreamMessage().subscribe({
       next: (res) => {
@@ -51,6 +67,22 @@ export class StreamChatComponent implements AfterViewInit {
           this.messages.push(res);
           this.scrollToBottom();
         }
+      },
+    });
+
+    this.socketService.onStreamChatBan().subscribe({
+      next: (res) => {
+        console.log(res);
+
+        if (this.user?.id == res.id) {
+          this.chatBan = res.value;
+        }
+      },
+    });
+
+    this.socketService.onStreamMessageDeleted().subscribe({
+      next: (res) => {
+        this.messages = this.messages.filter((message) => message.id != res.id);
       },
     });
   }
@@ -69,24 +101,71 @@ export class StreamChatComponent implements AfterViewInit {
     });
   }
   public sendMessage(): void {
-    this.showEmojiPicker = false;
-    const message: StreamMessage = {
-      id: 0,
-      user_id: this.user?.id ?? 0,
-      username: this.user?.username ?? '',
-      message: this.messageModel,
-      updated_at: new Date(),
-      created_at: new Date(),
-    };
+    if (!this.chatBan) {
+      this.showEmojiPicker = false;
+      const message: StreamMessage = {
+        id: 0,
+        user_id: this.user?.id ?? 0,
+        username: this.user?.username ?? '',
+        message: this.messageModel,
+        updated_at: new Date(),
+        created_at: new Date(),
+      };
 
-    this.messageModel = '';
+      this.messageModel = '';
 
-    this.streamService.sendMessage(message).subscribe({
-      next: (res) => {
-        this.messages.push(message);
-        this.scrollToBottom();
+      this.streamService.sendMessage(message).subscribe({
+        next: (res) => {
+          this.scrollToBottom();
+        },
+        error: (error) => {},
+      });
+    }
+  }
+
+  public deleteMessage(id: number): void {
+    this.confirmationService.confirm({
+      message: this.translocoService.translate(
+        'messages.deleteMessageQuestion'
+      ),
+      header: this.translocoService.translate('messages.deleteMessage'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      acceptButtonStyleClass: 'p-button-danger',
+      acceptLabel: this.translocoService.translate('buttons.yes'),
+      rejectLabel: this.translocoService.translate('buttons.no'),
+      accept: () => {
+        this.streamService.deleteMessage(id).subscribe({
+          next: (res) => {},
+          error: (error) => {},
+        });
       },
-      error: (error) => {},
+      reject: () => {},
+    });
+  }
+
+  public banUserChat(username: string, id: number): void {
+    this.confirmationService.confirm({
+      message: this.translocoService.translate('messages.chatBanQuestion', {
+        user: username,
+      }),
+      header: this.translocoService.translate('messages.chatBan'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      acceptButtonStyleClass: 'p-button-danger',
+      acceptLabel: this.translocoService.translate('buttons.yes'),
+      rejectLabel: this.translocoService.translate('buttons.no'),
+      accept: () => {
+        this.authService.streamChatBan({ value: true }, id).subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (error) => {},
+        });
+      },
+      reject: () => {},
     });
   }
 

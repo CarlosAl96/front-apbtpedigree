@@ -119,7 +119,8 @@
   },
   "footer": {
     "line1": "All logos and trademarks on this site are the property of their respective owners. Comments are the property of their posters.",
-    "line2": "Apbtpedigree All rights reserved. ©{{year}}"
+    "line2": "Apbtpedigree All rights reserved. ©{{year}}",
+    "foot": "Information stored in and displayed by"
   },
   "login": {
     "email": "Email",
@@ -161,7 +162,12 @@
     "deleteChatQuestion": "Are you sure to delete this chat?",
     "deleteMessage": "Delete Message",
     "deleteMessageQuestion": "Are you sure to delete this message?",
-    "maxSizeExceeded": "The file is too large. Maximum allowed: 2MB"
+    "maxSizeExceeded": "The file is too large. Maximum allowed: 2MB",
+    "chatBan": "Ban user from chat",
+    "chatUnban": "Unban user from chat",
+    "chatUnbanQuestion": "Are you sure to unban {{user}} from the chat?",
+    "chatBanQuestion": "Are you sure to ban {{user}} from the chat?",
+    "chatBanned": "You are not allowed to participate in the chat"
   },
   "account": {
     "personalInfo": "Personal Information",

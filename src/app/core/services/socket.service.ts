@@ -85,6 +85,22 @@ export class SocketService {
     });
   }
 
+  onStreamMessageDeleted(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('streamMessageDeleted', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onStreamChatBan(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('streamChatBan', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
   public disconnect(): void {
     this.socket.disconnect();
   }

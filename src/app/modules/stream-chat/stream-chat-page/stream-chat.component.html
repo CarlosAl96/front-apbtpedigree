@@ -26,8 +26,25 @@
             {{ message.message }}
           </span>
 
-          <div class="flex w-full justify-content-end align-items-center gap-1">
-            <span class="time">{{ message.created_at | timeFormat }}</span>
+          <div class="flex align-items-center gap-1">
+            <div
+              class="flex w-full justify-content-end align-items-center gap-1"
+            >
+              <span class="time">{{ message.created_at | timeFormat }}</span>
+            </div>
+            @if (user?.is_superuser) {
+            <i
+              class="pi pi-trash cursor-pointer"
+              style="color: red"
+              (click)="deleteMessage(message.id)"
+            ></i>
+
+            <i
+              class="pi pi-ban cursor-pointer"
+              style="color: red"
+              (click)="banUserChat(message.username, message.user_id)"
+            ></i>
+            }
           </div>
         </div>
       </div>
@@ -46,6 +63,7 @@
     <!-- [style]="{ position: 'absolute', bottom: '90px', rigth: '30rem' }" -->
 
     <div class="input-container">
+      @if (!chatBan) {
       <p-inputGroup class="input-message w-full h-full gap-2">
         <button
           pButton
@@ -73,6 +91,12 @@
           (click)="sendMessage()"
         ></button>
       </p-inputGroup>
+      }@else {
+      <div class="flex align-items-center justify-content-center w-full p-2">
+        <span style="color: red">{{ t("messages.chatBanned") }}</span>
+      </div>
+      }
     </div>
   </div>
 </p-card>
+<p-confirmDialog />

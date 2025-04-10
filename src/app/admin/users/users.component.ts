@@ -225,6 +225,53 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  public banUserChat(username: string, id: number, value: boolean): void {
+    this.confirmationService.confirm({
+      message: value
+        ? this.translocoService.translate('messages.chatUnbanQuestion', {
+            user: username,
+          })
+        : this.translocoService.translate('messages.chatBanQuestion', {
+            user: username,
+          }),
+
+      header: value
+        ? this.translocoService.translate('messages.chatUnban')
+        : this.translocoService.translate('messages.chatBan'),
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'pi pi-trash mr-2',
+      rejectIcon: 'pi pi-times mr-2',
+      acceptButtonStyleClass: 'p-button-danger',
+      acceptLabel: this.translocoService.translate('buttons.yes'),
+      rejectLabel: this.translocoService.translate('buttons.no'),
+      accept: () => {
+        this.authService.streamChatBan({ value: !value }, id).subscribe({
+          next: (res) => {
+            this.users = this.users.map((user) => {
+              if (user.id === id) {
+                user.stream_chat_ban = !value;
+              }
+              return user;
+            });
+            this.messageService.setMessage({
+              severity: 'success',
+              summary: this.translocoService.translate('toast.success'),
+              detail: this.translocoService.translate('toast.updateMessage'),
+            });
+          },
+          error: (error) => {
+            this.messageService.setMessage({
+              severity: 'error',
+              summary: this.translocoService.translate('toast.error'),
+              detail: this.translocoService.translate('toast.updateError'),
+            });
+          },
+        });
+      },
+      reject: () => {},
+    });
+  }
+
   public disableUser(id: number, value: boolean): void {
     this.confirmationService.confirm({
       message: value

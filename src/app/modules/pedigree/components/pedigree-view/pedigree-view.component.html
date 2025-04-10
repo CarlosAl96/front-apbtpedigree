@@ -139,7 +139,8 @@
         </strong>
         <span>{{ pedigree.pedigree.registration }}</span>
       </span>
-      } @if (pedigree.pedigree.birthdate) {
+      } @if (pedigree.pedigree.birthdate && pedigree.pedigree.birthdate !==
+      'null') {
       <span>
         <strong
           >{{ t("yourPedigrees.newPedigree.form.birthdate").toUpperCase() }}:

@@ -406,7 +406,7 @@ export class NewPedigreeComponent implements OnInit {
 
       formData.append('father_id', this.selectedFather.id.toString());
       formData.append('mother_id', this.selectedMother.id.toString());
-      formData.append('user_id', (this.user?.id ?? 0).toString());
+      //formData.append('user_id', (this.user?.id ?? 0).toString());
 
       if (this.files.length) {
         formData.append('img', this.files[0]);

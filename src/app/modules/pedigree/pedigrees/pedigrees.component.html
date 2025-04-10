@@ -80,21 +80,51 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-pedigree>
-      <tr
-        class="row {{
-          { color: pedigree.fightcolor, fullname: pedigree.fullname }
-            | fightColor
-        }}"
-        (click)="goToPedigree(pedigree.id)"
-      >
-        <td>{{ pedigree.id }}</td>
-        <td>
-          {{
-            pedigree.fullname ? pedigree.fullname : t("yourPedigrees.unknown")
-          }}
+      <tr class="row">
+        <td
+          class="{{
+            { color: pedigree.fightcolor, fullname: pedigree.fullname }
+              | fightColor
+          }}"
+        >
+          {{ pedigree.id }}
         </td>
-        <td>{{ pedigree.father_fullname }}</td>
-        <td>{{ pedigree.mother_fullname }}</td>
+        <td
+          class="{{
+            { color: pedigree.fightcolor, fullname: pedigree.fullname }
+              | fightColor
+          }}"
+          (click)="goToPedigree(pedigree.id)"
+        >
+          <span class="link-dog">
+            {{
+              pedigree.fullname ? pedigree.fullname : t("yourPedigrees.unknown")
+            }}</span
+          >
+        </td>
+        @if (pedigree.father_id) {
+        <td
+          class="{{
+            { color: '', fullname: pedigree.father_fullname } | fightColor
+          }}"
+          (click)="goToPedigree(pedigree.father_id)"
+        >
+          <span class="link-dog"> {{ pedigree.father_fullname }}</span>
+        </td>
+        } @else {
+        <td>{{ t("yourPedigrees.unknown") }}</td>
+        } @if (pedigree.mother_id) {
+        <td
+          class="{{
+            { color: '', fullname: pedigree.mother_fullname } | fightColor
+          }}"
+          (click)="goToPedigree(pedigree.mother_id)"
+        >
+          <span class="link-dog">{{ pedigree.mother_fullname }}</span>
+        </td>
+        } @else {
+        <td>{{ t("yourPedigrees.unknown") }}</td>
+        }
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

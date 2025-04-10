@@ -29,13 +29,25 @@
   justify-content: center;
 }
 
-.row {
-  cursor: pointer;
-}
-
 .row:hover {
   background-color: rgba(0, 0, 0, 0.041);
 }
+
+.link-dog {
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.link-dog:hover {
+  text-decoration: underline;
+}
+
 @media only screen and (min-height: 1080px) {
   .texts {
     zoom: 0.6;

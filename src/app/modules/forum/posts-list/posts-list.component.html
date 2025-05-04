@@ -55,6 +55,21 @@
           </div>
         </div>
       </div>
+
+      <div class="flex flex-column align-items-end justify-content-center mt-3">
+        <span class="link title" (click)="changeTopic('next')">{{
+          t("forum.nextTopic")
+        }}</span>
+        <span class="link title mb-3" (click)="changeTopic('previous')">{{
+          t("forum.previousTopic")
+        }}</span>
+        <p-paginator
+          [first]="first"
+          (onPageChange)="onPageChange($event)"
+          [rows]="queryPagination.size"
+          [totalRecords]="totalRows"
+        />
+      </div>
     </ng-template>
 
     <ng-template pTemplate="header">

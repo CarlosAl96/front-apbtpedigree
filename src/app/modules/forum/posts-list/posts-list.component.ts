@@ -420,6 +420,27 @@ export class PostsListComponent implements OnInit {
     return false;
   }
 
+  public changeTopic(option: string): void {
+    if (this.modelCategory != 0) {
+      this.forumService
+        .getNextOrPrevious(option, this.modelCategory, this.idTopic)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+
+            if (res.response != 0) {
+              window.location.href = `/forum/posts/${res.response}`;
+            } else {
+              window.location.href = `/forum/posts/${this.idTopic}`;
+            }
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+    }
+  }
+
   public wrapBlockquotes(content: string): string {
     const firstBlockquoteIndex = content.indexOf('<blockquote>');
     const lastBlockquoteIndex = content.lastIndexOf('</blockquote>');

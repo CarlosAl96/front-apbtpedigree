@@ -98,6 +98,16 @@ export class ForumComponent {
     return null;
   }
 
+  public markAllAsViewed(): void {
+    this.forumService.markAllForumsAsViewed().subscribe({
+      next: (res) => {
+        this.forumCategories.map((category) => {
+          category.new_posts = false;
+        });
+      },
+    });
+  }
+
   public goToLastPost(idTopic: number): void {
     const query: QueryPagination = {
       size: 20,

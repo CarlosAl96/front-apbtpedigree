@@ -5,7 +5,12 @@
 
   <p-table [value]="forumCategories" styleClass="p-datatable-striped">
     <ng-template pTemplate="caption">
-      <span class="text-xl">{{ t("forum.index") }}</span>
+      <div class="flex align-items-center justify-content-between">
+        <span class="text-xl">{{ t("forum.index") }}</span>
+        <span class="link title" (click)="markAllAsViewed()">{{
+          t("forum.markForums")
+        }}</span>
+      </div>
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -54,11 +59,9 @@
           <div class="flex flex-column">
             @if(!category.is_locked || user?.is_superuser ||
             category.moderators.includes(user?.username ?? '')){
-            <a
-              class="link title"
-              [href]="'/forum/topics/' + category.id"
-              >{{ category.name }}</a
-            >
+            <a class="link title" [href]="'/forum/topics/' + category.id">{{
+              category.name
+            }}</a>
             } @else {
             <span class="title">{{ category.name }}</span>
             }
@@ -87,9 +90,7 @@
             <div class="flex align-items-center gap-1">
               <a
                 class="link"
-                [href]="
-                  '/forum/profile/' + category.last_post_info.author
-                "
+                [href]="'/forum/profile/' + category.last_post_info.author"
                 ><strong>{{ category.last_post_info.author }}</strong></a
               >
               <i class="pi pi-arrow-right text-xs font-bold"></i>
@@ -153,9 +154,7 @@
           >{{ t("forum.whoOnline.line3") }}
           <a
             class="link"
-            [href]="
-              '/forum/profile/' + categoriesInfo.lastUsers[0].username
-            "
+            [href]="'/forum/profile/' + categoriesInfo.lastUsers[0].username"
             ><strong>{{ categoriesInfo.lastUsers[0].username }}</strong></a
           ></span
         >

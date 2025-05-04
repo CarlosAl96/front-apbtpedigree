@@ -59,6 +59,15 @@
           </div>
         </div>
       </div>
+
+      <div class="flex align-items-center justify-content-end mt-3">
+        <p-paginator
+          [first]="first"
+          (onPageChange)="onPageChange($event)"
+          [rows]="queryPagination.size"
+          [totalRecords]="totalRows"
+        />
+      </div>
       }
     </ng-template>
 

@@ -24,6 +24,8 @@ export class ForumService {
   private forumTopicsUrl: string = `${environment.api_url}topics`;
   private createTopicUrl: string = `${environment.api_url}topics/store`;
   private forumPostsUrl: string = `${environment.api_url}posts`;
+  private markAllAsViewedUrl: string = `${environment.api_url}markAllForums`;
+  private nextOrPreviousUrl: string = `${environment.api_url}postsNextOrPrevious`;
 
   constructor(private http: HttpClient) {}
 
@@ -40,6 +42,25 @@ export class ForumService {
         this.forumCategoriesUrl,
         options
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  public getNextOrPrevious(
+    option: string,
+    idCategory: number,
+    id: number
+  ): Observable<ApiResponse<number>> {
+    const httpParams = new HttpParams().appendAll({
+      option: option,
+      idCategory: idCategory,
+      id: id,
+    });
+    const options = httpParams
+      ? { params: httpParams, header: new HttpHeaders() }
+      : { header: new HttpHeaders() };
+
+    return this.http
+      .get<ApiResponse<number>>(this.nextOrPreviousUrl, options)
       .pipe(catchError(this.handleError));
   }
 
@@ -130,9 +151,15 @@ export class ForumService {
       .pipe(catchError(this.handleError));
   }
 
-  public markAllAsViewed(idCtaegory: number): Observable<any> {
+  public markAllAsViewed(idCategory: number): Observable<any> {
     return this.http
-      .patch<any>(this.forumTopicsUrl + '/' + idCtaegory + '/markAll', {})
+      .patch<any>(this.forumTopicsUrl + '/' + idCategory + '/markAll', {})
+      .pipe(catchError(this.handleError));
+  }
+
+  public markAllForumsAsViewed(): Observable<any> {
+    return this.http
+      .patch<any>(this.markAllAsViewedUrl, {})
       .pipe(catchError(this.handleError));
   }
 

@@ -199,7 +199,7 @@
         <td style="width: 400px">
           @if (topic.last_post_info){
           <div class="flex flex-column align-items-center">
-            <span>{{ topic.last_post_info.date | dateHourFormat }}</span>
+            <span>{{ getDateInLocale(topic.last_post_info.date, true) }}</span>
             <div class="flex align-items-center gap-1">
               <a
                 class="link"

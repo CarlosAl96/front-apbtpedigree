@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ForumCategory } from '../../../core/models/forumCategory';
 import { ForumService } from '../../../core/services/forum.service';
 import { QueryPagination } from '../../../core/models/queryPagination';
-import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
 import { SocketService } from '../../../core/services/socket.service';
 import { SessionService } from '../../../core/services/session.service';
 import { User } from '../../../core/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [TranslocoModule, CardModule, TableModule, DateHourFormatPipe],
+  imports: [TranslocoModule, CardModule, TableModule],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })
@@ -23,13 +22,15 @@ export class ForumComponent {
   public totalRows: number = 0;
   public categoriesInfo!: any;
   public user!: User | undefined;
+  private subscription: Subscription | null = null;
+  private currentLang: string = '';
   public queryPagination: QueryPagination = {
     size: 50,
     page: 0,
   };
 
   constructor(
-    private readonly router: Router,
+    private readonly translocoService: TranslocoService,
     private readonly forumService: ForumService,
     private readonly socketService: SocketService,
     private readonly sessionService: SessionService
@@ -37,6 +38,11 @@ export class ForumComponent {
     this.getCategories(this.queryPagination);
     this.getCategoriesInfo();
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+
+    this.subscription?.unsubscribe();
+    this.subscription = this.translocoService.langChanges$.subscribe((lang) => {
+      this.currentLang = lang;
+    });
 
     this.socketService.onForum().subscribe({
       next: (res) => {
@@ -106,6 +112,34 @@ export class ForumComponent {
         });
       },
     });
+  }
+
+  public getDateInLocale(date: string, hours: boolean): string {
+    const dateAux = new Date(date.replace('Z', ''));
+
+    let options: Intl.DateTimeFormatOptions = {};
+
+    if (hours) {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        hour12: true,
+      };
+    } else {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      };
+    }
+
+    const formatter = new Intl.DateTimeFormat(this.currentLang, options);
+    return formatter.format(dateAux);
   }
 
   public goToLastPost(idTopic: number): void {

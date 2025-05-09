@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -87,7 +87,6 @@ export class PostsListComponent implements OnInit {
   public posts: ForumPost[] = [];
 
   constructor(
-    private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly forumService: ForumService,
     private readonly translocoService: TranslocoService,

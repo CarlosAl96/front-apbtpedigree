@@ -11,8 +11,7 @@ import { ForumCategory } from '../../../core/models/forumCategory';
 import { ForumTopic } from '../../../core/models/forumTopic';
 import { ForumService } from '../../../core/services/forum.service';
 import { QueryPagination } from '../../../core/models/queryPagination';
-import { DateHourFormatPipe } from '../../../core/pipes/date-hour-format.pipe';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastService } from '../../../core/services/toast.service';
@@ -33,7 +32,6 @@ import { SocketService } from '../../../core/services/socket.service';
     TableModule,
     ReactiveFormsModule,
     FormsModule,
-    DateHourFormatPipe,
     ConfirmDialogModule,
     PaginatorModule,
     InputTextModule,
@@ -65,6 +63,8 @@ export class TopicsListComponent implements OnInit {
   public topics: ForumTopic[] = [];
   public first: number = 0;
   public totalRows: number = 0;
+  private subscription: Subscription | null = null;
+  private currentLang: string = '';
   public queryPagination: QueryPagination = {
     size: 10,
     page: 0,
@@ -158,6 +158,11 @@ export class TopicsListComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.subscription?.unsubscribe();
+    this.subscription = this.translocoService.langChanges$.subscribe((lang) => {
+      this.currentLang = lang;
+    });
+
     this.getTopicsFromCategory(this.idCategory);
   }
 
@@ -433,6 +438,34 @@ export class TopicsListComponent implements OnInit {
         });
       },
     });
+  }
+
+  public getDateInLocale(date: string, hours: boolean): string {
+    const dateAux = new Date(date.replace('Z', ''));
+
+    let options: Intl.DateTimeFormatOptions = {};
+
+    if (hours) {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        hour12: true,
+      };
+    } else {
+      options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      };
+    }
+
+    const formatter = new Intl.DateTimeFormat(this.currentLang, options);
+    return formatter.format(dateAux);
   }
 
   private getIsPopular(views: number, replies: number): boolean {

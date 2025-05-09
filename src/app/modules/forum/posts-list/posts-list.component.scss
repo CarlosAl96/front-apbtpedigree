@@ -80,6 +80,11 @@
   font-weight: 900;
 }
 
+.content-post {
+  max-width: calc(100vw - 380px);
+  overflow-x: auto;
+}
+
 ::ng-deep .blockquote {
   border: 1px solid var(--color-secondary);
   border-radius: 10px;
@@ -93,5 +98,9 @@
 @media only screen and (min-height: 1080px) {
   ::ng-deep .card .p-card.p-component {
     zoom: 1.6;
+  }
+
+  .content-post {
+    font-size: 8px !important;
   }
 }

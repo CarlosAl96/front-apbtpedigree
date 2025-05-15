@@ -14,3 +14,10 @@
 .form {
   width: 700px;
 }
+.chat-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}

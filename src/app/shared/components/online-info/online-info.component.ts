@@ -4,13 +4,13 @@ import { CardModule } from 'primeng/card';
 import { AuthService } from '../../../core/services/auth.service';
 import { SessionService } from '../../../core/services/session.service';
 import { User } from '../../../core/models/user';
-import {  } from '@angular/router';
+import {} from '@angular/router';
 import { SocketService } from '../../../core/services/socket.service';
 
 @Component({
   selector: 'app-online-info',
   standalone: true,
-  imports: [TranslocoModule, CardModule, ],
+  imports: [TranslocoModule, CardModule],
   templateUrl: './online-info.component.html',
   styleUrl: './online-info.component.scss',
 })
@@ -19,25 +19,15 @@ export class OnlineInfoComponent {
   public user!: User | undefined;
 
   constructor(
-    private readonly authService: AuthService,
     private readonly sessionService: SessionService,
     private readonly socketService: SocketService
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
-    this.getUsersLoggedInfo();
-    this.socketService.onLogin().subscribe({
-      next: (res) => {
-        this.getUsersLoggedInfo();
-      },
-    });
-  }
 
-  public getUsersLoggedInfo(): void {
-    this.authService.getUsersLoggedAndSubs().subscribe({
+    this.socketService.onLoginInfo().subscribe({
       next: (res) => {
-        this.loggeds = res.response.logged;
+        this.loggeds = res;
       },
-      error: (error) => {},
     });
   }
 }

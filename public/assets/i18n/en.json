@@ -409,6 +409,8 @@
     "changeOwner": {
       "currentOwner": "Current owner",
       "usernameOrEmail": "Username or email",
+      "newOwner": "New owner",
+      "placeholderSearchNewOwner": "Search for a user to transfer ownership...",
       "confirm": "Are you sure you want to transfer ownership of this dog to <strong>{{newOwner}}</strong>?"
     },
     "publicLink": {

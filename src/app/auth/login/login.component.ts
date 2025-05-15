@@ -15,6 +15,7 @@ import { ToastService } from '../../core/services/toast.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { PaymentService } from '../../core/services/payment.service';
 import { StreamPayPopupComponent } from '../../shared/components/stream-pay-popup/stream-pay-popup.component';
+import { SocketService } from '../../core/services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ export class LoginComponent {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly router: Router,
+    private readonly socketService: SocketService,
     private readonly authService: AuthService,
     private readonly sessionService: SessionService,
     private readonly toastService: ToastService,
@@ -76,6 +77,10 @@ export class LoginComponent {
           window.location.href = '/home';
           this.verifyPayment();
           this.loading = false;
+
+          this.socketService.emitLogin(
+            this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0
+          );
         },
         error: () => {
           this.error = [

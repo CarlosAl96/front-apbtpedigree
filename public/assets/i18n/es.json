@@ -409,6 +409,8 @@
     "changeOwner": {
       "currentOwner": "Dueño actual",
       "usernameOrEmail": "Nombre usuario o correo electrónico",
+      "newOwner": "Nuevo dueño",
+      "placeholderSearchNewOwner": "Buscar nuevo dueño...",
       "confirm": "¿Estás seguro que deseas transferir la propiedad de este perro a <strong>{{newOwner}}</strong>?"
     },
     "publicLink": {

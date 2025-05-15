@@ -2,10 +2,10 @@ import { Component, HostListener, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -20,6 +20,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { User } from '../../../../core/models/user';
 import { SessionService } from '../../../../core/services/session.service';
 import { Location } from '@angular/common';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AuthService } from '../../../../core/services/auth.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-transfer-ownership',
@@ -33,6 +36,8 @@ import { Location } from '@angular/common';
     ConfirmDialogModule,
     MessagesModule,
     InputTextareaModule,
+    AutoCompleteModule,
+    FormsModule,
   ],
   providers: [ConfirmationService],
   templateUrl: './transfer-ownership.component.html',
@@ -52,13 +57,17 @@ export class TransferOwnershipComponent {
   public formGroup!: FormGroup;
   public user!: User | undefined;
   public error!: Message[];
+  public urlImg: string = `${environment.uploads_url}users/`;
+
+  public filteredUsers: User[] = [];
+  public selectedUser!: User;
 
   constructor(
     private readonly location: Location,
-    private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly translocoService: TranslocoService,
     private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
     private readonly confirmationService: ConfirmationService,
     private readonly pedigreeService: PedigreeService,
     private readonly sessionService: SessionService
@@ -66,20 +75,19 @@ export class TransferOwnershipComponent {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
 
     this.formGroup = this.formBuilder.group({
-      username: ['', Validators.required],
       description: [''],
     });
   }
 
   public changeOwner(): void {
-    if (this.formGroup.valid) {
+    if (this.selectedUser.id) {
       this.confirmationService.confirm({
         header: this.translocoService.translate(
           'yourPedigrees.menu.transferOwnership'
         ),
         message: this.translocoService.translate(
           'yourPedigrees.changeOwner.confirm',
-          { newOwner: this.formGroup.controls['username'].value }
+          { newOwner: this.selectedUser.username }
         ),
         acceptIcon: 'pi pi-arrow-right-arrow-left mr-2',
         rejectIcon: 'pi pi-times mr-2',
@@ -88,8 +96,12 @@ export class TransferOwnershipComponent {
         acceptLabel: this.translocoService.translate('buttons.yes'),
         rejectLabel: this.translocoService.translate('buttons.no'),
         accept: () => {
+          const obj: any = {
+            description: this.formGroup.value.description ?? '',
+            newOwner: this.selectedUser.id,
+          };
           this.pedigreeService
-            .changePedigreeOwner(this.formGroup.value, this.pedigree.id)
+            .changePedigreeOwner(obj, this.pedigree.id)
             .subscribe({
               next: () => {
                 this.error = [];
@@ -124,6 +136,15 @@ export class TransferOwnershipComponent {
     } else {
       this.formGroup.controls['username'].markAsDirty();
     }
+  }
+
+  public searchUsers(query: string): void {
+    this.authService.searchUsers(query).subscribe({
+      next: (res) => {
+        this.filteredUsers = res.response;
+      },
+      error: (error) => {},
+    });
   }
 
   public goBack(): void {

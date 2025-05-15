@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,16 @@ import { environment } from '../../../environments/environment.development';
 export class SocketService {
   private socket: Socket;
 
-  constructor() {
+  constructor(private readonly sessionService: SessionService) {
     this.socket = io(environment.server, {});
+
+    setInterval(() => {
+      if (this.sessionService.readSession('USER_TOKEN')) {
+        const userId =
+          this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0;
+        this.socket.emit('heartbeat', userId);
+      }
+    }, 3000);
   }
 
   onMessage(): Observable<any> {
@@ -41,6 +50,14 @@ export class SocketService {
     return new Observable((observer) => {
       this.socket.on('login', (id) => {
         observer.next(id);
+      });
+    });
+  }
+
+  onLoginInfo(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('online-users-count', (count) => {
+        observer.next(count);
       });
     });
   }
@@ -99,6 +116,10 @@ export class SocketService {
         observer.next(res);
       });
     });
+  }
+
+  emitLogin(id: number): void {
+    this.socket.emit('register-user', id);
   }
 
   public disconnect(): void {

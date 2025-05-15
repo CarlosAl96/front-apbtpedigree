@@ -4,42 +4,91 @@
       @if (isFromPedigreeSearch) {
       <i class="pi pi-arrow-left icon-back w-full" (click)="goBack()"></i>
       }
-      <span class="w-full flex justify-content-center">{{t('yourPedigrees.menu.transferOwnership')}}</span>
+      <span class="w-full flex justify-content-center">{{
+        t("yourPedigrees.menu.transferOwnership")
+      }}</span>
       @if (isFromPedigreeSearch) {
       <div class="w-full"></div>
       }
-
     </div>
   </ng-template>
 
-  <form class="flex flex-column gap-3 form" [formGroup]="formGroup" (ngSubmit)="changeOwner()">
-
+  <div class="flex flex-column gap-3 form">
     <div class="flex gap-2">
-      <span>{{t("yourPedigrees.changeOwner.currentOwner")}}:</span>
-      <span><strong>{{ user?.username }}</strong></span>
+      <span>{{ t("yourPedigrees.changeOwner.currentOwner") }}:</span>
+      <span
+        ><strong>{{ pedigree.owner }}</strong></span
+      >
     </div>
 
     <div class="flex flex-column gap-2">
-      <label for="username">{{t("yourPedigrees.changeOwner.usernameOrEmail")}}</label>
-      <input pInputText id="username" formControlName="username" (keydown.space)="$event.preventDefault()" />
+      <label for="username">{{
+        t("yourPedigrees.changeOwner.newOwner")
+      }}</label>
+
+      <p-autoComplete
+        [(ngModel)]="selectedUser"
+        [suggestions]="filteredUsers"
+        (completeMethod)="searchUsers($event.query)"
+        optionLabel="username"
+        class="w-full"
+        inputStyleClass="w-full"
+        styleClass="w-full"
+        [placeholder]="t('yourPedigrees.changeOwner.placeholderSearchNewOwner')"
+      >
+        <ng-template let-user pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            @if (user.picture) {
+            <img
+              [src]="urlImg + user.picture"
+              class="chat-avatar"
+              style="width: 32px; height: 32px"
+            />
+            }
+            <div>{{ user.username }}</div>
+          </div>
+        </ng-template>
+      </p-autoComplete>
     </div>
 
-    <div class="flex mt-3">
-      <div class="w-full flex flex-column justify-content-center gap-2">
-        <label for="description">{{ t('yourPedigrees.newPedigree.form.description') }}</label>
-        <textarea pInputTextarea rows="5" styleClass="w-full" formControlName="description" inputId="description"
-          style="resize: none;"></textarea>
+    <form
+      class="flex flex-column gap-3 form"
+      [formGroup]="formGroup"
+      (ngSubmit)="changeOwner()"
+    >
+      <div class="flex mt-3">
+        <div class="w-full flex flex-column justify-content-center gap-2">
+          <label for="description">{{
+            t("yourPedigrees.newPedigree.form.description")
+          }}</label>
+          <textarea
+            pInputTextarea
+            rows="5"
+            styleClass="w-full"
+            formControlName="description"
+            inputId="description"
+            style="resize: none"
+          ></textarea>
+        </div>
       </div>
-    </div>
 
-    <p-messages class="mt-2" [(value)]="error" [enableService]="false" [closable]="false" />
+      <p-messages
+        class="mt-2"
+        [(value)]="error"
+        [enableService]="false"
+        [closable]="false"
+      />
 
-    <div class="flex flex-column align-items-start gap-2 mt-3">
-      <p-button class="btn-primary" type="submit" [disabled]="!formGroup.valid" [label]="t('buttons.changeOwner')" />
-    </div>
-
-  </form>
-
+      <div class="flex flex-column align-items-start gap-2 mt-3">
+        <p-button
+          class="btn-primary"
+          type="submit"
+          [disabled]="selectedUser && selectedUser.id ? false : true"
+          [label]="t('buttons.changeOwner')"
+        />
+      </div>
+    </form>
+  </div>
 </p-card>
 
 <p-confirmDialog />

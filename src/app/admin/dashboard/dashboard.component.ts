@@ -32,9 +32,9 @@ export class DashboardComponent {
   ) {
     this.getUsersLoggedInfo();
     this.getDashboardData();
-    this.socketService.onLogin().subscribe({
+    this.socketService.onLoginInfo().subscribe({
       next: (res) => {
-        this.getUsersLoggedInfo();
+        this.loggeds = res;
       },
     });
   }

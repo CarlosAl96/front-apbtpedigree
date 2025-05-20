@@ -162,9 +162,7 @@
         >
         <div class="h-separator"></div>
         <span
-          [innerHTML]="
-            t('forum.whoOnline.line4', { users: categoriesInfo.usersLogged })
-          "
+          [innerHTML]="t('forum.whoOnline.line4', { users: loggeds })"
         ></span>
         <!-- <span [innerHTML]="t('forum.whoOnline.line5' , {users: 123, date: forum[0].last_post})"></span> -->
         <div class="flex gap-1">

@@ -82,7 +82,11 @@
 
 .content-post {
   max-width: calc(100vw - 380px);
-  overflow-x: auto;
+  font-size: 22px;
+
+  p {
+      font-size: 22px !important;
+  }
 }
 
 ::ng-deep .blockquote {
@@ -97,10 +101,12 @@
 
 @media only screen and (min-height: 1080px) {
   ::ng-deep .card .p-card.p-component {
-    zoom: 1.6;
+    zoom: 1.4;
   }
 
+s
   .content-post {
     font-size: 8px !important;
   }
 }
+

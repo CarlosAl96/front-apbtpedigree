@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -43,6 +50,7 @@ import { SocketService } from '../../../core/services/socket.service';
   providers: [ConfirmationService],
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class PostsListComponent implements OnInit {
   @ViewChild('scroll') scroll!: ElementRef;
@@ -230,7 +238,10 @@ export class PostsListComponent implements OnInit {
           post.stars = this.getStarts(post.posts ?? 0);
           post.level = this.getUserLevel(post.posts ?? 0);
           post.message = this.wrapBlockquotes(post.message);
+          post.message = this.cleanText(post.message);
         });
+
+        console.log(this.posts);
 
         if (this.last) {
           this.last = false;
@@ -438,6 +449,10 @@ export class PostsListComponent implements OnInit {
           },
         });
     }
+  }
+
+  public cleanText(text: string): string {
+    return text.replace(/&nbsp;/g, ' ');
   }
 
   public wrapBlockquotes(content: string): string {

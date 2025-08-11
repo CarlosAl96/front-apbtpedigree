@@ -249,7 +249,8 @@
       "line4": "En total hay <strong>{{users}}</strong> usuarios en línea",
       "line5": "El mayor número de usuarios en línea fue de <strong>{{users}}</strong> el {{date}}",
       "line6": "Usuarios registrados:",
-      "line7": "Estos datos se basan en usuarios activos durante los últimos cinco minutos"
+      "line7": "Estos datos se basan en usuarios activos durante los últimos cinco minutos",
+      "line8": "Usuarios conectados:"
     },
     "youCan": {
       "line1": "Puedes <strong>publicar</strong> nuevos temas en este foro",

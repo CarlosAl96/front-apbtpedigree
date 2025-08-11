@@ -17,7 +17,9 @@ export class SocketService {
       if (this.sessionService.readSession('USER_TOKEN')) {
         const userId =
           this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0;
-        this.socket.emit('heartbeat', userId);
+        const username =
+          this.sessionService.readSession('USER_TOKEN')?.user.username ?? '';
+        this.socket.emit('heartbeat', { userId, username });
       }
     }, 3000);
   }
@@ -118,8 +120,8 @@ export class SocketService {
     });
   }
 
-  emitLogin(id: number): void {
-    this.socket.emit('register-user', id);
+  emitLogin(id: number, username: string): void {
+    this.socket.emit('register-user', { userId: id, username });
   }
 
   public disconnect(): void {

@@ -60,7 +60,7 @@ export class LoginComponent {
     if (this.formGroup.valid) {
       this.loading = true;
       this.authService.login(this.formGroup.value).subscribe({
-        next: (res) => {
+        next: async (res) => {
           this.error = [];
           console.log(res);
 
@@ -74,13 +74,14 @@ export class LoginComponent {
           });
 
           this.sessionService.setIsLogin(true);
-          window.location.href = '/home';
-          this.verifyPayment();
+
           this.loading = false;
 
           this.socketService.emitLogin(
-            this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0
+            this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0,
+            this.sessionService.readSession('USER_TOKEN')?.user.username ?? ''
           );
+          window.location.href = '/home';
         },
         error: () => {
           this.error = [
@@ -98,26 +99,5 @@ export class LoginComponent {
     }
   }
 
-  private verifyPayment(repro: boolean = false): void {
-    this.paymentService.verifyPayment().subscribe({
-      next: (res) => {
-        if (
-          res.response.isAdmin ||
-          (res.response.isPaid && res.response.isLive)
-        ) {
-          return;
-        } else {
-          if (repro) {
-            res.response.repro = true;
-          }
-          this.dialogService.open(StreamPayPopupComponent, {
-            data: res.response,
-            header: this.translocoService.translate('stream.streamAnnounced'),
-            width: '50rem',
-          });
-        }
-      },
-      error: (error) => {},
-    });
-  }
+
 }

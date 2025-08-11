@@ -34,7 +34,7 @@ export class DashboardComponent {
     this.getDashboardData();
     this.socketService.onLoginInfo().subscribe({
       next: (res) => {
-        this.loggeds = res;
+        this.loggeds = res.count;
       },
     });
   }

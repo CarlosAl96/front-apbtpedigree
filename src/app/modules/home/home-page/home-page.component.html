@@ -3,7 +3,7 @@
     <div class="header-container">{{ t("navbar.items.home") }}</div>
   </ng-template>
 
-  <div class="texts">
+  <div class="flex flex-column">
     <h2>{{ t("home.welcome") }}</h2>
     <span class="text-home">{{ t("home.p1") }}</span>
     <h3>{{ t("home.q1") }}</h3>
@@ -34,9 +34,11 @@
       >
     </div>
     @if (!user) {
-    <h3>{{ t("home.q2") }}</h3>
-    <span class="text-home">{{ t("home.p2") }}</span>
-    <h3 class="text-center">{{ t("home.final") }}</h3>
+    <div class="flex flex-column">
+      <h3>{{ t("home.q2") }}</h3>
+      <span class="text-home">{{ t("home.p2") }}</span>
+      <h3 class="text-center">{{ t("home.final") }}</h3>
+    </div>
     }
   </div>
 </p-card>

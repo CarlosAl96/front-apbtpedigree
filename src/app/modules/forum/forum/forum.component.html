@@ -115,7 +115,7 @@
   <div class="mt-5"></div>
 
   @if (categoriesInfo) {
-  <p-card class="who-online">
+  <p-card class="who-online" [style]="{ zoom: 1 }">
     <ng-template pTemplate="header">
       <div class="header-container justify-content-start">
         {{ t("onlineInfo.title") }}
@@ -164,7 +164,6 @@
         <span
           [innerHTML]="t('forum.whoOnline.line4', { users: loggeds })"
         ></span>
-        <!-- <span [innerHTML]="t('forum.whoOnline.line5' , {users: 123, date: forum[0].last_post})"></span> -->
         <div class="flex gap-1">
           <span>{{ t("forum.whoOnline.line6") }}</span>
           @for (user of categoriesInfo.lastUsers; track $index) {
@@ -172,6 +171,17 @@
             ><strong
               >{{ user.username }}@if ($index < categoriesInfo.lastUsers.length
               - 1) {,}</strong
+            ></a
+          >
+          }
+        </div>
+        <div class="flex gap-1">
+          <span>{{ t("forum.whoOnline.line8") }}</span>
+          @for (user of loggedUsers; track $index) {
+          <a class="link" [href]="'/forum/profile/' + user.username"
+            ><strong
+              >{{ user.username }}@if ($index < loggedUsers.length - 1)
+              {,}</strong
             ></a
           >
           }

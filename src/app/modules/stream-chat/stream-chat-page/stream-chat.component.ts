@@ -63,7 +63,20 @@ export class StreamChatComponent implements AfterViewInit {
 
     this.socketService.onStreamMessage().subscribe({
       next: (res) => {
-        if (res.user_id != this.user?.id) {
+        console.log('Mensaje recibido:', res, 'Usuario actual:', this.user?.id);
+        // Si el mensaje es del usuario actual, lo agregamos solo si no existe ya en el array
+        if (res.user_id === this.user?.id) {
+          // Buscar si ya existe un mensaje igual (por id, texto y fecha)
+          const exists = this.messages.some(m =>
+            m.user_id === res.user_id &&
+            m.message === res.message &&
+            Math.abs(new Date(m.created_at).getTime() - new Date(res.created_at).getTime()) < 2000 // 2 segundos de margen
+          );
+          if (!exists) {
+            this.messages.push(res);
+            this.scrollToBottom();
+          }
+        } else {
           this.messages.push(res);
           this.scrollToBottom();
         }
@@ -114,9 +127,14 @@ export class StreamChatComponent implements AfterViewInit {
 
       this.messageModel = '';
 
+      // Solo agregamos el mensaje localmente si no esperamos que el socket lo devuelva
+      // Si el socket lo devuelve, se evitará el duplicado en el handler
+      this.messages.push(message);
+      this.scrollToBottom();
+
       this.streamService.sendMessage(message).subscribe({
         next: (res) => {
-          this.scrollToBottom();
+          // El mensaje ya fue agregado localmente
         },
         error: (error) => {},
       });

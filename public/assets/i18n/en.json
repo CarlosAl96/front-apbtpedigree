@@ -249,7 +249,8 @@
       "line4": "In total there are <strong>{{users}}</strong> users online",
       "line5": "Most users ever online was <strong>{{users}}</strong> on {{date}}",
       "line6": "Registered Users:",
-      "line7": "This data is based on users active over the past five minutes"
+      "line7": "This data is based on users active over the past five minutes",
+      "line8": "Logged Users:"
     },
     "youCan": {
       "line1": "You <strong>can</strong> post new topics in this forum",

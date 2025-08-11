@@ -25,6 +25,7 @@ export class ForumComponent {
   private subscription: Subscription | null = null;
   private currentLang: string = '';
   public loggeds: number = 0;
+  public loggedUsers: any = [];
   public queryPagination: QueryPagination = {
     size: 50,
     page: 0,
@@ -60,7 +61,10 @@ export class ForumComponent {
 
     this.socketService.onLoginInfo().subscribe({
       next: (res) => {
-        this.loggeds = res;
+        console.log(res);
+
+        this.loggeds = res.count;
+        this.loggedUsers = res.users;
       },
     });
   }

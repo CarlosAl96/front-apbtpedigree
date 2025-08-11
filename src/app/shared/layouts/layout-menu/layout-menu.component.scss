@@ -3,8 +3,3 @@
   top: 0px;
   z-index: 9;
 }
-@media only screen and (min-height: 1080px) {
-  ::ng-deep .card .p-card.p-component {
-    zoom: 1.4;
-  }
-}

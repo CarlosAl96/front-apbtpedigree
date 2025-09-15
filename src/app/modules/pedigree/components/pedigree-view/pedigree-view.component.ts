@@ -124,7 +124,7 @@ export class PedigreeViewComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.pedigree) {
-      this.siblings = this.pedigree.siblings;
+      this.siblings = this.getBrothers('full');
       this.fullBrothersCount = this.getBrothers('full').length;
       this.setPercentStatictics();
       this.getLogs();

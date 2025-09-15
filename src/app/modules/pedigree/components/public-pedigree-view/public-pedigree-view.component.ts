@@ -126,7 +126,7 @@ export class PublicPedigreeViewComponent implements OnInit {
       next: (res) => {
         this.isLoading = false;
         this.pedigree = fullnameTransform(res.response);
-        this.siblings = this.pedigree.siblings;
+        this.siblings = this.getBrothers('full');
         this.fullBrothersCount = this.getBrothers('full').length;
 
         this.setPercentStatictics();

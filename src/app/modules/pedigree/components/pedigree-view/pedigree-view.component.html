@@ -382,24 +382,23 @@
             { color: offspring.fightcolor, fullname: offspring.fullname }
               | fightColor
           }} row"
-          (click)="onChangeIdPedigree(offspring.id)"
         >
-          <td>{{ offspring.id }}</td>
-          <td>
+          <td (click)="onChangeIdPedigree(offspring.id)">{{ offspring.id }}</td>
+          <td (click)="onChangeIdPedigree(offspring.id)">
             {{
               offspring.fullname
                 ? offspring.fullname
                 : t("yourPedigrees.unknown")
             }}
           </td>
-          <td>
+          <td (click)="onChangeIdPedigree(offspring.father_id)">
             {{
               offspring.father_fullname
                 ? offspring.father_fullname
                 : t("yourPedigrees.unknown")
             }}
           </td>
-          <td>
+          <td (click)="onChangeIdPedigree(offspring.mother_id)">
             {{
               offspring.mother_fullname
                 ? offspring.mother_fullname
@@ -471,22 +470,21 @@
             { color: sibling.fightcolor, fullname: sibling.fullname }
               | fightColor
           }} row"
-          (click)="onChangeIdPedigree(sibling.id)"
         >
-          <td>{{ sibling.id }}</td>
-          <td>
+          <td (click)="onChangeIdPedigree(sibling.id)">{{ sibling.id }}</td>
+          <td (click)="onChangeIdPedigree(sibling.id)">
             {{
               sibling.fullname ? sibling.fullname : t("yourPedigrees.unknown")
             }}
           </td>
-          <td>
+          <td (click)="onChangeIdPedigree(sibling.father_id)">
             {{
               sibling.father_fullname
                 ? sibling.father_fullname
                 : t("yourPedigrees.unknown")
             }}
           </td>
-          <td>
+          <td (click)="onChangeIdPedigree(sibling.mother_id)">
             {{
               sibling.mother_fullname
                 ? sibling.mother_fullname

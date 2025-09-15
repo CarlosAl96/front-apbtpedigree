@@ -100,8 +100,8 @@ export class PublicPedigreeViewComponent implements OnInit {
     setTimeout(() => {
       this.filterOptions = [
         {
-          name: this.translocoService.translate('yourPedigrees.all'),
-          code: 'all',
+          name: this.translocoService.translate('yourPedigrees.fullBrothers'),
+          code: 'full',
         },
         {
           name: this.translocoService.translate(
@@ -114,10 +114,6 @@ export class PublicPedigreeViewComponent implements OnInit {
             'yourPedigrees.pedigreeStats.halfBrothersDam'
           ),
           code: 'half-dam',
-        },
-        {
-          name: this.translocoService.translate('yourPedigrees.fullBrothers'),
-          code: 'full',
         },
       ];
 
@@ -263,11 +259,6 @@ export class PublicPedigreeViewComponent implements OnInit {
           case 'half-dam':
             return (
               sibling.mother_id === idMother && sibling.father_id !== idFather
-            );
-
-          case 'all':
-            return (
-              sibling.father_id === idFather || sibling.mother_id === idMother
             );
 
           default:

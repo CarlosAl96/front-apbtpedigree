@@ -128,6 +128,8 @@ export class PedigreeViewComponent implements OnInit {
       this.fullBrothersCount = this.getBrothers('full').length;
       this.setPercentStatictics();
       this.getLogs();
+
+      console.log(this.pedigree);
     }
   }
 

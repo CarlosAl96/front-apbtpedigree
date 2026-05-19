@@ -12,7 +12,7 @@ export interface Chat {
   viewed_two: boolean;
   is_deleted_one: boolean;
   is_deleted_two: boolean;
-  last_message: Message;
+  last_message: Message | null;
   im_first?: boolean;
   created_at: Date;
   updated_at: Date;

@@ -76,3 +76,26 @@
     font-weight: 900;
   }
 }
+
+.user-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  width: 100%;
+  min-width: 0;
+  padding-left: 1rem;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+
+  span,
+  a,
+  strong {
+    padding-left: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+.ellipsis {
+  font-weight: 700;
+}

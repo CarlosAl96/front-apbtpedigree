@@ -147,11 +147,13 @@
             t('forum.whoOnline.line1', { posts: categoriesInfo.postsCount })
           "
         ></span>
+        @if (user?.is_superuser) {
         <span
           [innerHTML]="
             t('forum.whoOnline.line2', { users: categoriesInfo.usersCount })
           "
         ></span>
+        }
         <span
           >{{ t("forum.whoOnline.line3") }}
           <a
@@ -175,15 +177,18 @@
           >
           }
         </div>
-        <div class="flex gap-1">
+        <div class="user-list">
           <span>{{ t("forum.whoOnline.line8") }}</span>
-          @for (user of loggedUsers; track $index) {
+          @for (user of loggedUsers.slice(0, 7); track $index) {
           <a class="link" [href]="'/forum/profile/' + user.username"
             ><strong
-              >{{ user.username }}@if ($index < loggedUsers.length - 1)
+              >{{ user.username }}@if ($index < loggedUsers.slice(0, 7).length - 1)
               {,}</strong
             ></a
           >
+          }
+          @if (loggedUsers.length > 7) {
+          <span class="ellipsis">...</span>
           }
         </div>
         <div class="h-separator"></div>

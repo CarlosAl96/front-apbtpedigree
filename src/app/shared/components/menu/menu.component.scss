@@ -1,6 +1,16 @@
 .navbar-list {
   padding-left: 1rem;
   height: 100%;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.header-container {
+  text-transform: uppercase;
+}
+
+.navbar-item {
+  text-transform: uppercase;
 }
 
 .navbar-item a {
@@ -8,6 +18,8 @@
   color: inherit;
   display: flex;
   align-items: center;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
 
 .navbar-item:hover {

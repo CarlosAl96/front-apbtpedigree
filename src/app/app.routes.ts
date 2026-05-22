@@ -55,13 +55,13 @@ export const routes: Routes = [
       import('./modules/forum/forum.routes').then((m) => m.FORUM_ROUTES),
     canActivate: [noAuthGuard, forumBanGuard],
   },
-  {
-    path: 'stream',
-    component: LayoutComponent,
-    loadChildren: () =>
-      import('./modules/stream/stream.routes').then((m) => m.STREAM_ROUTES),
-    canActivate: [noAuthGuard, isPayedGuard],
-  },
+  // {
+  //   path: 'stream',
+  //   component: LayoutComponent,
+  //   loadChildren: () =>
+  //     import('./modules/stream/stream.routes').then((m) => m.STREAM_ROUTES),
+  //   canActivate: [noAuthGuard, isPayedGuard],
+  // },
   {
     path: 'stream-chat',
     component: LayoutComponent,

@@ -9,4 +9,16 @@
   padding-right: 1rem;
   padding-left: 1rem;
   color: var(--color-font-light);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+::ng-deep .header .p-inputtext,
+::ng-deep .header .p-dropdown,
+::ng-deep .header .p-dropdown-label,
+::ng-deep .header .p-button,
+::ng-deep .header .p-button-label,
+::ng-deep .header .p-dropdown-item {
+  font-size: 1rem;
+  text-transform: uppercase;
 }

@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DropOption } from '../../../core/models/dropOption';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
@@ -40,6 +40,7 @@ import { SocketService } from '../../../core/services/socket.service';
     DropdownModule,
     ButtonModule,
     TableModule,
+    RouterLink,
     ReactiveFormsModule,
     FormsModule,
     TooltipModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -30,6 +30,7 @@ import { SocketService } from '../../../core/services/socket.service';
     DropdownModule,
     ButtonModule,
     TableModule,
+    RouterLink,
     ReactiveFormsModule,
     FormsModule,
     ConfirmDialogModule,

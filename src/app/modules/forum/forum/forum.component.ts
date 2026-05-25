@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
@@ -13,7 +14,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [TranslocoModule, CardModule, TableModule],
+  imports: [TranslocoModule, CardModule, TableModule, RouterLink],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss',
 })

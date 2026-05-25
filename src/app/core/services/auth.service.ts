@@ -114,8 +114,12 @@ export class AuthService {
   }
 
   public getUserByUsername(username: string): Observable<ApiResponse<User>> {
+    const encodedUsername = encodeURIComponent(username);
+
     return this.http
-      .get<ApiResponse<User>>(this.usersUrl + '/' + username + '/getByUsername')
+      .get<ApiResponse<User>>(
+        this.usersUrl + '/' + encodedUsername + '/getByUsername'
+      )
       .pipe(catchError(this.handleError));
   }
 

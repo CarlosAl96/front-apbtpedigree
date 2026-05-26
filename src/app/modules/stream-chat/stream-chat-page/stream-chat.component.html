@@ -20,7 +20,17 @@
           "
         >
           <span class="message">
-            <strong> {{ message.username }}</strong>
+            @if (message.user_id != user?.id) {
+            <a
+              class="username-link"
+              [routerLink]="['/messages']"
+              [queryParams]="{ user: message.username }"
+            >
+              <strong>{{ message.username }}</strong>
+            </a>
+            } @else {
+            <strong>{{ message.username }}</strong>
+            }
           </span>
           <span class="message">
             {{ message.message }}

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
@@ -29,6 +30,7 @@ import { AuthService } from '../../../core/services/auth.service';
     PickerComponent,
     FormsModule,
     ConfirmDialogModule,
+    RouterLink,
   ],
   providers: [ConfirmationService],
   templateUrl: './stream-chat.component.html',

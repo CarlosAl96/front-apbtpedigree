@@ -62,6 +62,17 @@
   gap: 0.2rem;
 }
 
+.username-link {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.username-link:hover {
+  color: var(--color-primary);
+}
+
 .left-align {
   justify-content: start;
   padding-right: 4rem;

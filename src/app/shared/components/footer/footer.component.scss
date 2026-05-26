@@ -6,4 +6,44 @@
   align-items: center;
   justify-content: center;
   color: var(--color-font-dark);
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+
+.footer-content {
+  width: 42%;
+}
+
+.footer-text {
+  font-size: inherit;
+}
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    font-size: 1.25rem;
+  }
+
+  .footer-content {
+    width: calc(100% - 2rem);
+  }
+
+  .footer-text {
+    font-size: 1.25rem !important;
+    margin: 0.35rem 0;
+  }
+}
+
+@media only screen and (max-device-width: 768px) {
+  .footer {
+    font-size: 1.5rem;
+  }
+
+  .footer-content {
+    width: calc(100% - 2rem);
+  }
+
+  .footer-text {
+    font-size: 1.5rem !important;
+    margin: 0.35rem 0;
+  }
 }

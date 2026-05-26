@@ -17,6 +17,7 @@ import { TagModule } from 'primeng/tag';
 import { SocketService } from '../../../core/services/socket.service';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 
 @Component({
   selector: 'app-messages-list',
@@ -31,6 +32,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormsModule,
     TagModule,
     ConfirmDialogModule,
+    LinkifyPipe,
   ],
   providers: [ConfirmationService],
   templateUrl: './messages-list.component.html',

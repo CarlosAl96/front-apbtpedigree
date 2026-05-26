@@ -118,6 +118,13 @@
   height: 200px;
 }
 
+::ng-deep .message a {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .input-message {
   height: 60px;
 }

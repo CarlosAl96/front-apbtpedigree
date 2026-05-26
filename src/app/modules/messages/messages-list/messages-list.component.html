@@ -54,9 +54,7 @@
         @if (message.img && message.img!= '') {
         <img class="message-img" [src]="message.img" />
         }
-        <span class="message">
-          {{ message.message }}
-        </span>
+        <span class="message" [innerHTML]="message.message | linkify"></span>
 
         <div class="flex align-items-center gap-1">
           <span class="time">{{ message.created_at | timeFormat }}</span>

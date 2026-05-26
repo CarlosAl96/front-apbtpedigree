@@ -32,9 +32,7 @@
             <strong>{{ message.username }}</strong>
             }
           </span>
-          <span class="message">
-            {{ message.message }}
-          </span>
+          <span class="message" [innerHTML]="message.message | linkify"></span>
 
           <div class="flex align-items-center gap-1">
             <div

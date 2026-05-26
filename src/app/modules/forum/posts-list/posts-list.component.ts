@@ -30,6 +30,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService } from 'primeng/api';
 import { SocketService } from '../../../core/services/socket.service';
+import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 
 @Component({
   selector: 'app-posts-list',
@@ -47,6 +48,7 @@ import { SocketService } from '../../../core/services/socket.service';
     PaginatorModule,
     InputTextModule,
     ConfirmDialogModule,
+    LinkifyPipe,
   ],
   providers: [ConfirmationService],
   templateUrl: './posts-list.component.html',

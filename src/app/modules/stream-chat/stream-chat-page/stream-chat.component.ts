@@ -16,6 +16,7 @@ import { CardModule } from 'primeng/card';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AuthService } from '../../../core/services/auth.service';
+import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 
 @Component({
   selector: 'app-stream-chat',
@@ -31,6 +32,7 @@ import { AuthService } from '../../../core/services/auth.service';
     FormsModule,
     ConfirmDialogModule,
     RouterLink,
+    LinkifyPipe,
   ],
   providers: [ConfirmationService],
   templateUrl: './stream-chat.component.html',

@@ -202,3 +202,9 @@
     padding: 0 1rem;
   }
 }
+
+@media only screen and (min-height: 1080px) {
+  ::ng-deep .p-card.p-component {
+    zoom: 1.4;
+  }
+}

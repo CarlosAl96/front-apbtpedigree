@@ -134,8 +134,12 @@
 
 .parent-link {
   cursor: pointer;
+}
+
+.parent-link,
+.unknown {
   font-weight: 900;
-  font-size: smaller;
+  font-size: 1rem;
   color: black;
 }
 
@@ -153,12 +157,6 @@
 .link-dog:hover {
   color: var(--color-primary);
   text-decoration: underline;
-}
-
-.unknown {
-  font-weight: 900;
-  font-size: smaller;
-  color: black;
 }
 
 .parent-link:hover {

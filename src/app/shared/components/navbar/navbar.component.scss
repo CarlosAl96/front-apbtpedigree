@@ -8,6 +8,7 @@
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: var(--color-bg-navbar);
+  font-size: 1rem;
 }
 
 .navbar-list {
@@ -19,6 +20,7 @@
   margin: 0;
   padding: 0;
   height: 100%;
+  font-size: 1rem;
 }
 
 .navbar-list li {
@@ -38,6 +40,7 @@
   border-bottom: 2px solid transparent;
   min-width: max-content;
   text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .icon-svg {
@@ -77,6 +80,7 @@
   text-decoration: none;
   cursor: pointer;
   color: inherit;
+  font-size: 1rem;
   &:hover {
     color: var(--color-primary);
     text-decoration: underline;

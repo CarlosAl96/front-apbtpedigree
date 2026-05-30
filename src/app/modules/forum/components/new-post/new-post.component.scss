@@ -26,3 +26,12 @@
   margin-bottom: 2rem;
   width: 100%;
 }
+
+.content-preview,
+::ng-deep .content-preview p,
+::ng-deep .content-preview a,
+::ng-deep .content-preview span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

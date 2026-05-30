@@ -50,6 +50,7 @@ export class MyPedigreesComponent implements OnInit {
   public isLoading: boolean = false;
   public isPrivate: boolean = false;
   public isEditable: boolean = false;
+  public canDeletePedigree: boolean = false;
   public isResults: boolean = true;
 
   constructor(
@@ -97,28 +98,43 @@ export class MyPedigreesComponent implements OnInit {
     this.pedigreeService.getPedigreeById(id).subscribe({
       next: (res) => {
         this.pedigree = fullnameTransform(res.response);
-        if (!this.user) {
-          if (this.pedigree.pedigree.private) {
-            this.isPrivate = true;
-          }
-        } else {
-          if (
-            this.pedigree.pedigree.user_id !== this.user?.id &&
-            this.pedigree.pedigree.private
-          ) {
-            this.isPrivate = true;
-          } else {
-            this.isPrivate = false;
-          }
+        const canModerateThisView =
+          this.user?.is_superuser ||
+          (this.isFromPedigreeSearch && this.user?.is_moderator);
 
+        if (
+          !this.isFromPedigreeSearch &&
+          this.user &&
+          !this.user.is_superuser &&
+          this.pedigree.pedigree.user_id !== this.user.id
+        ) {
+          this.isLoading = false;
+          window.location.href = '/pedigree/my-pedigrees/0';
+          return;
+        }
+
+        const canViewPrivatePedigree =
+          this.user &&
+          (this.pedigree.pedigree.user_id === this.user.id ||
+            canModerateThisView);
+
+        this.isPrivate =
+          this.pedigree.pedigree.private && !canViewPrivatePedigree;
+
+        if (this.user) {
           if (
             this.pedigree.pedigree.user_id === this.user?.id ||
-            this.user.is_superuser
+            canModerateThisView
           ) {
             this.isEditable = true;
           } else {
             this.isEditable = false;
           }
+
+          this.canDeletePedigree =
+            this.user.is_superuser ||
+            (this.pedigree.pedigree.user_id === this.user.id &&
+              !this.user.is_moderator);
         }
         this.isLoading = false;
       },

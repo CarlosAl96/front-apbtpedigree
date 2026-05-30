@@ -3,7 +3,9 @@
     <div class="header-container">{{ t("navbar.items.home") }}</div>
   </ng-template>
 
-  <div class="flex flex-column">
+  <div class="flex flex-column home-intro" itemprop="description">
+    <h1 class="home-title">{{ t("home.heroTitle") }}</h1>
+    <p class="home-lead">{{ t("home.heroIntro") }}</p>
     <h2>{{ t("home.welcome") }}</h2>
     <span class="text-home">{{ t("home.p1") }}</span>
     <h3>{{ t("home.q1") }}</h3>

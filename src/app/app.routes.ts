@@ -18,10 +18,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'home',
+    path: '',
     component: LayoutMenuComponent,
     loadChildren: () =>
       import('./modules/home/home.routes').then((m) => m.HOME_ROUTES),
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: 'pedigree',
@@ -82,5 +88,5 @@ export const routes: Routes = [
     path: 'public/pedigree/:id',
     component: PublicPedigreeViewComponent,
   },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth/login', pathMatch: 'full' },
 ];

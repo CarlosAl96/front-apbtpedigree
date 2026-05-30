@@ -131,18 +131,14 @@ export class PublicPedigreeViewComponent implements OnInit {
 
         this.setPercentStatictics();
 
-        if (!this.user) {
-          if (this.pedigree.pedigree.private) {
-            this.isPrivate = true;
-          }
-        } else {
-          if (
-            this.pedigree.pedigree.user_id !== this.user?.id &&
-            this.pedigree.pedigree.private
-          ) {
-            this.isPrivate = true;
-          }
-        }
+        const canViewPrivatePedigree =
+          this.user &&
+          (this.pedigree.pedigree.user_id === this.user.id ||
+            this.user.is_superuser ||
+            this.user.is_moderator);
+
+        this.isPrivate =
+          this.pedigree.pedigree.private && !canViewPrivatePedigree;
       },
       error: (error) => {
         this.isLoading = false;

@@ -25,10 +25,26 @@ export class SessionService {
   }
 
   readSession(key: string): UserTokenData | null {
-    if (localStorage.getItem(key) == null) {
+    const token = localStorage.getItem(key);
+
+    if (token == null) {
       return null;
     }
-    return jwtDecode(localStorage.getItem(key)!);
+
+    try {
+      const decodedToken = jwtDecode<UserTokenData>(token);
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+
+      if (!decodedToken.exp || decodedToken.exp <= currentTimestamp) {
+        localStorage.removeItem(key);
+        return null;
+      }
+
+      return decodedToken;
+    } catch {
+      localStorage.removeItem(key);
+      return null;
+    }
   }
 
   deleteSession() {

@@ -54,6 +54,8 @@
 .message {
   font-weight: 600;
   font-size: larger;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .info {
@@ -83,9 +85,11 @@
 .content-post {
   max-width: calc(100vw - 380px);
   font-size: 22px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 
   p {
-      font-size: 22px !important;
+    font-size: 22px !important;
   }
 
   a {
@@ -93,7 +97,19 @@
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
+}
+
+::ng-deep .content-post p,
+::ng-deep .content-post a,
+::ng-deep .content-post span,
+::ng-deep .content-post blockquote,
+::ng-deep .content-post .blockquote {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 ::ng-deep .blockquote {

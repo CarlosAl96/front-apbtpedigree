@@ -1,10 +1,11 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const token: string | null = localStorage.getItem('USER_TOKEN');
-  const router: Router = new Router();
+  const router = inject(Router);
 
   if (token) {
     if (!req.url.toString().includes('refresh')) {

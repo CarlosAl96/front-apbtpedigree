@@ -179,7 +179,7 @@
         </td>
         <td>
           <div class="flex flex-column gap-2">
-            @if(!topic.is_locked || user?.is_superuser ||
+            @if(!topic.is_locked || user?.is_superuser || user?.is_moderator ||
             forumCategory.moderators.includes(user?.username ?? '')){
             <a class="link title" [href]="'/forum/posts/' + topic.id">{{
               topic.name
@@ -229,7 +229,7 @@
             (onClick)="goToEditTopic(topic.id)"
             severity="primary"
           />
-          } @if(forumCategory && (user?.is_superuser ||
+          } @if(forumCategory && (user?.is_superuser || user?.is_moderator ||
           forumCategory.moderators.includes(user?.username ?? ''))){
           <p-button
             [rounded]="true"
@@ -292,7 +292,7 @@
               </svg>
             </ng-template>
           </p-button>
-          } @if(forumCategory && (user?.is_superuser ||
+          } @if(forumCategory && (user?.is_superuser || user?.is_moderator ||
           forumCategory.moderators.includes(user?.username ?? '') || user?.id ==
           topic.id_author)){
           <p-button

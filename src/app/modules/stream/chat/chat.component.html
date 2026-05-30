@@ -34,7 +34,7 @@
 
         <div class="flex w-full justify-content-end align-items-center gap-1">
           <span class="time">{{ message.created_at | timeFormat }}</span>
-          @if (user?.is_superuser) {
+          @if (user?.is_superuser || user?.is_moderator) {
           <i
             class="pi pi-trash cursor-pointer"
             style="color: red"

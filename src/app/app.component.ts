@@ -72,16 +72,28 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
     this.socketService.onLive().subscribe({
       next: (res) => {
+        this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+        if (!this.user) {
+          return;
+        }
         this.verifyPayment();
       },
     });
     this.socketService.onAnnounce().subscribe({
       next: (res) => {
+        this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+        if (!this.user) {
+          return;
+        }
         this.verifyPayment();
       },
     });
     this.socketService.onReprogramed().subscribe({
       next: (res) => {
+        this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+        if (!this.user) {
+          return;
+        }
         this.verifyPayment(true);
       },
     });
@@ -108,6 +120,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private verifyPayment(repro: boolean = false): void {
+    this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+    if (!this.user) {
+      return;
+    }
+
     this.paymentService.verifyPayment().subscribe({
       next: (res) => {
         if (res.response.isAdmin) {

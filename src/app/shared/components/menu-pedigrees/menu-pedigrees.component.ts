@@ -71,8 +71,13 @@ export class MenuPedigreesComponent {
       }
     });
 
-    if (this.user) {
+    if (this.user?.is_superuser) {
+      this.queryPagination.superUsersOnly = true;
+      delete this.queryPagination.userId;
+      this.getPedigrees(this.queryPagination);
+    } else if (this.user) {
       this.queryPagination.userId = this.user.id;
+      delete this.queryPagination.superUsersOnly;
       this.getPedigrees(this.queryPagination);
     }
 

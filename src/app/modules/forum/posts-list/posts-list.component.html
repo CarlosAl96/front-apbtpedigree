@@ -190,7 +190,7 @@
                   (onClick)="goToEdit(post.id)"
                   icon="pi pi-pencil"
                 ></p-button>
-                } @if (post.id_author == user?.id || user?.is_superuser ||
+                } @if (post.id_author == user?.id || user?.is_superuser || user?.is_moderator ||
                 isModerator(user?.username ?? '')) {
                 <p-button
                   [rounded]="true"

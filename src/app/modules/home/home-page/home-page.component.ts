@@ -28,6 +28,10 @@ export class HomePageComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    if (!this.user) {
+      return;
+    }
+
     await this.verifyPayment();
   }
 

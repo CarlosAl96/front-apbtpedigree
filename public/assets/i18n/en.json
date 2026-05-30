@@ -27,6 +27,8 @@
     "paymentsChart": "Payments made in the last 12 months"
   },
   "home": {
+    "heroTitle": "APBT Online Pedigree Database",
+    "heroIntro": "Search, register, manage, and share American Pit Bull Terrier pedigrees, bloodlines, breeder records, and community resources from one place.",
     "welcome": "Welcome!",
     "p1": "Register, manage, and share APBT pedigrees with a community of over 948,000 registered dogs. Explore bloodlines, use the lineage calculator, marketplace, and community tools. Also enjoy live chat and real-time customer support for fast and personalized assistance.",
     "q1": "What can you do on our platform?",
@@ -295,6 +297,7 @@
     "search": "Search Users",
     "delete": "Delete User",
     "admin": "Admin",
+    "moderator": "Moderator",
     "user": "User",
     "edit": "Edit User",
     "forumBan": "Forum Ban",

@@ -16,6 +16,7 @@ export interface User {
   posts: number;
 
   is_superuser: boolean;
+  is_moderator: boolean;
   stateOnline: boolean;
   adminuser: boolean;
   is_staff: boolean;

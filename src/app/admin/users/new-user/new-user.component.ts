@@ -79,11 +79,13 @@ export class NewUserComponent {
       combineLatest([
         this.translocoService.selectTranslate('users.user'),
         this.translocoService.selectTranslate('users.admin'),
+        this.translocoService.selectTranslate('users.moderator'),
         this.translocoService.langChanges$,
-      ]).subscribe(([user, admin]) => {
+      ]).subscribe(([user, admin, moderator]) => {
         this.userTypes = [
           { name: user, code: 0 },
           { name: admin, code: 1 },
+          { name: moderator, code: 2 },
         ];
       });
     });
@@ -118,9 +120,14 @@ export class NewUserComponent {
         formData.append('picture', this.files[0]);
       }
 
-      if (formData.get('type') == '1') {
-        formData.set('is_superuser', 'true');
-      }
+      formData.set(
+        'is_superuser',
+        formData.get('type') == '1' ? 'true' : 'false'
+      );
+      formData.set(
+        'is_moderator',
+        formData.get('type') == '2' ? 'true' : 'false'
+      );
 
       formData.delete('type');
 
@@ -260,7 +267,7 @@ export class NewUserComponent {
       state: this.user.state,
       country: this.user.country,
       zip_code: this.user.zip_code,
-      type: this.user.is_superuser ? 1 : 0,
+      type: this.user.is_superuser ? 1 : this.user.is_moderator ? 2 : 0,
     });
   }
 

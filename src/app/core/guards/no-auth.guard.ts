@@ -8,7 +8,7 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
 
   if (sessionService.readSession('USER_TOKEN') == null) {
     sessionService.deleteSession();
-    router.navigate(['auth']);
+    router.navigate(['/auth/login']);
     return false;
   }
   return true;

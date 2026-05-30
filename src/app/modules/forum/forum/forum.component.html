@@ -57,7 +57,7 @@
         </td>
         <td>
           <div class="flex flex-column">
-            @if(!category.is_locked || user?.is_superuser ||
+            @if(!category.is_locked || user?.is_superuser || user?.is_moderator ||
             category.moderators.includes(user?.username ?? '')){
             <a class="link title" [href]="'/forum/topics/' + category.id">{{
               category.name
@@ -147,7 +147,7 @@
             t('forum.whoOnline.line1', { posts: categoriesInfo.postsCount })
           "
         ></span>
-        @if (user?.is_superuser) {
+        @if (user?.is_superuser || user?.is_moderator) {
         <span
           [innerHTML]="
             t('forum.whoOnline.line2', { users: categoriesInfo.usersCount })

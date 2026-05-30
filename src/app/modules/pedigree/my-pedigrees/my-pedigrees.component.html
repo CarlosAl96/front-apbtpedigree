@@ -18,8 +18,10 @@
       (click)="changeTab('changePermissions')">{{t('yourPedigrees.menu.changePermissions')}}</span>
     <span [class]=" tabActive==='transferOwnership' ? 'link-menu active' : 'link-menu'"
       (click)="changeTab('transferOwnership')">{{t('yourPedigrees.menu.transferOwnership')}}</span>
+    @if (canDeletePedigree) {
     <span [class]=" tabActive==='deleteDog' ? 'link-menu active' : 'link-menu'"
       (click)="changeTab('deleteDog')">{{t('yourPedigrees.menu.deleteDog')}}</span>
+    }
     }
     <span [class]=" tabActive==='publicLink' ? 'link-menu active' : 'link-menu'"
       (click)="changeTab('publicLink')">{{t('yourPedigrees.menu.publicLink')}}</span>
@@ -58,7 +60,7 @@
       <app-transfer-ownership [pedigree]="pedigree.pedigree"
         [isFromPedigreeSearch]="isFromPedigreeSearch"></app-transfer-ownership>
       }
-      @else if (idPedigree > 0 && tabActive === 'deleteDog') {
+      @else if (idPedigree > 0 && tabActive === 'deleteDog' && canDeletePedigree) {
       <app-delete-pedigree [pedigree]="pedigree.pedigree"
         [isFromPedigreeSearch]="isFromPedigreeSearch"></app-delete-pedigree>
       }

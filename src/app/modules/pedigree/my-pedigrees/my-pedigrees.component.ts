@@ -99,13 +99,12 @@ export class MyPedigreesComponent implements OnInit {
       next: (res) => {
         this.pedigree = fullnameTransform(res.response);
         const canModerateThisView =
-          this.user?.is_superuser ||
-          (this.isFromPedigreeSearch && this.user?.is_moderator);
+          this.user?.is_superuser || this.user?.is_moderator;
 
         if (
           !this.isFromPedigreeSearch &&
           this.user &&
-          !this.user.is_superuser &&
+          !canModerateThisView &&
           this.pedigree.pedigree.user_id !== this.user.id
         ) {
           this.isLoading = false;

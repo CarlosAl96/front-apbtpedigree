@@ -71,9 +71,9 @@ export class MenuPedigreesComponent {
       }
     });
 
-    if (this.user?.is_superuser) {
-      this.queryPagination.superUsersOnly = true;
+    if (this.user?.is_superuser || this.user?.is_moderator) {
       delete this.queryPagination.userId;
+      delete this.queryPagination.superUsersOnly;
       this.getPedigrees(this.queryPagination);
     } else if (this.user) {
       this.queryPagination.userId = this.user.id;

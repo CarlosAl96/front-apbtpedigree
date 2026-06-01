@@ -120,14 +120,10 @@ export class NewUserComponent {
         formData.append('picture', this.files[0]);
       }
 
-      formData.set(
-        'is_superuser',
-        formData.get('type') == '1' ? 'true' : 'false'
-      );
-      formData.set(
-        'is_moderator',
-        formData.get('type') == '2' ? 'true' : 'false'
-      );
+      const userType = String(this.formGroup.get('type')?.value ?? '0');
+
+      formData.set('is_superuser', userType === '1' ? 'true' : 'false');
+      formData.set('is_moderator', userType === '2' ? 'true' : 'false');
 
       formData.delete('type');
 

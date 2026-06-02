@@ -41,7 +41,6 @@ import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 export class StreamChatComponent implements AfterViewInit {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('audioInput') audioInput!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
   public chatBan: boolean = false;
@@ -49,10 +48,25 @@ export class StreamChatComponent implements AfterViewInit {
   public messages: StreamMessage[] = [];
   public imageBase64: string = '';
   public audioBase64: string = '';
+  public audioRecording: boolean = false;
+  public recordingSeconds: number = 0;
   public maxSizeExceeded: boolean = false;
+  public recorderError: string = '';
   private readonly maxImageSize: number = 250 * 5096;
-  private readonly maxAudioSize: number = 2 * 1024 * 1024;
+  private readonly maxAudioSize: number = 10 * 1024 * 1024;
+  private mediaRecorder: MediaRecorder | null = null;
+  private audioChunks: Blob[] = [];
+  private audioStream: MediaStream | null = null;
+  private recordingTimerId: number | null = null;
   activeStream: any;
+
+  public get formattedRecordingTime(): string {
+    const minutes = Math.floor(this.recordingSeconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const seconds = (this.recordingSeconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }
 
   constructor(
     private readonly socketService: SocketService,
@@ -127,7 +141,7 @@ export class StreamChatComponent implements AfterViewInit {
     });
   }
   public sendMessage(): void {
-    if (!this.chatBan) {
+    if (!this.chatBan && !this.audioRecording) {
       this.showEmojiPicker = false;
       const message: StreamMessage = {
         id: 0,
@@ -144,6 +158,7 @@ export class StreamChatComponent implements AfterViewInit {
       this.imageBase64 = '';
       this.audioBase64 = '';
       this.maxSizeExceeded = false;
+      this.recorderError = '';
       this.resetFileInputs();
 
       // Solo agregamos el mensaje localmente si no esperamos que el socket lo devuelva
@@ -235,34 +250,143 @@ export class StreamChatComponent implements AfterViewInit {
     this.fileInput.nativeElement.click();
   }
 
-  public onAudioSelected(event: any): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-
-    if (file.size > this.maxAudioSize) {
-      this.maxSizeExceeded = true;
-      this.audioBase64 = '';
+  public async toggleAudioRecording(): Promise<void> {
+    if (this.audioRecording) {
+      this.stopAudioRecording();
       return;
     }
-    this.maxSizeExceeded = false;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.audioBase64 = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+
+    await this.startAudioRecording();
   }
 
-  public audioUpload(): void {
-    this.audioInput.nativeElement.click();
+  public stopAudioRecording(): void {
+    if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive') {
+      return;
+    }
+
+    this.mediaRecorder.stop();
+  }
+
+  public cancelAudioRecording(): void {
+    if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+      this.mediaRecorder.onstop = null;
+      this.mediaRecorder.stop();
+    }
+
+    this.audioChunks = [];
+    this.audioBase64 = '';
+    this.audioRecording = false;
+    this.recordingSeconds = 0;
+    this.recorderError = '';
+    this.clearRecordingTimer();
+    this.releaseAudioStream();
   }
 
   private resetFileInputs(): void {
     if (this.fileInput?.nativeElement) {
       this.fileInput.nativeElement.value = '';
     }
-    if (this.audioInput?.nativeElement) {
-      this.audioInput.nativeElement.value = '';
+  }
+
+  private async startAudioRecording(): Promise<void> {
+    this.showEmojiPicker = false;
+    this.recorderError = '';
+    this.maxSizeExceeded = false;
+    this.audioBase64 = '';
+
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      this.recorderError = 'Tu navegador no permite grabar audio.';
+      return;
     }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const options = this.getAudioRecorderOptions();
+
+      this.audioStream = stream;
+      this.audioChunks = [];
+      this.mediaRecorder = options
+        ? new MediaRecorder(stream, options)
+        : new MediaRecorder(stream);
+
+      this.mediaRecorder.ondataavailable = (event: BlobEvent) => {
+        if (event.data.size > 0) {
+          this.audioChunks.push(event.data);
+        }
+      };
+
+      this.mediaRecorder.onstop = () => {
+        const mimeType =
+          this.mediaRecorder?.mimeType || this.audioChunks[0]?.type || 'audio/webm';
+        const audioBlob = new Blob(this.audioChunks, { type: mimeType });
+
+        this.audioRecording = false;
+        this.recordingSeconds = 0;
+        this.clearRecordingTimer();
+        this.releaseAudioStream();
+
+        if (!audioBlob.size) {
+          return;
+        }
+
+        if (audioBlob.size > this.maxAudioSize) {
+          this.maxSizeExceeded = true;
+          this.audioBase64 = '';
+          return;
+        }
+
+        this.blobToDataUrl(audioBlob)
+          .then((audio) => {
+            this.audioBase64 = audio;
+          })
+          .catch(() => {
+            this.recorderError = 'No se pudo preparar el audio.';
+          });
+      };
+
+      this.audioRecording = true;
+      this.recordingSeconds = 0;
+      this.recordingTimerId = window.setInterval(() => {
+        this.recordingSeconds++;
+      }, 1000);
+      this.mediaRecorder.start();
+    } catch (error) {
+      this.audioRecording = false;
+      this.recorderError = 'No se pudo acceder al micrófono.';
+      this.clearRecordingTimer();
+      this.releaseAudioStream();
+    }
+  }
+
+  private getAudioRecorderOptions(): MediaRecorderOptions | undefined {
+    const supportedMimeType = [
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/mp4',
+    ].find((mimeType) => MediaRecorder.isTypeSupported(mimeType));
+
+    return supportedMimeType ? { mimeType: supportedMimeType } : undefined;
+  }
+
+  private blobToDataUrl(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  private clearRecordingTimer(): void {
+    if (this.recordingTimerId !== null) {
+      window.clearInterval(this.recordingTimerId);
+      this.recordingTimerId = null;
+    }
+  }
+
+  private releaseAudioStream(): void {
+    this.audioStream?.getTracks().forEach((track) => track.stop());
+    this.audioStream = null;
   }
 
   private scrollToBottom(): void {

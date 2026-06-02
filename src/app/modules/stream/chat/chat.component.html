@@ -75,12 +75,41 @@
       <img class="preview-img" [src]="imageBase64" />
     </div>
     } @if(audioBase64 != ''){
-    <div class="flex justify-content-center w-full p-2">
+    <div class="audio-preview">
       <audio class="preview-audio" [src]="audioBase64" controls></audio>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="cancelAudioRecording()"
+      ></button>
+    </div>
+    } @if(audioRecording){
+    <div class="recording-preview">
+      <span class="recording-dot"></span>
+      <span class="recording-time">{{ formattedRecordingTime }}</span>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="cancelAudioRecording()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-check"
+        (click)="stopAudioRecording()"
+      ></button>
     </div>
     } @if(maxSizeExceeded){
     <div class="flex justify-content-center w-full p-2">
       <span style="color: red">{{ t("messages.maxSizeExceeded") }}</span>
+    </div>
+    } @if(recorderError != ''){
+    <div class="flex justify-content-center w-full p-2">
+      <span style="color: red">{{ recorderError }}</span>
     </div>
     }
     <p-inputGroup class="input-message h-full w-full gap-2">
@@ -102,8 +131,8 @@
         pButton
         class="text-input button-icon"
         type="button"
-        icon="pi pi-microphone"
-        (click)="audioUpload()"
+        [icon]="audioRecording ? 'pi pi-stop' : 'pi pi-microphone'"
+        (click)="toggleAudioRecording()"
       ></button>
       <input
         pInputText
@@ -121,20 +150,13 @@
         accept="image/*"
         hidden
       />
-      <input
-        #audioInput
-        type="file"
-        (change)="onAudioSelected($event)"
-        accept="audio/*"
-        hidden
-      />
       <button
         pButton
         type="button"
         class="text-input"
         icon="pi pi-send"
         label="{{ t('buttons.send') }}"
-        [disabled]="messageModel == '' && imageBase64 == '' && audioBase64 == ''"
+        [disabled]="audioRecording || (messageModel == '' && imageBase64 == '' && audioBase64 == '')"
         (click)="sendMessage()"
       ></button>
     </p-inputGroup>

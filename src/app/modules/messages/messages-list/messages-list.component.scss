@@ -110,6 +110,27 @@
   width: min(100%, 360px);
 }
 
+.audio-preview,
+.recording-preview {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.recording-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.recording-time {
+  font-weight: 700;
+}
+
 .message-img {
   height: 200px;
   max-width: 100%;
@@ -117,7 +138,8 @@
 }
 
 .message-audio {
-  width: min(100%, 320px);
+  width: 320px;
+  max-width: 100%;
 }
 
 ::ng-deep .message a {

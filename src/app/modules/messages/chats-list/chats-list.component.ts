@@ -148,6 +148,7 @@ export class ChatsListComponent {
         img_sender: '',
         message: '',
         img: null,
+        audio: null,
         created_at: new Date(),
       },
       im_first: true,

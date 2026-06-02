@@ -32,6 +32,12 @@
             <strong>{{ message.username }}</strong>
             }
           </span>
+          @if (message.img && message.img!= '') {
+          <img class="message-img" [src]="message.img" />
+          }
+          @if (message.audio && message.audio!= '') {
+          <audio class="message-audio" [src]="message.audio" controls></audio>
+          }
           <span class="message" [innerHTML]="message.message | linkify"></span>
 
           <div class="flex align-items-center gap-1">
@@ -72,6 +78,19 @@
 
     <div class="input-container">
       @if (!chatBan) {
+      @if(imageBase64 != ''){
+      <div class="flex justify-content-center w-full p-2">
+        <img class="preview-img" [src]="imageBase64" />
+      </div>
+      } @if(audioBase64 != ''){
+      <div class="flex justify-content-center w-full p-2">
+        <audio class="preview-audio" [src]="audioBase64" controls></audio>
+      </div>
+      } @if(maxSizeExceeded){
+      <div class="flex justify-content-center w-full p-2">
+        <span style="color: red">{{ t("messages.maxSizeExceeded") }}</span>
+      </div>
+      }
       <p-inputGroup class="input-message w-full h-full gap-2">
         <button
           pButton
@@ -79,6 +98,20 @@
           type="button"
           icon="pi pi-face-smile"
           (click)="toggleEmojiPicker()"
+        ></button>
+        <button
+          pButton
+          class="text-input button-icon"
+          type="button"
+          icon="pi pi-image"
+          (click)="fileUpload()"
+        ></button>
+        <button
+          pButton
+          class="text-input button-icon"
+          type="button"
+          icon="pi pi-microphone"
+          (click)="audioUpload()"
         ></button>
         <input
           pInputText
@@ -89,13 +122,27 @@
           placeholder="{{ t('messages.messagePlaceholder') }}"
           (focus)="showEmojiPicker = false"
         />
+        <input
+          #fileInput
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          hidden
+        />
+        <input
+          #audioInput
+          type="file"
+          (change)="onAudioSelected($event)"
+          accept="audio/*"
+          hidden
+        />
         <button
           pButton
           type="button"
           class="text-input"
           icon="pi pi-send"
           label="{{ t('buttons.send') }}"
-          [disabled]="messageModel == ''"
+          [disabled]="messageModel == '' && imageBase64 == '' && audioBase64 == ''"
           (click)="sendMessage()"
         ></button>
       </p-inputGroup>

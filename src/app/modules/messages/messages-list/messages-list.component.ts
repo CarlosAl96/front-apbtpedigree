@@ -41,6 +41,7 @@ import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 export class MessagesListComponent {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('audioInput') audioInput!: ElementRef;
   public user!: User | undefined;
   public chatSelected!: Chat;
   public urlImg: string = `${environment.uploads_url}users/`;
@@ -50,7 +51,10 @@ export class MessagesListComponent {
   public totalRows: number = 0;
   public totalPages: number = 0;
   public imageBase64: string = '';
+  public audioBase64: string = '';
   public maxSizeExceeded: boolean = false;
+  private readonly maxImageSize: number = 250 * 5096;
+  private readonly maxAudioSize: number = 2 * 1024 * 1024;
   public queryPagination: QueryPagination = {
     page: 0,
     size: 50,
@@ -142,12 +146,15 @@ export class MessagesListComponent {
         : this.chatSelected.id_user_one,
       message: this.messageModel,
       img: this.imageBase64,
+      audio: this.audioBase64,
       created_at: new Date(),
     };
     this.chatSelected.last_message = message;
     this.messageModel = '';
     this.imageBase64 = '';
+    this.audioBase64 = '';
     this.maxSizeExceeded = false;
+    this.resetFileInputs();
     this.messages.push(message);
 
     this.chatService
@@ -195,9 +202,7 @@ export class MessagesListComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (!file) return;
 
-    const maxSize: number = 250 * 5096;
-
-    if (file.size > maxSize) {
+    if (file.size > this.maxImageSize) {
       this.maxSizeExceeded = true;
       this.imageBase64 = '';
       return;
@@ -213,12 +218,43 @@ export class MessagesListComponent {
   public fileUpload(): void {
     this.fileInput.nativeElement.click();
   }
+
+  public onAudioSelected(event: any): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    if (file.size > this.maxAudioSize) {
+      this.maxSizeExceeded = true;
+      this.audioBase64 = '';
+      return;
+    }
+    this.maxSizeExceeded = false;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.audioBase64 = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  public audioUpload(): void {
+    this.audioInput.nativeElement.click();
+  }
+
   public addEmoji(event: any): void {
     this.messageModel += event.emoji.native + ' ';
   }
 
   public toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  private resetFileInputs(): void {
+    if (this.fileInput?.nativeElement) {
+      this.fileInput.nativeElement.value = '';
+    }
+    if (this.audioInput?.nativeElement) {
+      this.audioInput.nativeElement.value = '';
+    }
   }
 
   private scrollToBottom(): void {

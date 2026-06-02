@@ -125,8 +125,18 @@
   height: 100px;
 }
 
+.preview-audio {
+  width: min(100%, 360px);
+}
+
 .message-img {
   height: 200px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.message-audio {
+  width: min(100%, 320px);
 }
 
 .input-message {

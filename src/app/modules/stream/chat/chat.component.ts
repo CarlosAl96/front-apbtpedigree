@@ -44,11 +44,18 @@ import { AuthService } from '../../../core/services/auth.service';
 export class ChatComponent implements AfterViewInit {
   @Input('ativeStream') activeStream!: Stream | null;
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('audioInput') audioInput!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
   public user!: User | undefined;
   public messages: StreamMessage[] = [];
   public chatBan: boolean = false;
+  public imageBase64: string = '';
+  public audioBase64: string = '';
+  public maxSizeExceeded: boolean = false;
+  private readonly maxImageSize: number = 250 * 5096;
+  private readonly maxAudioSize: number = 2 * 1024 * 1024;
 
   constructor(
     private readonly socketService: SocketService,
@@ -124,11 +131,17 @@ export class ChatComponent implements AfterViewInit {
       user_id: this.user?.id ?? 0,
       username: this.user?.username ?? '',
       message: this.messageModel,
+      img: this.imageBase64,
+      audio: this.audioBase64,
       updated_at: new Date(),
       created_at: new Date(),
     };
 
     this.messageModel = '';
+    this.imageBase64 = '';
+    this.audioBase64 = '';
+    this.maxSizeExceeded = false;
+    this.resetFileInputs();
 
     this.streamService.sendMessage(message).subscribe({
       next: (res) => {
@@ -191,6 +204,57 @@ export class ChatComponent implements AfterViewInit {
 
   public toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  public onFileSelected(event: any): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    if (file.size > this.maxImageSize) {
+      this.maxSizeExceeded = true;
+      this.imageBase64 = '';
+      return;
+    }
+    this.maxSizeExceeded = false;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageBase64 = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  public fileUpload(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  public onAudioSelected(event: any): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+
+    if (file.size > this.maxAudioSize) {
+      this.maxSizeExceeded = true;
+      this.audioBase64 = '';
+      return;
+    }
+    this.maxSizeExceeded = false;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.audioBase64 = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  public audioUpload(): void {
+    this.audioInput.nativeElement.click();
+  }
+
+  private resetFileInputs(): void {
+    if (this.fileInput?.nativeElement) {
+      this.fileInput.nativeElement.value = '';
+    }
+    if (this.audioInput?.nativeElement) {
+      this.audioInput.nativeElement.value = '';
+    }
   }
 
   private scrollToBottom(): void {

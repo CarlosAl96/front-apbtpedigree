@@ -7,5 +7,6 @@ export interface Message {
   img_sender?: string;
   message: string;
   img: string | null;
+  audio: string | null;
   created_at: Date;
 }

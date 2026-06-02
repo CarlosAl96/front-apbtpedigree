@@ -54,6 +54,9 @@
         @if (message.img && message.img!= '') {
         <img class="message-img" [src]="message.img" />
         }
+        @if (message.audio && message.audio!= '') {
+        <audio class="message-audio" [src]="message.audio" controls></audio>
+        }
         <span class="message" [innerHTML]="message.message | linkify"></span>
 
         <div class="flex align-items-center gap-1">
@@ -85,6 +88,10 @@
     <div class="flex justify-content-center w-full p-2">
       <img class="preview-img" [src]="imageBase64" />
     </div>
+    } @if(audioBase64 != ''){
+    <div class="flex justify-content-center w-full p-2">
+      <audio class="preview-audio" [src]="audioBase64" controls></audio>
+    </div>
     } @if(maxSizeExceeded){
     <div class="flex justify-content-center w-full p-2">
       <span style="color: red">{{ t("messages.maxSizeExceeded") }}</span>
@@ -103,6 +110,12 @@
         (click)="fileUpload()"
         icon="pi pi-image"
       ></button>
+      <button
+        pButton
+        type="button"
+        (click)="audioUpload()"
+        icon="pi pi-microphone"
+      ></button>
       <input
         pInputText
         type="text"
@@ -118,12 +131,19 @@
         accept="image/*"
         hidden
       />
+      <input
+        #audioInput
+        type="file"
+        (change)="onAudioSelected($event)"
+        accept="audio/*"
+        hidden
+      />
       <button
         pButton
         type="button"
         icon="pi pi-send"
         label="{{ t('buttons.send') }}"
-        [disabled]="messageModel == '' && imageBase64 == ''"
+        [disabled]="messageModel == '' && imageBase64 == '' && audioBase64 == ''"
         (click)="sendMessage()"
       ></button>
     </p-inputGroup>

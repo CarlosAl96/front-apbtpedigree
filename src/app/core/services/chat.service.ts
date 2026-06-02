@@ -39,6 +39,7 @@ export class ChatService {
       message: '',
       created_at: new Date(),
       img: null,
+      audio: null,
     },
     created_at: new Date(),
     updated_at: new Date(),

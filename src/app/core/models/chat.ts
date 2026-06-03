@@ -12,6 +12,7 @@ export interface Chat {
   viewed_two: boolean;
   is_deleted_one: boolean;
   is_deleted_two: boolean;
+  chat_type?: 'private' | 'support';
   last_message: Message | null;
   im_first?: boolean;
   created_at: Date;

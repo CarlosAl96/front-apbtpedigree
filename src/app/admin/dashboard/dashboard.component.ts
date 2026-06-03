@@ -5,11 +5,22 @@ import { SocketService } from '../../core/services/socket.service';
 import { AuthService } from '../../core/services/auth.service';
 import { ChartDat } from '../../core/models/chartDat';
 import { ChartModule } from 'primeng/chart';
+import { TableModule } from 'primeng/table';
+import { DateHourFormatPipe } from '../../core/pipes/date-hour-format.pipe';
+import { Pedigree } from '../../core/models/pedigree';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardModule, TranslocoModule, ChartModule],
+  imports: [
+    CardModule,
+    TranslocoModule,
+    ChartModule,
+    TableModule,
+    DateHourFormatPipe,
+    RouterLink,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -20,6 +31,7 @@ export class DashboardComponent {
   public payments: number = 0;
   public usersData: ChartDat[] = [];
   public paymentsData: ChartDat[] = [];
+  public recentPedigrees: Pedigree[] = [];
   public chartDataUsers: any;
   public chartDataUsersOptions: any;
   public chartDataPayments: any;
@@ -37,6 +49,11 @@ export class DashboardComponent {
         this.loggeds = res.count;
       },
     });
+    this.socketService.onPedigreeRegistered().subscribe({
+      next: () => {
+        this.getDashboardData();
+      },
+    });
   }
 
   public getDashboardData(): void {
@@ -47,6 +64,7 @@ export class DashboardComponent {
         this.payments = res.response.payments;
         this.usersData = this.fillMissingMonths(res.response.usersData);
         this.paymentsData = this.fillMissingMonths(res.response.paymentsData);
+        this.recentPedigrees = res.response.recentPedigrees || [];
 
         this.loadChartDataUsers();
         this.loadChartDataPayments();
@@ -185,5 +203,23 @@ export class DashboardComponent {
       month,
       count: array.find((p) => p.month === month)?.count || 0,
     }));
+  }
+
+  public getPedigreeName(pedigree: Pedigree): string {
+    return [
+      pedigree.beforeNameTitles,
+      pedigree.name,
+      pedigree.afterNameTitles,
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
+  public getUserName(pedigree: Pedigree): string {
+    const fullName = [pedigree.first_name, pedigree.last_name]
+      .filter(Boolean)
+      .join(' ');
+
+    return fullName || pedigree.username || '-';
   }
 }

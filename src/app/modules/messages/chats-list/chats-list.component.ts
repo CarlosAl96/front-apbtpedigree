@@ -52,8 +52,10 @@ export class ChatsListComponent {
     private readonly route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe((params) => {
-      if (params['user']) {
-        this.usernameFromForum = params['user'] as string;
+      this.usernameFromForum = (params['user'] as string) || '';
+
+      if (this.usernameFromForum && this.chats.length) {
+        this.openChatFromQuery();
       }
     });
 
@@ -90,8 +92,8 @@ export class ChatsListComponent {
               (!chat.im_first && chat.is_deleted_two)
             )
         );
-        if (this.usernameFromForum != '') {
-          this.searchUsers(this.usernameFromForum, true);
+        if (this.usernameFromForum) {
+          this.openChatFromQuery();
         }
       },
       error: (error) => {},
@@ -205,5 +207,9 @@ export class ChatsListComponent {
       return true;
     }
     return false;
+  }
+
+  private openChatFromQuery(): void {
+    this.searchUsers(this.usernameFromForum, true);
   }
 }

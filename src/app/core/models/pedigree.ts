@@ -20,6 +20,12 @@ export interface Pedigree {
   user_id: number;
   entered_by: number;
   entered_by_name: string;
+  registered_user_id?: number;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone_number?: string | null;
 
   status: string;
   fightcolor: string;

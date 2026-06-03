@@ -29,6 +29,7 @@ export class ChatService {
     viewed_two: false,
     is_deleted_one: false,
     is_deleted_two: false,
+    chat_type: 'private',
     last_message: {
       id: 0,
       id_chat: 0,
@@ -47,6 +48,7 @@ export class ChatService {
   private chatSelected = new BehaviorSubject<Chat>(this.chatEmpty);
 
   private getChatsUrl: string = `${environment.api_url}chat/get`;
+  private getSupportChatsUrl: string = `${environment.api_url}chat/support/get`;
   private getChatsCountUrl: string = `${environment.api_url}chat/getChatsCount`;
   private deleteChatUrl: string = `${environment.api_url}chat/delete/`;
   private viewedChatUrl: string = `${environment.api_url}chat/view/`;
@@ -70,6 +72,12 @@ export class ChatService {
   public getChats(): Observable<ApiResponse<Chat[]>> {
     return this.http
       .get<ApiResponse<Chat[]>>(this.getChatsUrl)
+      .pipe(catchError(this.handleError));
+  }
+
+  public getSupportChats(): Observable<ApiResponse<Chat[]>> {
+    return this.http
+      .get<ApiResponse<Chat[]>>(this.getSupportChatsUrl)
       .pipe(catchError(this.handleError));
   }
 
@@ -108,6 +116,14 @@ export class ChatService {
 
   public sendMessage(data: any, im_first: boolean): Observable<any> {
     data.im_first = im_first;
+    return this.http
+      .post<any>(this.messagesUrl + '/store', data)
+      .pipe(catchError(this.handleError));
+  }
+
+  public sendSupportMessage(data: any, im_first: boolean): Observable<any> {
+    data.im_first = im_first;
+    data.chat_type = 'support';
     return this.http
       .post<any>(this.messagesUrl + '/store', data)
       .pipe(catchError(this.handleError));

@@ -45,4 +45,62 @@
       />
     </div>
   </div>
+
+  <div class="recent-report mt-5">
+    <p-table
+      [value]="recentPedigrees"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{ 'min-width': '64rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="report-caption">
+          <h2>{{ t("dashboard.recentPedigrees") }}</h2>
+          <span>{{ t("dashboard.recentPedigreesHint") }}</span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ t("payments.date") }}</th>
+          <th>{{ t("login.username") }}</th>
+          <th>{{ t("login.email") }}</th>
+          <th>{{ t("register.phone") }}</th>
+          <th>ID</th>
+          <th>{{ t("header.searchOptions.registeredName") }}</th>
+          <th>{{ t("header.searchOptions.owner") }}</th>
+          <th>{{ t("header.searchOptions.breeder") }}</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-pedigree>
+        <tr>
+          <td>{{ pedigree.created_at | dateHourFormat }}</td>
+          <td>
+            <span class="user-name">{{ getUserName(pedigree) }}</span>
+            <span class="username">&#64;{{ pedigree.username || "-" }}</span>
+          </td>
+          <td>{{ pedigree.email || "-" }}</td>
+          <td>{{ pedigree.phone_number || "-" }}</td>
+          <td>
+            <a [routerLink]="['/public/pedigree', pedigree.id]">
+              {{ pedigree.id }}
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="['/public/pedigree', pedigree.id]">
+              {{ getPedigreeName(pedigree) || "-" }}
+            </a>
+          </td>
+          <td>{{ pedigree.owner || "-" }}</td>
+          <td>{{ pedigree.breeder || "-" }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">{{ t("dashboard.noRecentPedigrees") }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </p-card>

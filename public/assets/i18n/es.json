@@ -24,7 +24,10 @@
     "users": "Usuarios registrados",
     "payments": "Pagos realizados",
     "usersChart": "Usuarios registrados en los últimos 12 meses",
-    "paymentsChart": "Pagos hechos en los últimos 12 meses"
+    "paymentsChart": "Pagos hechos en los últimos 12 meses",
+    "recentPedigrees": "Pedigríes registrados recientemente",
+    "recentPedigreesHint": "Últimos 10 registros con datos del usuario y del pedigrí",
+    "noRecentPedigrees": "No hay pedigríes registrados recientemente"
   },
   "home": {
     "heroTitle": "APBT Online Pedigree Database",
@@ -169,7 +172,19 @@
     "chatUnban": "Desbanear usuario del chat",
     "chatBanQuestion": "¿Estás seguro de banear a {{user}} del chat?",
     "chatUnbanQuestion": "¿Estás seguro de desbanear a {{user}} del chat?",
-    "chatBanned": "No tienes permitido participar en el chat"
+    "chatBanned": "No tienes permitido participar en el chat",
+    "adminChat": "Chat Admin",
+    "adminChatTooltip": "Abrir soporte",
+    "supportTitle": "Soporte",
+    "supportSubtitle": "Chat directo con Admin",
+    "supportAdminSubtitle": "Chats de soporte",
+    "supportWelcome": "Escribe tu mensaje para contactar a soporte.",
+    "noSupportChats": "No hay chats de soporte todavía",
+    "noMessagesYet": "Sin mensajes todavía",
+    "selectSupportChat": "Selecciona un chat de soporte",
+    "clearSupportChat": "Limpiar chat",
+    "deleteSupportChat": "Eliminar chat",
+    "deleteSupportMessage": "Eliminar mensaje"
   },
   "account": {
     "personalInfo": "Información personal",

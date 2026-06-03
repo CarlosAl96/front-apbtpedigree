@@ -37,3 +37,47 @@
   padding: 1rem;
   width: 48%;
 }
+
+.recent-report {
+  overflow-x: auto;
+}
+
+.report-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: left;
+}
+
+.report-caption h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.report-caption span,
+.username {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.user-name {
+  display: block;
+  font-weight: 700;
+}
+
+.recent-report a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+@media (max-width: 900px) {
+  .flex.justify-content-between {
+    flex-direction: column;
+  }
+
+  .c-chart {
+    width: 100%;
+  }
+}

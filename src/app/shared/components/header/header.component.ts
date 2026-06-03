@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryPaginationPedigree } from '../../../core/models/queryPaginationPedigree';
 import { LanguageService } from '../../../core/services/language.service';
+import { AdminChatButtonComponent } from '../admin-chat-button/admin-chat-button.component';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ import { LanguageService } from '../../../core/services/language.service';
     InputTextModule,
     ButtonModule,
     TranslocoModule,
+    AdminChatButtonComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

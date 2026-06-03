@@ -120,6 +120,22 @@ export class SocketService {
     });
   }
 
+  onPedigreeRegistered(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('pedigreeRegistered', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
+  onSupportChat(): Observable<any> {
+    return new Observable((observer) => {
+      this.socket.on('supportChat', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+
   emitLogin(id: number, username: string): void {
     this.socket.emit('register-user', { userId: id, username });
   }

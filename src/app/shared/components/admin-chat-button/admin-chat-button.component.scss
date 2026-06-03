@@ -1,0 +1,135 @@
+:host {
+  display: inline-flex;
+}
+
+::ng-deep .admin-chat-button .p-button {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.support-window {
+  position: fixed;
+  top: 5rem;
+  right: 1rem;
+  z-index: 30;
+  width: min(92vw, 520px);
+  height: min(78vh, 620px);
+  background-color: var(--surface-0);
+  border: 1px solid var(--surface-300);
+  border-radius: 6px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-transform: none;
+}
+
+.support-window button,
+.support-window input {
+  text-transform: none;
+}
+
+.support-header {
+  padding: 0.75rem 1rem;
+  background-color: var(--color-bg-header);
+  color: var(--color-font-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.support-body {
+  min-height: 0;
+  flex: 1;
+  display: flex;
+}
+
+.support-chat-list {
+  width: 180px;
+  border-right: 1px solid var(--surface-200);
+  overflow-y: auto;
+}
+
+.support-chat-item {
+  width: 100%;
+  padding: 0.75rem;
+  border: 0;
+  border-bottom: 1px solid var(--surface-200);
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.support-chat-item span {
+  color: var(--text-color-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-chat-item.selected {
+  background-color: var(--surface-200);
+}
+
+.support-conversation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.support-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.support-message {
+  width: fit-content;
+  max-width: 85%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background-color: var(--surface-100);
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+}
+
+.support-message.own {
+  align-self: flex-end;
+  background-color: var(--surface-300);
+}
+
+.support-message-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.support-input {
+  padding: 0.75rem;
+  background-color: var(--surface-100);
+}
+
+.support-empty,
+.support-no-selection {
+  color: var(--text-color-secondary);
+  padding: 1rem;
+}
+
+@media (max-width: 640px) {
+  .support-window {
+    top: 4.75rem;
+    right: 1rem;
+    width: calc(100vw - 2rem);
+  }
+}

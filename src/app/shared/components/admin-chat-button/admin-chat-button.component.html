@@ -1,0 +1,126 @@
+@if (showButton) {
+  @if (isOpen) {
+    <section class="support-window" *transloco="let t">
+      <header class="support-header">
+        <div>
+          <strong>{{ t("messages.supportTitle") }}</strong>
+          <span>{{ isSupportAdmin ? t("messages.supportAdminSubtitle") : t("messages.supportSubtitle") }}</span>
+        </div>
+        <div class="support-header-actions">
+          @if (selectedChat?.id) {
+            <button
+              pButton
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text"
+              [pTooltip]="isSupportAdmin ? t('messages.deleteSupportChat') : t('messages.clearSupportChat')"
+              tooltipPosition="bottom"
+              (click)="clearSelectedChat()"
+            ></button>
+          }
+          <button
+            pButton
+            type="button"
+            icon="pi pi-times"
+            class="p-button-rounded p-button-text"
+            (click)="toggleSupport()"
+          ></button>
+        </div>
+      </header>
+
+      <div class="support-body">
+        @if (isSupportAdmin) {
+          <aside class="support-chat-list">
+            @if (!chats.length) {
+              <span class="support-empty">{{ t("messages.noSupportChats") }}</span>
+            }
+            @for (chat of chats; track chat.id) {
+              <div
+                [class]="selectedChat?.id === chat.id ? 'support-chat-item selected' : 'support-chat-item'"
+                (click)="selectChat(chat)"
+              >
+                <strong>{{ getOtherUsername(chat) }}</strong>
+                <span>{{ chat.last_message?.message || t("messages.noMessagesYet") }}</span>
+                <button
+                  pButton
+                  type="button"
+                  icon="pi pi-trash"
+                  class="support-chat-delete p-button-rounded p-button-text"
+                  [pTooltip]="t('messages.deleteSupportChat')"
+                  tooltipPosition="right"
+                  (click)="deleteSupportChat(chat, $event)"
+                ></button>
+              </div>
+            }
+          </aside>
+        }
+
+        <div class="support-conversation">
+          @if (selectedChat) {
+            <div #supportMessages class="support-messages">
+              @if (!messages.length) {
+                <span class="support-empty">{{ t("messages.supportWelcome") }}</span>
+              }
+              @for (message of messages; track $index) {
+                <div
+                  [class]="
+                    message.id_sender === user?.id
+                      ? 'support-message own'
+                      : 'support-message'
+                  "
+                >
+                  <span [innerHTML]="message.message | linkify"></span>
+                  <div class="support-message-actions">
+                    <small>{{ message.created_at | timeFormat }}</small>
+                    @if (canDeleteMessage(message)) {
+                      <button
+                        pButton
+                        type="button"
+                        icon="pi pi-trash"
+                        class="support-message-delete p-button-rounded p-button-text"
+                        [pTooltip]="t('messages.deleteSupportMessage')"
+                        tooltipPosition="bottom"
+                        (click)="deleteSupportMessage(message)"
+                      ></button>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <p-inputGroup class="support-input">
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="messageModel"
+                [placeholder]="t('messages.messagePlaceholder')"
+                (keyup.enter)="sendMessage()"
+              />
+              <button
+                pButton
+                type="button"
+                icon="pi pi-send"
+                [disabled]="!messageModel.trim()"
+                (click)="sendMessage()"
+              ></button>
+            </p-inputGroup>
+          } @else {
+            <div class="support-no-selection">
+              <i class="pi pi-comments"></i>
+              <span>{{ t("messages.selectSupportChat") }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <p-button
+    class="admin-chat-button"
+    icon="pi pi-question-circle"
+    [pTooltip]="'messages.adminChatTooltip' | transloco"
+    [attr.aria-label]="'messages.adminChatTooltip' | transloco"
+    tooltipPosition="bottom"
+    (onClick)="toggleSupport()"
+  />
+}

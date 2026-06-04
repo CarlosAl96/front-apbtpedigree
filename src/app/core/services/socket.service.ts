@@ -11,7 +11,9 @@ export class SocketService {
   private socket: Socket;
 
   constructor(private readonly sessionService: SessionService) {
-    this.socket = io(environment.server, {});
+    this.socket = io(environment.server, {
+      path: environment.socket_path,
+    });
 
     setInterval(() => {
       if (this.sessionService.readSession('USER_TOKEN')) {

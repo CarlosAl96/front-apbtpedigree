@@ -76,8 +76,19 @@
         <tr>
           <td>{{ pedigree.created_at | dateHourFormat }}</td>
           <td>
+            @if (pedigree.username) {
+            <a
+              class="user-chat-link"
+              [routerLink]="['/messages']"
+              [queryParams]="{ user: pedigree.username }"
+            >
+              <span class="user-name">{{ getUserName(pedigree) }}</span>
+              <span class="username">&#64;{{ pedigree.username }}</span>
+            </a>
+            } @else {
             <span class="user-name">{{ getUserName(pedigree) }}</span>
-            <span class="username">&#64;{{ pedigree.username || "-" }}</span>
+            <span class="username">-</span>
+            }
           </td>
           <td>{{ pedigree.email || "-" }}</td>
           <td>{{ pedigree.phone_number || "-" }}</td>

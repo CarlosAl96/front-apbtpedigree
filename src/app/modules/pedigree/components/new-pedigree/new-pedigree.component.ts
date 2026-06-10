@@ -44,6 +44,7 @@ import { SessionService } from '../../../../core/services/session.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { environment } from '../../../../../environments/environment.development';
 import { Location } from '@angular/common';
+import { UppercaseInputDirective } from '../../../../shared/directives/uppercase-input.directive';
 
 @Component({
   selector: 'app-new-pedigree',
@@ -66,6 +67,7 @@ import { Location } from '@angular/common';
     FileUploadModule,
     CalendarModule,
     MessagesModule,
+    UppercaseInputDirective,
   ],
   templateUrl: './new-pedigree.component.html',
   styleUrl: './new-pedigree.component.scss',
@@ -264,8 +266,18 @@ export class NewPedigreeComponent implements OnInit {
     if (option == 'mother') {
       modelSearchOption = this.modelSearchOptionMother;
       modelSearch = this.modelSearchMother;
+      this.modelSearchMother = this.normalizeSearchValue(
+        modelSearchOption,
+        modelSearch
+      );
+      modelSearch = this.modelSearchMother;
     } else {
       modelSearchOption = this.modelSearchOptionFather;
+      modelSearch = this.modelSearchFather;
+      this.modelSearchFather = this.normalizeSearchValue(
+        modelSearchOption,
+        modelSearch
+      );
       modelSearch = this.modelSearchFather;
     }
 
@@ -538,5 +550,11 @@ export class NewPedigreeComponent implements OnInit {
       const control = formGroup.get(field);
       if (control) control.markAsDirty({ onlySelf: true });
     });
+  }
+
+  private normalizeSearchValue(searchOption: string, value: string): string {
+    return searchOption === 'dogId' || searchOption === 'userId'
+      ? value
+      : value.toUpperCase();
   }
 }

@@ -44,6 +44,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class ChatComponent implements AfterViewInit {
   @Input('ativeStream') activeStream!: Stream | null;
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
@@ -218,11 +219,19 @@ export class ChatComponent implements AfterViewInit {
   }
 
   public addEmoji(event: any): void {
-    this.messageModel += event.emoji.native + ' ';
+    const emoji = event?.emoji?.native || event?.native || '';
+
+    if (emoji) {
+      this.messageModel += `${emoji} `;
+    }
   }
 
   public toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
+
+    if (this.showEmojiPicker) {
+      this.messageInput?.nativeElement.blur();
+    }
   }
 
   public onFileSelected(event: any): void {

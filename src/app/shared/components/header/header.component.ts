@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QueryPaginationPedigree } from '../../../core/models/queryPaginationPedigree';
 import { LanguageService } from '../../../core/services/language.service';
 import { AdminChatButtonComponent } from '../admin-chat-button/admin-chat-button.component';
+import { UppercaseInputDirective } from '../../directives/uppercase-input.directive';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ import { AdminChatButtonComponent } from '../admin-chat-button/admin-chat-button
     ButtonModule,
     TranslocoModule,
     AdminChatButtonComponent,
+    UppercaseInputDirective,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
@@ -120,6 +122,10 @@ export class HeaderComponent implements OnInit {
 
   public search(): void {
     this.queryPagination = { orderBy: 'id ASC', size: 50, page: 0 };
+    this.modelSearch = this.normalizeSearchValue(
+      this.modelSearchOption,
+      this.modelSearch
+    );
 
     if (this.modelSearchOption === 'registeredName') {
       this.queryPagination.registeredName = this.modelSearch as string;
@@ -141,5 +147,11 @@ export class HeaderComponent implements OnInit {
       this.queryPagination as any
     ).toString();
     window.location.href = `/pedigree?${queryString}`;
+  }
+
+  private normalizeSearchValue(searchOption: string, value: string): string {
+    return searchOption === 'dogId' || searchOption === 'userId'
+      ? value
+      : value.toUpperCase();
   }
 }

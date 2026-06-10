@@ -40,6 +40,7 @@ import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 })
 export class StreamChatComponent implements AfterViewInit {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef;
   public messageModel: string = '';
   public showEmojiPicker: boolean = false;
@@ -222,11 +223,19 @@ export class StreamChatComponent implements AfterViewInit {
   }
 
   public addEmoji(event: any): void {
-    this.messageModel += event.emoji.native + ' ';
+    const emoji = event?.emoji?.native || event?.native || '';
+
+    if (emoji) {
+      this.messageModel += `${emoji} `;
+    }
   }
 
   public toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
+
+    if (this.showEmojiPicker) {
+      this.messageInput?.nativeElement.blur();
+    }
   }
 
   public onFileSelected(event: any): void {

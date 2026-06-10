@@ -40,6 +40,7 @@ import { LinkifyPipe } from '../../../core/pipes/linkify.pipe';
 })
 export class MessagesListComponent {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
+  @ViewChild('messageInput') private messageInput!: ElementRef<HTMLInputElement>;
   @ViewChild('fileInput') fileInput!: ElementRef;
   public user!: User | undefined;
   public chatSelected!: Chat;
@@ -271,11 +272,19 @@ export class MessagesListComponent {
   }
 
   public addEmoji(event: any): void {
-    this.messageModel += event.emoji.native + ' ';
+    const emoji = event?.emoji?.native || event?.native || '';
+
+    if (emoji) {
+      this.messageModel += `${emoji} `;
+    }
   }
 
   public toggleEmojiPicker(): void {
     this.showEmojiPicker = !this.showEmojiPicker;
+
+    if (this.showEmojiPicker) {
+      this.messageInput?.nativeElement.blur();
+    }
   }
 
   private resetFileInputs(): void {

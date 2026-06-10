@@ -1,10 +1,12 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { TooltipModule } from 'primeng/tooltip';
+import { Subscription } from 'rxjs';
 import { Chat } from '../../../core/models/chat';
 import { Message } from '../../../core/models/message';
 import { QueryPagination } from '../../../core/models/queryPagination';
@@ -31,18 +33,21 @@ import { SocketService } from '../../../core/services/socket.service';
   templateUrl: './admin-chat-button.component.html',
   styleUrl: './admin-chat-button.component.scss',
 })
-export class AdminChatButtonComponent {
+export class AdminChatButtonComponent implements OnDestroy {
   @ViewChild('supportMessages') private supportMessages!: ElementRef;
 
   public readonly adminId = 1;
   public readonly adminUsername = 'Admin';
+  private readonly hiddenRoutes = ['/messages', '/stream-chat', '/stream'];
   public user: User | undefined;
   public isOpen: boolean = false;
+  public isHiddenRoute: boolean = false;
   public chats: Chat[] = [];
   public selectedChat: Chat | null = null;
   public messages: Message[] = [];
   public messageModel: string = '';
   public totalRows: number = 0;
+  private readonly routeSubscription: Subscription;
   public queryPagination: QueryPagination = {
     page: 0,
     size: 50,
@@ -51,9 +56,21 @@ export class AdminChatButtonComponent {
   constructor(
     private readonly chatService: ChatService,
     private readonly sessionService: SessionService,
-    private readonly socketService: SocketService
+    private readonly socketService: SocketService,
+    private readonly router: Router
   ) {
     this.user = this.sessionService.readSession('USER_TOKEN')?.user;
+    this.isHiddenRoute = this.shouldHideOnRoute(this.router.url);
+
+    this.routeSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isHiddenRoute = this.shouldHideOnRoute(event.urlAfterRedirects);
+
+        if (this.isHiddenRoute) {
+          this.isOpen = false;
+        }
+      }
+    });
 
     this.socketService.onSupportChat().subscribe({
       next: (res) => {
@@ -83,7 +100,11 @@ export class AdminChatButtonComponent {
   }
 
   public get showButton(): boolean {
-    return !!this.user;
+    return !!this.user && !this.isHiddenRoute;
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
   }
 
   public get isSupportAdmin(): boolean {
@@ -302,6 +323,14 @@ export class AdminChatButtonComponent {
       this.isSupportAdmin ||
       res.id_one === this.user?.id ||
       res.id_two === this.user?.id
+    );
+  }
+
+  private shouldHideOnRoute(url: string): boolean {
+    const path = url.split('?')[0].split('#')[0];
+
+    return this.hiddenRoutes.some(
+      (route) => path === route || path.startsWith(`${route}/`)
     );
   }
 

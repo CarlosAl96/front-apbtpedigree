@@ -1,44 +1,42 @@
 :host {
-  display: inline-flex;
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 999;
 }
 
 ::ng-deep .admin-chat-button .p-button {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3.7rem;
+  height: 3.7rem;
   padding: 0;
   border-radius: 50%;
+  box-shadow: 0 8px 18px #0004;
+  animation: support-pulse 1.8s infinite;
 }
 
 .support-window {
   position: fixed;
-  top: 5rem;
-  right: 1rem;
-  z-index: 30;
+  right: 1.25rem;
+  bottom: 5.25rem;
   width: min(92vw, 520px);
-  height: min(78vh, 620px);
-  background-color: var(--surface-0);
+  height: min(72vh, 620px);
+  background: var(--surface-0);
   border: 1px solid var(--surface-300);
   border-radius: 6px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 26px #0005;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   text-transform: none;
 }
 
-.support-window button,
-.support-window input {
-  text-transform: none;
-}
-
 .support-header {
   padding: 0.75rem 1rem;
-  background-color: var(--color-bg-header);
+  background: var(--color-bg-header);
   color: var(--color-font-light);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
 }
 
 .support-body {
@@ -54,17 +52,11 @@
 }
 
 .support-chat-item {
-  width: 100%;
   padding: 0.75rem;
-  border: 0;
   border-bottom: 1px solid var(--surface-200);
-  background: transparent;
-  color: inherit;
-  text-align: left;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  cursor: pointer;
 }
 
 .support-chat-item span {
@@ -98,7 +90,8 @@
   max-width: 85%;
   padding: 0.65rem 0.75rem;
   border-radius: 8px;
-  background-color: var(--surface-100);
+  background: #8fa3b5;
+  color: #fff;
   display: flex;
   flex-direction: column;
   overflow-wrap: anywhere;
@@ -106,7 +99,14 @@
 
 .support-message.own {
   align-self: flex-end;
-  background-color: var(--surface-300);
+  background: var(--surface-300);
+}
+
+@keyframes support-pulse {
+  50% {
+    transform: scale(1.07);
+    box-shadow: 0 0 0 12px #2196f300;
+  }
 }
 
 .support-message-actions {
@@ -117,7 +117,7 @@
 
 .support-input {
   padding: 0.75rem;
-  background-color: var(--surface-100);
+  background: var(--surface-100);
 }
 
 .support-empty,
@@ -127,9 +127,15 @@
 }
 
 @media (max-width: 640px) {
-  .support-window {
-    top: 4.75rem;
+  :host {
     right: 1rem;
+    bottom: 1rem;
+  }
+
+  .support-window {
+    right: 1rem;
+    bottom: 4.75rem;
     width: calc(100vw - 2rem);
+    height: min(72vh, 560px);
   }
 }

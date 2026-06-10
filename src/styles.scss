@@ -51,6 +51,20 @@ body {
   color: green !important;
 }
 
+.chat-emoji-picker {
+  display: block;
+  width: min(100%, 352px);
+  margin: 0 0.5rem;
+  z-index: 2;
+  touch-action: manipulation;
+}
+
+@media (max-width: 600px) {
+  .chat-emoji-picker {
+    width: calc(100% - 1rem);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 6px;

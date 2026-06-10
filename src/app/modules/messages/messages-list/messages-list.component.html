@@ -76,8 +76,8 @@
 
   @if (showEmojiPicker) {
   <emoji-mart
+    class="chat-emoji-picker"
     (emojiSelect)="addEmoji($event)"
-    [style]="{ position: 'absolute', bottom: '80px', left: '32rem' }"
     title="Pick your emoji…"
     emoji="point_up"
   ></emoji-mart>
@@ -146,12 +146,12 @@
         [icon]="audioRecording ? 'pi pi-stop' : 'pi pi-microphone'"
       ></button>
       <input
+        #messageInput
         pInputText
         type="text"
         [(ngModel)]="messageModel"
         (keyup.enter)="sendMessage()"
         placeholder="{{ t('messages.messagePlaceholder') }}"
-        (focus)="showEmojiPicker = false"
       />
       <input
         #fileInput

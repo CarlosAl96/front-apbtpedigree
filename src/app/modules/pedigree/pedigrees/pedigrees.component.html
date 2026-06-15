@@ -11,11 +11,16 @@
     <p [innerHTML]="t('pedigrees.line4')"></p>
   </div>
 
-  <div class="mt-5">
+  <div class="mt-5 flex gap-2">
     <p-button
       class="btn-primary"
       [label]="t('buttons.newDog')"
       (onClick)="goToNewDog()"
+    />
+    <p-button
+      icon="pi pi-flag"
+      [label]="t('pedigreeClaims.claimPedigree')"
+      (onClick)="goToClaimPedigree()"
     />
   </div>
 </p-card>

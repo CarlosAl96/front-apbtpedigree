@@ -8,6 +8,8 @@ export interface QueryPaginationPedigree {
   callname?: string;
   breeder?: string;
   owner?: string;
+  ownerId?: number;
+  ownerName?: string;
   userId?: number;
   superUsersOnly?: boolean;
 }

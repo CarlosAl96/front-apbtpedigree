@@ -1,9 +1,10 @@
 .header {
+  position: relative;
   height: 4.5rem;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.5rem;
   background-color: var(--color-bg-header);
   padding-right: 1rem;
@@ -13,7 +14,48 @@
   text-transform: uppercase;
 }
 
+.header-logo {
+  position: absolute;
+  left: 1rem;
+  flex: 0 0 auto;
+}
+
+.header-logo img {
+  width: clamp(8.5rem, 16vw, 12.5rem);
+}
+
+.header-search {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.header-actions {
+  position: absolute;
+  right: 1rem;
+  flex: 0 0 auto;
+  min-width: max-content;
+}
+
+.search-input,
+::ng-deep .header-search .p-autocomplete {
+  flex: 1 1 12rem;
+  min-width: 10rem;
+  max-width: 24rem;
+}
+
+::ng-deep .header-search .p-dropdown {
+  flex: 0 0 8.75rem;
+}
+
+::ng-deep .header-search .search-button {
+  flex: 0 0 auto;
+  min-width: 7.5rem;
+  white-space: nowrap;
+}
+
 ::ng-deep .header .p-inputtext,
+::ng-deep .header .p-autocomplete,
+::ng-deep .header .p-autocomplete-input,
 ::ng-deep .header .p-dropdown,
 ::ng-deep .header .p-dropdown-label,
 ::ng-deep .header .p-button,
@@ -21,4 +63,19 @@
 ::ng-deep .header .p-dropdown-item {
   font-size: 1rem;
   text-transform: uppercase;
+}
+
+.owner-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-transform: none;
+}
+
+.owner-option span {
+  text-transform: uppercase;
+}
+
+.owner-option small {
+  opacity: 0.72;
 }

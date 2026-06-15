@@ -534,6 +534,41 @@
     "paymentCreated": "The payment has been successfully completed!",
     "paymentError": "An error occurred while processing the payment!"
   },
+  "pedigreeClaims": {
+    "adminMenu": "Pedigree Claims",
+    "userMenu": "Claim Pedigree",
+    "adminTitle": "Pedigree Claim Requests",
+    "userTitle": "Claim a Pedigree",
+    "claimPedigree": "Claim pedigree",
+    "myRequests": "My Requests",
+    "create": "Create request",
+    "pedigreeId": "Pedigree ID",
+    "message": "Message",
+    "requester": "Requester",
+    "status": "Status",
+    "createdAt": "Created at",
+    "reviewedAt": "Reviewed at",
+    "reviewedBy": "Reviewed by",
+    "actions": "Actions",
+    "approve": "Approve request",
+    "deny": "Deny request",
+    "delete": "Delete request",
+    "confirmApprove": "Approve the claim for pedigree #{{id}} by {{user}}?",
+    "confirmDeny": "Deny the claim for pedigree #{{id}} by {{user}}?",
+    "confirmDelete": "Delete request #{{id}}?",
+    "empty": "No requests found",
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "denied": "Denied"
+    },
+    "toast": {
+      "created": "The claim request has been created!",
+      "approved": "The claim request has been approved!",
+      "denied": "The claim request has been denied!",
+      "deleted": "The claim request has been deleted!"
+    }
+  },
   "errorMessages": {
     "alreadyEmail": "An account with this email already exists",
     "alreadyUser": "An account with this username already exists",

@@ -1,0 +1,39 @@
+.claims-page {
+  width: 100%;
+}
+
+::ng-deep .claims-page .p-card .p-card-content {
+  padding: 0;
+}
+
+.claim-form-shell {
+  display: grid;
+  grid-template-columns: minmax(12rem, 15rem) minmax(28rem, 1fr) minmax(11rem, auto);
+  gap: 1.25rem;
+  align-items: end;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+}
+
+.claim-message input {
+  width: 100%;
+}
+
+::ng-deep .claim-form-shell .p-inputnumber-input {
+  width: 100%;
+}
+
+.claim-submit {
+  min-width: 11rem;
+}
+
+::ng-deep .claim-form-shell .p-button {
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .claim-form-shell {
+    grid-template-columns: 1fr;
+    padding: 0.75rem 0;
+  }
+}

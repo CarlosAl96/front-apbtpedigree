@@ -534,6 +534,41 @@
     "paymentCreated": "¡Se ha realizado el pago exitosamente!",
     "paymentError": "¡Ha ocurrido un error realizando el pago!"
   },
+  "pedigreeClaims": {
+    "adminMenu": "Reclamos de Pedigrí",
+    "userMenu": "Reclamar Pedigrí",
+    "adminTitle": "Solicitudes de reclamo de Pedigrí",
+    "userTitle": "Reclamar un Pedigrí",
+    "claimPedigree": "Reclamar pedigrí",
+    "myRequests": "Mis solicitudes",
+    "create": "Crear solicitud",
+    "pedigreeId": "ID del Pedigrí",
+    "message": "Mensaje",
+    "requester": "Solicitante",
+    "status": "Estado",
+    "createdAt": "Creado",
+    "reviewedAt": "Revisado",
+    "reviewedBy": "Revisado por",
+    "actions": "Acciones",
+    "approve": "Aprobar solicitud",
+    "deny": "Denegar solicitud",
+    "delete": "Eliminar solicitud",
+    "confirmApprove": "¿Aprobar el reclamo del pedigrí #{{id}} para {{user}}?",
+    "confirmDeny": "¿Denegar el reclamo del pedigrí #{{id}} para {{user}}?",
+    "confirmDelete": "¿Eliminar la solicitud #{{id}}?",
+    "empty": "No hay solicitudes",
+    "statuses": {
+      "pending": "Pendiente",
+      "approved": "Aprobada",
+      "denied": "Denegada"
+    },
+    "toast": {
+      "created": "La solicitud de reclamo fue creada!",
+      "approved": "La solicitud de reclamo fue aprobada!",
+      "denied": "La solicitud de reclamo fue denegada!",
+      "deleted": "La solicitud de reclamo fue eliminada!"
+    }
+  },
   "errorMessages": {
     "alreadyEmail": "Ya existe una cuenta con este correo electrónico",
     "alreadyUser": "Ya existe una cuenta con este nombre de usuario",

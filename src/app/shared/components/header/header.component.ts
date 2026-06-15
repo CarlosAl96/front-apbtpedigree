@@ -16,6 +16,8 @@ import { QueryPaginationPedigree } from '../../../core/models/queryPaginationPed
 import { LanguageService } from '../../../core/services/language.service';
 import { AdminChatButtonComponent } from '../admin-chat-button/admin-chat-button.component';
 import { UppercaseInputDirective } from '../../directives/uppercase-input.directive';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +27,7 @@ import { UppercaseInputDirective } from '../../directives/uppercase-input.direct
     FormsModule,
     InputTextModule,
     ButtonModule,
+    AutoCompleteModule,
     TranslocoModule,
     AdminChatButtonComponent,
     UppercaseInputDirective,
@@ -39,6 +42,8 @@ export class HeaderComponent implements OnInit {
   public activeLang: string = 'en';
   public modelSearch: string = '';
   public modelSearchOption: string = 'registeredName';
+  public filteredUsers: User[] = [];
+  public selectedOwnerUser: User | null = null;
   public queryPagination: QueryPaginationPedigree = {
     orderBy: 'id ASC',
     size: 50,
@@ -58,7 +63,8 @@ export class HeaderComponent implements OnInit {
     private readonly translocoService: TranslocoService,
     public readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly languageService: LanguageService
+    private readonly languageService: LanguageService,
+    private readonly authService: AuthService
   ) {
     this.availableLangs =
       this.translocoService.getAvailableLangs() as LangDefinition[];
@@ -92,8 +98,12 @@ export class HeaderComponent implements OnInit {
             this.modelSearchOption = 'owner';
             this.modelSearch = params['owner'];
           } else if (params['userId']) {
-            this.modelSearchOption = 'userId';
+            this.modelSearchOption = 'owner';
             this.modelSearch = params['userId'];
+            this.selectedOwnerUser = this.buildOwnerUser(
+              Number(params['userId']),
+              params['ownerName'] || `ID ${params['userId']}`
+            );
           }
         }
       });
@@ -122,23 +132,44 @@ export class HeaderComponent implements OnInit {
 
   public search(): void {
     this.queryPagination = { orderBy: 'id ASC', size: 50, page: 0 };
-    this.modelSearch = this.normalizeSearchValue(
-      this.modelSearchOption,
-      this.modelSearch
-    );
 
     if (this.modelSearchOption === 'registeredName') {
+      this.modelSearch = this.normalizeSearchValue(
+        this.modelSearchOption,
+        this.modelSearch
+      );
       this.queryPagination.registeredName = this.modelSearch as string;
     } else if (this.modelSearchOption === 'dogId') {
+      this.modelSearch = this.normalizeSearchValue(
+        this.modelSearchOption,
+        this.modelSearch
+      );
       this.queryPagination.dogId = Number(this.modelSearch);
     } else if (this.modelSearchOption === 'registrationNumber') {
+      this.modelSearch = this.normalizeSearchValue(
+        this.modelSearchOption,
+        this.modelSearch
+      );
       this.queryPagination.registrationNumber = this.modelSearch as string;
     } else if (this.modelSearchOption === 'callname') {
+      this.modelSearch = this.normalizeSearchValue(
+        this.modelSearchOption,
+        this.modelSearch
+      );
       this.queryPagination.callname = this.modelSearch as string;
     } else if (this.modelSearchOption === 'breeder') {
+      this.modelSearch = this.normalizeSearchValue(
+        this.modelSearchOption,
+        this.modelSearch
+      );
       this.queryPagination.breeder = this.modelSearch as string;
     } else if (this.modelSearchOption === 'owner') {
-      this.queryPagination.owner = this.modelSearch as string;
+      if (!this.selectedOwnerUser?.id) {
+        return;
+      }
+
+      this.queryPagination.userId = this.selectedOwnerUser.id;
+      this.queryPagination.ownerName = this.selectedOwnerUser.username;
     } else if (this.modelSearchOption === 'userId') {
       this.queryPagination.userId = Number(this.modelSearch);
     }
@@ -149,9 +180,47 @@ export class HeaderComponent implements OnInit {
     window.location.href = `/pedigree?${queryString}`;
   }
 
+  public onSearchOptionChange(): void {
+    this.modelSearch = '';
+    this.filteredUsers = [];
+    this.selectedOwnerUser = null;
+  }
+
+  public searchUsers(query: string): void {
+    this.authService.searchUsers(query || '').subscribe({
+      next: (res) => {
+        this.filteredUsers = res.response;
+      },
+      error: () => {
+        this.filteredUsers = [];
+      },
+    });
+  }
+
+  public clearOwnerSearch(): void {
+    this.selectedOwnerUser = null;
+    this.filteredUsers = [];
+  }
+
+  public isSearchDisabled(): boolean {
+    if (this.modelSearchOption === 'owner') {
+      return !this.selectedOwnerUser?.id;
+    }
+
+    return this.modelSearch === '';
+  }
+
+  public getUserDisplayName(user: User): string {
+    return [user.first_name, user.last_name].filter(Boolean).join(' ');
+  }
+
   private normalizeSearchValue(searchOption: string, value: string): string {
     return searchOption === 'dogId' || searchOption === 'userId'
       ? value
       : value.toUpperCase();
+  }
+
+  private buildOwnerUser(id: number, username: string): User {
+    return { id, username } as User;
   }
 }

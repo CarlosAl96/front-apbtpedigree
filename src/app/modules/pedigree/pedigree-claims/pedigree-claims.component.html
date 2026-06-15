@@ -1,0 +1,107 @@
+<div class="claims-page flex flex-column gap-3" *transloco="let t">
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="header-container justify-content-center">
+        {{ t("pedigreeClaims.userTitle") }}
+      </div>
+    </ng-template>
+
+    <div class="claim-form-shell">
+      <div class="claim-id flex flex-column gap-2">
+        <label for="pedigreeId">{{ t("pedigreeClaims.pedigreeId") }}</label>
+        <p-inputNumber
+          [(ngModel)]="pedigreeId"
+          inputId="pedigreeId"
+          [min]="1"
+          mode="decimal"
+          [useGrouping]="false"
+          styleClass="w-full"
+        />
+      </div>
+
+      <div class="claim-message flex flex-column gap-2">
+        <label for="claimMessage">{{ t("pedigreeClaims.message") }}</label>
+        <input
+          pInputText
+          type="text"
+          id="claimMessage"
+          [(ngModel)]="message"
+        />
+      </div>
+
+      <div class="claim-submit flex align-items-end">
+        <p-button
+          icon="pi pi-send"
+          [label]="t('pedigreeClaims.create')"
+          [loading]="isSaving"
+          [disabled]="!pedigreeId"
+          styleClass="w-full"
+          (onClick)="createClaim()"
+        />
+      </div>
+    </div>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="header-container justify-content-center">
+        {{ t("pedigreeClaims.myRequests") }}
+      </div>
+    </ng-template>
+
+    @if (isLoading) {
+    <div class="flex w-full align-items-center justify-content-center">
+      <p-progressSpinner
+        styleClass="w-4rem h-4rem"
+        strokeWidth="5"
+        animationDuration=".5s"
+      />
+    </div>
+    } @else {
+    <p-table [value]="claims" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>{{ t("pedigreeClaims.pedigreeId") }}</th>
+          <th>{{ t("header.searchOptions.registeredName") }}</th>
+          <th>{{ t("header.searchOptions.owner") }}</th>
+          <th>{{ t("pedigreeClaims.status") }}</th>
+          <th>{{ t("pedigreeClaims.createdAt") }}</th>
+          <th>{{ t("pedigreeClaims.reviewedAt") }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-claim>
+        <tr>
+          <td>{{ claim.id }}</td>
+          <td>
+            <a [href]="'/pedigree/view/' + claim.pedigree_id">
+              {{ claim.pedigree_id }}
+            </a>
+          </td>
+          <td>{{ getPedigreeName(claim) }}</td>
+          <td>{{ claim.current_owner || "-" }}</td>
+          <td>
+            <p-tag
+              [severity]="getStatusSeverity(claim.status)"
+              [value]="t('pedigreeClaims.statuses.' + claim.status)"
+            />
+          </td>
+          <td>{{ claim.created_at | dateHourFormat }}</td>
+          <td>
+            {{
+              claim.reviewed_at
+                ? (claim.reviewed_at | dateHourFormat)
+                : "-"
+            }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">{{ t("pedigreeClaims.empty") }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    }
+  </p-card>
+</div>

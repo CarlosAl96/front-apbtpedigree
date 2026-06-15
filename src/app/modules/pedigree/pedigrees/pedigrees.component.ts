@@ -114,6 +114,10 @@ export class PedigreesComponent {
     window.location.href = '/pedigree/new';
   }
 
+  public goToClaimPedigree(): void {
+    window.location.href = '/pedigree/claims';
+  }
+
   public goToPedigree(id: number): void {
     window.location.href = '/pedigree/view/' + id;
   }

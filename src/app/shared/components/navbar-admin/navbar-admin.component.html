@@ -113,6 +113,19 @@
         {{ t("payments.title") }}</a
       >
     </li>
+    <li>
+      <a
+        href="/admin/pedigree-claims"
+        [class]="
+          this.router.url == '/admin/pedigree-claims'
+            ? 'navbar-item active'
+            : 'navbar-item'
+        "
+      >
+        <i class="pi pi-flag icon-svg"></i>
+        {{ t("pedigreeClaims.adminMenu") }}</a
+      >
+    </li>
   </ul>
 
   <div class="flex justify-content-end w-full">

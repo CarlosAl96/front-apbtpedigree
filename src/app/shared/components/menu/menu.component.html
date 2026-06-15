@@ -10,12 +10,21 @@
     <li
       [class]="
         router.url.startsWith('/pedigree') &&
-        !router.url.startsWith('/pedigree/my-pedigrees/')
+        !router.url.startsWith('/pedigree/my-pedigrees/') &&
+        router.url != '/pedigree/claims'
           ? 'navbar-item active'
           : 'navbar-item'
       "
     >
       <a href="/pedigree"> {{ t("navbar.items.pedigrees") }}</a>
+    </li>
+
+    <li
+      [class]="
+        router.url == '/pedigree/claims' ? 'navbar-item active' : 'navbar-item'
+      "
+    >
+      <a href="/pedigree/claims"> {{ t("pedigreeClaims.userMenu") }}</a>
     </li>
 
     <li

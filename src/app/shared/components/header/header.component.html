@@ -1,19 +1,51 @@
 <div class="header" *transloco="let t" data-nosnippet>
-  <div class="flex align-items-center gap-2 w-full">
-    <img style="width: 200px" src="./assets/images/logo-pedigree.png" />
+  <div class="header-logo flex align-items-center gap-2">
+    <img src="./assets/images/logo-pedigree.png" />
   </div>
 
-  <div class="flex align-items-center gap-2 w-full">
+  <div class="header-search flex align-items-center gap-2">
+    @if (modelSearchOption === 'owner') {
+    <p-autoComplete
+      [(ngModel)]="selectedOwnerUser"
+      [suggestions]="filteredUsers"
+      (completeMethod)="searchUsers($event.query)"
+      (onClear)="clearOwnerSearch()"
+      optionLabel="username"
+      [forceSelection]="true"
+      [showClear]="true"
+      [minLength]="1"
+      appendTo="body"
+      class="search-owner"
+      inputStyleClass="w-full"
+      styleClass="w-full"
+      [placeholder]="t('header.search')"
+    >
+      <ng-template let-user pTemplate="item">
+        <div class="owner-option">
+          <span>{{ user.username }}</span>
+          @if (getUserDisplayName(user)) {
+          <small>{{ getUserDisplayName(user) }}</small>
+          }
+        </div>
+      </ng-template>
+    </p-autoComplete>
+    } @else {
     <input
       pInputText
       type="text"
       appUppercaseInput
+      class="search-input"
       [(ngModel)]="modelSearch"
       [placeholder]="t('header.search')"
       (keyup.enter)="search()"
     />
+    }
     <label>{{ t("header.by") }}</label>
-    <p-dropdown [options]="searchOptions" [(ngModel)]="modelSearchOption">
+    <p-dropdown
+      [options]="searchOptions"
+      [(ngModel)]="modelSearchOption"
+      (onChange)="onSearchOptionChange()"
+    >
       <ng-template pTemplate="selectedItem">
         <div>{{ t("header.searchOptions." + modelSearchOption) }}</div>
       </ng-template>
@@ -26,13 +58,13 @@
       type="button"
       icon="pi pi-search"
       [label]="t('buttons.search')"
-      class="p-button-primary"
+      class="p-button-primary search-button"
       (click)="search()"
-      [disabled]="modelSearch == ''"
+      [disabled]="isSearchDisabled()"
     ></button>
   </div>
 
-  <div class="flex align-items-center justify-content-end gap-2 w-full">
+  <div class="header-actions flex align-items-center justify-content-end gap-2">
     @if (user?.is_superuser && !this.router.url.includes('admin')) {
     <button
       pButton

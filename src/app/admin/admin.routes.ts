@@ -4,6 +4,7 @@ import { ForumComponent } from './forum/forum.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StreamsComponent } from './streams/streams.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { PedigreeClaimsAdminComponent } from './pedigree-claims/pedigree-claims-admin.component';
 
 export const ADMIN_ROUTES: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -11,5 +12,6 @@ export const ADMIN_ROUTES: Routes = [
   { path: 'forum', component: ForumComponent },
   { path: 'streams', component: StreamsComponent },
   { path: 'payments', component: PaymentsComponent },
+  { path: 'pedigree-claims', component: PedigreeClaimsAdminComponent },
   { path: '**', redirectTo: 'dashboard' },
 ];

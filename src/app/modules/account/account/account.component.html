@@ -3,6 +3,14 @@
     <div class="header-container">{{ t("navbar.items.yourAccount") }}</div>
   </ng-template>
 
+  <div class="account-actions">
+    <p-button
+      icon="pi pi-flag"
+      [label]="t('pedigreeClaims.claimPedigree')"
+      (onClick)="goToClaimPedigree()"
+    />
+  </div>
+
   <div class="border-container">
     <div class="w-full">
       <div class="header-profile-secondary">

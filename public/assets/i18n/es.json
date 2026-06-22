@@ -544,6 +544,13 @@
     "create": "Crear solicitud",
     "pedigreeId": "ID del Pedigrí",
     "message": "Mensaje",
+    "searchPedigrees": "Buscar pedigríes",
+    "searchResults": "Pedigríes",
+    "selectPedigrees": "Busca y selecciona uno o varios pedigríes",
+    "selectedCount": "{{count}} seleccionados",
+    "startTyping": "Escribe en el buscador para encontrar pedigríes.",
+    "noSearchResults": "No se encontraron pedigríes para esta búsqueda.",
+    "removeSelection": "Quitar de la selección",
     "requester": "Solicitante",
     "status": "Estado",
     "createdAt": "Creado",
@@ -564,9 +571,15 @@
     },
     "toast": {
       "created": "La solicitud de reclamo fue creada!",
+      "createdMany": "¡Se crearon correctamente {{count}} solicitudes de reclamo!",
       "approved": "La solicitud de reclamo fue aprobada!",
       "denied": "La solicitud de reclamo fue denegada!",
       "deleted": "La solicitud de reclamo fue eliminada!"
+    },
+    "notification": {
+      "title": "Nuevo reclamo de pedigrí",
+      "created": "{{user}} envió un reclamo para el pedigrí #{{id}}.",
+      "createdMany": "{{user}} envió {{count}} nuevos reclamos de pedigrí."
     }
   },
   "errorMessages": {

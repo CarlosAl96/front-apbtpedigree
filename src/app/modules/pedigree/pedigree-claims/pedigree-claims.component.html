@@ -7,18 +7,103 @@
     </ng-template>
 
     <div class="claim-form-shell">
-      <div class="claim-id flex flex-column gap-2">
-        <label for="pedigreeId">{{ t("pedigreeClaims.pedigreeId") }}</label>
-        <p-inputNumber
-          [(ngModel)]="pedigreeId"
-          inputId="pedigreeId"
-          [min]="1"
-          mode="decimal"
-          [useGrouping]="false"
+      <div class="claim-search-row">
+        <div class="flex flex-column gap-2">
+          <label>{{ t("header.by") }}</label>
+          <p-dropdown
+            [options]="searchOptions"
+            [(ngModel)]="searchOption"
+            (onChange)="onSearchOptionChange()"
+            styleClass="w-full"
+          >
+            <ng-template pTemplate="selectedItem">
+              {{ t("header.searchOptions." + searchOption) }}
+            </ng-template>
+            <ng-template let-option pTemplate="item">
+              {{ t("header.searchOptions." + option) }}
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div class="flex flex-column gap-2">
+        <label>{{ t("pedigreeClaims.searchResults") }}</label>
+        <p-multiSelect
+          [options]="searchResults"
+          [(ngModel)]="selectedPedigrees"
+          optionLabel="claimDisplayName"
+          dataKey="id"
+          [filter]="true"
+          [loading]="isSearching"
+          [showToggleAll]="true"
+          [resetFilterOnHide]="false"
+          [emptyMessage]="t('pedigreeClaims.startTyping')"
+          [emptyFilterMessage]="t('pedigreeClaims.noSearchResults')"
+          [selectedItemsLabel]="t('pedigreeClaims.selectedCount', { count: selectedPedigrees.length })"
+          [placeholder]="t('pedigreeClaims.selectPedigrees')"
           styleClass="w-full"
-        />
+          appendTo="body"
+        >
+          <ng-template pTemplate="filter">
+            <div class="claim-multiselect-filter">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="searchValue"
+                [placeholder]="t('pedigreeClaims.searchPedigrees')"
+                (ngModelChange)="onPedigreeFilter($event)"
+              />
+            </div>
+          </ng-template>
+          <ng-template let-pedigree pTemplate="item">
+            <div class="pedigree-option">
+              <span>{{ pedigree.claimDisplayName }}</span>
+              <small>{{ pedigree.owner || "-" }}</small>
+            </div>
+          </ng-template>
+        </p-multiSelect>
+        </div>
       </div>
 
+      @if (searchPerformed && !isSearching && !hasSearchResults) {
+      <div class="empty-search">{{ t("pedigreeClaims.noSearchResults") }}</div>
+      }
+
+      @if (selectedPedigrees.length > 0) {
+      <div class="selected-pedigrees flex flex-column gap-2">
+        <strong>
+          {{ t("pedigreeClaims.selectedCount", { count: selectedPedigrees.length }) }}
+        </strong>
+        <div class="selected-pedigree-list">
+          @for (pedigree of selectedPedigrees; track pedigree.id) {
+          <div class="selected-pedigree">
+            <div class="selected-pedigree-content">
+              <img
+                class="selected-pedigree-image"
+                [src]="getPedigreeImageUrl(pedigree)"
+                [alt]="pedigree.name"
+              />
+              <div class="selected-pedigree-text">
+                <span>{{ pedigree.claimDisplayName }}</span>
+                <small>{{ t("header.searchOptions.owner") }}: {{ pedigree.owner || "-" }}</small>
+              </div>
+            </div>
+            <p-button
+              styleClass="selected-remove-button"
+              icon="pi pi-times"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              [ariaLabel]="t('pedigreeClaims.removeSelection')"
+              (onClick)="removeSelectedPedigree(pedigree.id)"
+            />
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <div class="claim-submit-row">
       <div class="claim-message flex flex-column gap-2">
         <label for="claimMessage">{{ t("pedigreeClaims.message") }}</label>
         <input
@@ -34,10 +119,11 @@
           icon="pi pi-send"
           [label]="t('pedigreeClaims.create')"
           [loading]="isSaving"
-          [disabled]="!pedigreeId"
+          [disabled]="selectedPedigrees.length === 0"
           styleClass="w-full"
           (onClick)="createClaim()"
         />
+      </div>
       </div>
     </div>
   </p-card>
@@ -61,7 +147,6 @@
     <p-table [value]="claims" styleClass="p-datatable-striped">
       <ng-template pTemplate="header">
         <tr>
-          <th>ID</th>
           <th>{{ t("pedigreeClaims.pedigreeId") }}</th>
           <th>{{ t("header.searchOptions.registeredName") }}</th>
           <th>{{ t("header.searchOptions.owner") }}</th>
@@ -72,7 +157,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-claim>
         <tr>
-          <td>{{ claim.id }}</td>
           <td>
             <a [href]="'/pedigree/view/' + claim.pedigree_id">
               {{ claim.pedigree_id }}
@@ -86,11 +170,11 @@
               [value]="t('pedigreeClaims.statuses.' + claim.status)"
             />
           </td>
-          <td>{{ claim.created_at | dateHourFormat }}</td>
-          <td>
+          <td class="white-space-nowrap">{{ claim.created_at | date: "dd-MM-yyyy HH:mm" }}</td>
+          <td class="white-space-nowrap">
             {{
               claim.reviewed_at
-                ? (claim.reviewed_at | dateHourFormat)
+                ? (claim.reviewed_at | date: "dd-MM-yyyy HH:mm")
                 : "-"
             }}
           </td>
@@ -98,7 +182,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="7">{{ t("pedigreeClaims.empty") }}</td>
+          <td colspan="6">{{ t("pedigreeClaims.empty") }}</td>
         </tr>
       </ng-template>
     </p-table>

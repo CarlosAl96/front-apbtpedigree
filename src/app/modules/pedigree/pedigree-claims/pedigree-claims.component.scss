@@ -7,24 +7,124 @@
 }
 
 .claim-form-shell {
-  display: grid;
-  grid-template-columns: minmax(12rem, 15rem) minmax(28rem, 1fr) minmax(11rem, auto);
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
-  align-items: end;
   width: 100%;
-  padding: 0.75rem 1.25rem;
+  padding: 1rem 1.25rem;
 }
 
-.claim-message input {
-  width: 100%;
-}
-
-::ng-deep .claim-form-shell .p-inputnumber-input {
-  width: 100%;
+.claim-search-row {
+  display: grid;
+  grid-template-columns: minmax(12rem, 15rem) minmax(18rem, 1fr);
+  gap: 1rem;
 }
 
 .claim-submit {
-  min-width: 11rem;
+  min-width: 10rem;
+}
+
+.claim-multiselect-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.25rem;
+}
+
+.claim-multiselect-filter input {
+  width: 100%;
+}
+
+.claim-submit-row {
+  display: grid;
+  grid-template-columns: minmax(18rem, 1fr) minmax(11rem, auto);
+  gap: 1rem;
+}
+
+.claim-message input,
+.claim-search-row input {
+  width: 100%;
+}
+
+.pedigree-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pedigree-option small,
+.selected-pedigree small {
+  color: var(--text-color-secondary);
+}
+
+.selected-pedigree-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.4rem;
+}
+
+.selected-pedigree {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+  background: var(--surface-ground);
+}
+
+.selected-pedigree-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.selected-pedigree-image {
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 4px;
+  object-fit: cover;
+  background: var(--surface-card);
+}
+
+.selected-pedigree-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.selected-pedigree-text span,
+.selected-pedigree-text small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selected-pedigree-text span {
+  font-size: 0.9rem;
+}
+
+.selected-pedigree-text small {
+  font-size: 0.75rem;
+}
+
+::ng-deep .selected-pedigree .selected-remove-button {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+}
+
+.empty-search {
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: var(--surface-ground);
+  color: var(--text-color-secondary);
+  text-align: center;
 }
 
 ::ng-deep .claim-form-shell .p-button {
@@ -33,7 +133,11 @@
 
 @media (max-width: 768px) {
   .claim-form-shell {
-    grid-template-columns: 1fr;
     padding: 0.75rem 0;
+  }
+
+  .claim-search-row,
+  .claim-submit-row {
+    grid-template-columns: 1fr;
   }
 }

@@ -544,6 +544,13 @@
     "create": "Create request",
     "pedigreeId": "Pedigree ID",
     "message": "Message",
+    "searchPedigrees": "Search pedigrees",
+    "searchResults": "Pedigrees",
+    "selectPedigrees": "Search and select one or more pedigrees",
+    "selectedCount": "{{count}} selected",
+    "startTyping": "Type in the search box to find pedigrees.",
+    "noSearchResults": "No pedigrees were found for this search.",
+    "removeSelection": "Remove from selection",
     "requester": "Requester",
     "status": "Status",
     "createdAt": "Created at",
@@ -564,9 +571,15 @@
     },
     "toast": {
       "created": "The claim request has been created!",
+      "createdMany": "{{count}} pedigree claim request(s) created successfully!",
       "approved": "The claim request has been approved!",
       "denied": "The claim request has been denied!",
       "deleted": "The claim request has been deleted!"
+    },
+    "notification": {
+      "title": "New pedigree claim",
+      "created": "{{user}} submitted a claim for pedigree #{{id}}.",
+      "createdMany": "{{user}} submitted {{count}} new pedigree claims."
     }
   },
   "errorMessages": {

@@ -20,6 +20,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { AuthService } from '../../../core/services/auth.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-account',
@@ -35,6 +36,7 @@ import { AuthService } from '../../../core/services/auth.service';
     InputTextModule,
     FormsModule,
     MessagesModule,
+    ButtonModule,
   ],
 
   templateUrl: './account.component.html',
@@ -89,6 +91,10 @@ export class AccountComponent implements OnInit {
     });
   }
   ngOnInit(): void {}
+
+  public goToClaimPedigree(): void {
+    window.location.href = '/pedigree/claims';
+  }
 
   private getByUsername(): void {
     this.authService.getUserByUsername(this.username).subscribe({

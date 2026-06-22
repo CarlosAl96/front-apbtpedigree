@@ -6,11 +6,12 @@ import { SessionService } from '../../../core/services/session.service';
 import { PaymentService } from '../../../core/services/payment.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { StreamPayPopupComponent } from '../../../shared/components/stream-pay-popup/stream-pay-popup.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [TranslocoModule, CardModule],
+  imports: [TranslocoModule, CardModule, ButtonModule],
   providers: [DialogService],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -33,6 +34,12 @@ export class HomePageComponent implements OnInit {
     }
 
     await this.verifyPayment();
+  }
+
+  public goToClaimPedigree(): void {
+    window.location.href = this.user
+      ? '/pedigree/claims'
+      : '/auth/login?returnUrl=%2Fpedigree%2Fclaims';
   }
 
   private async verifyPayment(repro: boolean = false): Promise<boolean> {

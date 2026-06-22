@@ -123,7 +123,10 @@
         "
       >
         <i class="pi pi-flag icon-svg"></i>
-        {{ t("pedigreeClaims.adminMenu") }}</a
+        {{ t("pedigreeClaims.adminMenu") }}
+        @if (pendingClaims > 0) {
+        <span class="claims-badge">{{ pendingClaims }}</span>
+        }</a
       >
     </li>
   </ul>

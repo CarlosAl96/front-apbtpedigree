@@ -30,7 +30,7 @@ export class PedigreeClaimService {
   }
 
   public createClaim(request: {
-    pedigreeId: number;
+    pedigreeIds: number[];
     message?: string;
   }): Observable<ApiResponse<any>> {
     return this.http

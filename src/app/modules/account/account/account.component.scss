@@ -30,6 +30,12 @@
   gap: 0.5rem;
 }
 
+.account-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+
 .header-profile-secondary {
   background-color: var(--surface-ground);
   padding: 1rem;

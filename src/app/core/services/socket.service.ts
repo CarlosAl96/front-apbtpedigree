@@ -130,6 +130,24 @@ export class SocketService {
     });
   }
 
+  onPedigreeClaimCreated(): Observable<any> {
+    return new Observable((observer) => {
+      const listener = (claim: any) => observer.next(claim);
+      this.socket.on('pedigreeClaimCreated', listener);
+
+      return () => this.socket.off('pedigreeClaimCreated', listener);
+    });
+  }
+
+  onPedigreeClaimUpdated(): Observable<any> {
+    return new Observable((observer) => {
+      const listener = (claim: any) => observer.next(claim);
+      this.socket.on('pedigreeClaimUpdated', listener);
+
+      return () => this.socket.off('pedigreeClaimUpdated', listener);
+    });
+  }
+
   onSupportChat(): Observable<any> {
     return new Observable((observer) => {
       this.socket.on('supportChat', (res) => {

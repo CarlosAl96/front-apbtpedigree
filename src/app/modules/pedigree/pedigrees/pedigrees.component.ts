@@ -61,7 +61,7 @@ export class PedigreesComponent {
             'registeredName'
           ] as string;
         } else if (params['dogId']) {
-          this.queryPagination.dogId = Number(params['dogId']);
+          this.queryPagination.dogId = params['dogId'];
         } else if (params['registrationNumber']) {
           this.queryPagination.registrationNumber = params[
             'registrationNumber'
@@ -72,8 +72,13 @@ export class PedigreesComponent {
           this.queryPagination.breeder = params['breeder'] as string;
         } else if (params['owner']) {
           this.queryPagination.owner = params['owner'] as string;
+        } else if (params['ownerUsername']) {
+          this.queryPagination.ownerUsername = params[
+            'ownerUsername'
+          ] as string;
         } else if (params['userId']) {
           this.queryPagination.userId = Number(params['userId']);
+          this.queryPagination.ownerName = params['ownerName'];
         }
         this.isSearching = true;
         this.getPedigrees(this.queryPagination);

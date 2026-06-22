@@ -6,12 +6,13 @@
   <div class="header-search flex align-items-center gap-2">
     @if (modelSearchOption === 'owner') {
     <p-autoComplete
-      [(ngModel)]="selectedOwnerUser"
+      [(ngModel)]="ownerSearchValue"
+      (ngModelChange)="onOwnerValueChange($event)"
       [suggestions]="filteredUsers"
       (completeMethod)="searchUsers($event.query)"
       (onClear)="clearOwnerSearch()"
       optionLabel="username"
-      [forceSelection]="true"
+      [forceSelection]="false"
       [showClear]="true"
       [minLength]="1"
       appendTo="body"
@@ -19,6 +20,7 @@
       inputStyleClass="w-full"
       styleClass="w-full"
       [placeholder]="t('header.search')"
+      (keyup.enter)="search()"
     >
       <ng-template let-user pTemplate="item">
         <div class="owner-option">
@@ -36,6 +38,7 @@
       appUppercaseInput
       class="search-input"
       [(ngModel)]="modelSearch"
+      (ngModelChange)="onTextSearchValueChange($event)"
       [placeholder]="t('header.search')"
       (keyup.enter)="search()"
     />
@@ -111,6 +114,8 @@
       </ng-template>
     </p-dropdown>
 
+    @if (!router.url.startsWith('/admin')) {
     <app-admin-chat-button></app-admin-chat-button>
+    }
   </div>
 </div>

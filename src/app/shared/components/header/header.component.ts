@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
   public modelSearchOption: string = 'registeredName';
   public filteredUsers: User[] = [];
   public selectedOwnerUser: User | null = null;
+  public ownerSearchValue: User | string = '';
   public queryPagination: QueryPaginationPedigree = {
     orderBy: 'id ASC',
     size: 50,
@@ -97,13 +98,20 @@ export class HeaderComponent implements OnInit {
           } else if (params['owner']) {
             this.modelSearchOption = 'owner';
             this.modelSearch = params['owner'];
+            this.ownerSearchValue = this.modelSearch;
+          } else if (params['ownerUsername']) {
+            this.modelSearchOption = 'owner';
+            this.modelSearch = params['ownerUsername'];
+            this.ownerSearchValue = this.modelSearch;
           } else if (params['userId']) {
             this.modelSearchOption = 'owner';
-            this.modelSearch = params['userId'];
+            this.modelSearch =
+              params['ownerName'] || `ID ${params['userId']}`;
             this.selectedOwnerUser = this.buildOwnerUser(
               Number(params['userId']),
               params['ownerName'] || `ID ${params['userId']}`
             );
+            this.ownerSearchValue = this.selectedOwnerUser;
           }
         }
       });
@@ -140,11 +148,8 @@ export class HeaderComponent implements OnInit {
       );
       this.queryPagination.registeredName = this.modelSearch as string;
     } else if (this.modelSearchOption === 'dogId') {
-      this.modelSearch = this.normalizeSearchValue(
-        this.modelSearchOption,
-        this.modelSearch
-      );
-      this.queryPagination.dogId = Number(this.modelSearch);
+      this.modelSearch = this.modelSearch.trim();
+      this.queryPagination.dogId = this.modelSearch;
     } else if (this.modelSearchOption === 'registrationNumber') {
       this.modelSearch = this.normalizeSearchValue(
         this.modelSearchOption,
@@ -164,12 +169,13 @@ export class HeaderComponent implements OnInit {
       );
       this.queryPagination.breeder = this.modelSearch as string;
     } else if (this.modelSearchOption === 'owner') {
-      if (!this.selectedOwnerUser?.id) {
-        return;
+      if (this.selectedOwnerUser?.id) {
+        this.queryPagination.userId = this.selectedOwnerUser.id;
+        this.queryPagination.ownerName = this.selectedOwnerUser.username;
+      } else {
+        this.modelSearch = this.modelSearch.trim();
+        this.queryPagination.ownerUsername = this.modelSearch;
       }
-
-      this.queryPagination.userId = this.selectedOwnerUser.id;
-      this.queryPagination.ownerName = this.selectedOwnerUser.username;
     } else if (this.modelSearchOption === 'userId') {
       this.queryPagination.userId = Number(this.modelSearch);
     }
@@ -181,8 +187,26 @@ export class HeaderComponent implements OnInit {
   }
 
   public onSearchOptionChange(): void {
-    this.modelSearch = '';
-    this.filteredUsers = [];
+    if (this.modelSearchOption === 'owner') {
+      this.ownerSearchValue = this.selectedOwnerUser || this.modelSearch;
+    }
+  }
+
+  public onOwnerValueChange(value: User | string | null): void {
+    this.ownerSearchValue = value || '';
+
+    if (typeof value === 'string') {
+      this.modelSearch = value;
+      this.selectedOwnerUser = null;
+      return;
+    }
+
+    this.selectedOwnerUser = value;
+    this.modelSearch = value?.username || '';
+  }
+
+  public onTextSearchValueChange(value: string): void {
+    this.modelSearch = value;
     this.selectedOwnerUser = null;
   }
 
@@ -198,13 +222,15 @@ export class HeaderComponent implements OnInit {
   }
 
   public clearOwnerSearch(): void {
+    this.modelSearch = '';
+    this.ownerSearchValue = '';
     this.selectedOwnerUser = null;
     this.filteredUsers = [];
   }
 
   public isSearchDisabled(): boolean {
     if (this.modelSearchOption === 'owner') {
-      return !this.selectedOwnerUser?.id;
+      return this.modelSearch.trim() === '';
     }
 
     return this.modelSearch === '';

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -7,10 +7,12 @@ import { ConfirmationService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { DateHourFormatPipe } from '../../core/pipes/date-hour-format.pipe';
+import { DatePipe } from '@angular/common';
 import { PedigreeClaim } from '../../core/models/pedigreeClaim';
 import { PedigreeClaimService } from '../../core/services/pedigree-claim.service';
 import { ToastService } from '../../core/services/toast.service';
+import { SocketService } from '../../core/services/socket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pedigree-claims-admin',
@@ -23,13 +25,14 @@ import { ToastService } from '../../core/services/toast.service';
     TableModule,
     TagModule,
     ProgressSpinnerModule,
-    DateHourFormatPipe,
+    DatePipe,
   ],
   providers: [ConfirmationService],
   templateUrl: './pedigree-claims-admin.component.html',
   styleUrl: './pedigree-claims-admin.component.scss',
 })
-export class PedigreeClaimsAdminComponent implements OnInit {
+export class PedigreeClaimsAdminComponent implements OnInit, OnDestroy {
+  private readonly subscriptions = new Subscription();
   public claims: PedigreeClaim[] = [];
   public isLoading: boolean = false;
 
@@ -37,11 +40,26 @@ export class PedigreeClaimsAdminComponent implements OnInit {
     private readonly pedigreeClaimService: PedigreeClaimService,
     private readonly confirmationService: ConfirmationService,
     private readonly toastService: ToastService,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
+    private readonly socketService: SocketService
   ) {}
 
   ngOnInit(): void {
     this.getClaims();
+    this.subscriptions.add(
+      this.socketService
+        .onPedigreeClaimCreated()
+        .subscribe(() => this.getClaims())
+    );
+    this.subscriptions.add(
+      this.socketService
+        .onPedigreeClaimUpdated()
+        .subscribe(() => this.getClaims())
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   public approve(claim: PedigreeClaim): void {

@@ -6,6 +6,13 @@
   <div class="flex flex-column home-intro" itemprop="description">
     <h1 class="home-title">{{ t("home.heroTitle") }}</h1>
     <p class="home-lead">{{ t("home.heroIntro") }}</p>
+    <div>
+      <p-button
+        icon="pi pi-flag"
+        [label]="t('pedigreeClaims.claimPedigree')"
+        (onClick)="goToClaimPedigree()"
+      />
+    </div>
     <h2>{{ t("home.welcome") }}</h2>
     <span class="text-home">{{ t("home.p1") }}</span>
     <h3>{{ t("home.q1") }}</h3>

@@ -3,7 +3,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { MessagesModule } from 'primeng/messages';
@@ -34,6 +34,7 @@ import { SocketService } from '../../core/services/socket.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private readonly returnUrl: string;
   public formGroup!: FormGroup;
   public loading: boolean = false;
   public error!: Message[];
@@ -46,12 +47,22 @@ export class LoginComponent {
     private readonly toastService: ToastService,
     private readonly translocoService: TranslocoService,
     private readonly paymentService: PaymentService,
-    private readonly dialogService: DialogService
+    private readonly dialogService: DialogService,
+    private readonly route: ActivatedRoute
   ) {
     this.formGroup = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    const requestedReturnUrl = this.route.snapshot.queryParamMap.get(
+      'returnUrl'
+    );
+    this.returnUrl =
+      requestedReturnUrl?.startsWith('/') &&
+      !requestedReturnUrl.startsWith('//')
+        ? requestedReturnUrl
+        : '/home';
   }
 
   public login(event: any): void {
@@ -81,7 +92,7 @@ export class LoginComponent {
             this.sessionService.readSession('USER_TOKEN')?.user.id ?? 0,
             this.sessionService.readSession('USER_TOKEN')?.user.username ?? ''
           );
-          window.location.href = '/home';
+          window.location.href = this.returnUrl;
         },
         error: () => {
           this.error = [

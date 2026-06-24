@@ -21,7 +21,7 @@
         <th>{{ t("header.searchOptions.owner") }}</th>
         <th>{{ t("pedigreeClaims.status") }}</th>
         <th>{{ t("pedigreeClaims.createdAt") }}</th>
-        <th>{{ t("pedigreeClaims.actions") }}</th>
+        <th class="actions-column">{{ t("pedigreeClaims.actions") }}</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-claim>
@@ -44,29 +44,32 @@
           />
         </td>
         <td class="white-space-nowrap">{{ claim.created_at | date: "dd-MM-yyyy HH:mm" }}</td>
-        <td>
-          <div class="flex gap-2">
+        <td class="actions-column">
+          <div class="claim-actions">
             <p-button
               icon="pi pi-check"
               [rounded]="true"
-              [text]="true"
+              [outlined]="true"
               severity="success"
+              styleClass="claim-action-button"
               [disabled]="claim.status !== 'pending'"
               (onClick)="approve(claim)"
             />
             <p-button
               icon="pi pi-times"
               [rounded]="true"
-              [text]="true"
+              [outlined]="true"
               severity="warning"
+              styleClass="claim-action-button"
               [disabled]="claim.status !== 'pending'"
               (onClick)="deny(claim)"
             />
             <p-button
               icon="pi pi-trash"
               [rounded]="true"
-              [text]="true"
+              [outlined]="true"
               severity="danger"
+              styleClass="claim-action-button"
               (onClick)="delete(claim)"
             />
           </div>

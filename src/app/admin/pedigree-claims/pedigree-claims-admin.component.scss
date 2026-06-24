@@ -7,3 +7,29 @@
   display: block;
   opacity: 0.72;
 }
+
+.actions-column {
+  text-align: center;
+  width: 11rem;
+}
+
+.claim-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+::ng-deep .claim-action-button.p-button {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+}
+
+::ng-deep .claim-action-button.p-button .p-button-icon {
+  font-size: 0.95rem;
+}
+
+::ng-deep .claim-action-button.p-button:disabled {
+  opacity: 0.45;
+}

@@ -7291,6 +7291,401 @@
     font-size: 1rem;
   }
 }
+
+:root {
+  --blue-50: #eef4ff;
+  --blue-100: #d8e7ff;
+  --blue-200: #abc9fb;
+  --blue-300: #85b2f9;
+  --blue-400: #609af8;
+  --blue-500: #5486f3;
+  --blue-600: #4578e6;
+  --blue-700: #295bac;
+  --blue-800: #204887;
+  --blue-900: #183462;
+  --green-50: #eefaf3;
+  --green-100: #d4f4e1;
+  --green-200: #a8e9c3;
+  --green-300: #7ddda5;
+  --green-400: #51d287;
+  --green-500: #29c76f;
+  --green-600: #24b263;
+  --green-700: #188a42;
+  --green-800: #136c34;
+  --green-900: #0e4f26;
+  --yellow-50: #fff6ed;
+  --yellow-100: #ffe8cf;
+  --yellow-200: #ffd19e;
+  --yellow-300: #ffba70;
+  --yellow-400: #ffa954;
+  --yellow-500: #ff9f42;
+  --yellow-600: #f08f2f;
+  --yellow-700: #c76f1e;
+  --yellow-800: #9a5a12;
+  --yellow-900: #653a0b;
+  --orange-50: #fff6ed;
+  --orange-100: #ffe8cf;
+  --orange-200: #ffd19e;
+  --orange-300: #ffba70;
+  --orange-400: #ffa954;
+  --orange-500: #ff9f42;
+  --orange-600: #f08f2f;
+  --orange-700: #c76f1e;
+  --orange-800: #9a5a12;
+  --orange-900: #653a0b;
+  --red-50: #fff1f1;
+  --red-100: #ffd8d8;
+  --red-200: #ffb1b1;
+  --red-300: #fb8b8c;
+  --red-400: #f06c6d;
+  --red-500: #ea5455;
+  --red-600: #dc4243;
+  --red-700: #b32b23;
+  --red-800: #8c221c;
+  --red-900: #661814;
+}
+
+.p-button.p-button-info,
+.p-button-group.p-button-info > .p-button,
+.p-splitbutton.p-button-info > .p-button {
+  color: #ffffff;
+  background: var(--blue-500);
+  border-color: var(--blue-500);
+}
+.p-button.p-button-info:not(:disabled):hover,
+.p-button-group.p-button-info > .p-button:not(:disabled):hover,
+.p-splitbutton.p-button-info > .p-button:not(:disabled):hover {
+  color: #ffffff;
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+}
+.p-button.p-button-info:not(:disabled):focus,
+.p-button-group.p-button-info > .p-button:not(:disabled):focus,
+.p-splitbutton.p-button-info > .p-button:not(:disabled):focus {
+  box-shadow: 0 0 0 0.2rem var(--blue-100);
+}
+.p-button.p-button-info:not(:disabled):active,
+.p-button-group.p-button-info > .p-button:not(:disabled):active,
+.p-splitbutton.p-button-info > .p-button:not(:disabled):active {
+  color: #ffffff;
+  background: var(--blue-700);
+  border-color: var(--blue-700);
+}
+.p-button.p-button-info.p-button-outlined,
+.p-button.p-button-info.p-button-text,
+.p-button-group.p-button-info > .p-button.p-button-outlined,
+.p-button-group.p-button-info > .p-button.p-button-text,
+.p-splitbutton.p-button-info > .p-button.p-button-outlined,
+.p-splitbutton.p-button-info > .p-button.p-button-text {
+  background-color: transparent;
+  color: var(--blue-500);
+}
+.p-button.p-button-info.p-button-outlined,
+.p-button-group.p-button-info > .p-button.p-button-outlined,
+.p-splitbutton.p-button-info > .p-button.p-button-outlined {
+  border-color: currentColor;
+}
+.p-button.p-button-info.p-button-text,
+.p-button-group.p-button-info > .p-button.p-button-text,
+.p-splitbutton.p-button-info > .p-button.p-button-text {
+  border-color: transparent;
+}
+.p-button.p-button-info.p-button-outlined:not(:disabled):hover,
+.p-button.p-button-info.p-button-text:not(:disabled):hover,
+.p-button-group.p-button-info > .p-button.p-button-outlined:not(:disabled):hover,
+.p-button-group.p-button-info > .p-button.p-button-text:not(:disabled):hover,
+.p-splitbutton.p-button-info > .p-button.p-button-outlined:not(:disabled):hover,
+.p-splitbutton.p-button-info > .p-button.p-button-text:not(:disabled):hover {
+  color: var(--blue-600);
+  background: var(--blue-50);
+  border-color: currentColor;
+}
+.p-button.p-button-info.p-button-outlined:not(:disabled):active,
+.p-button.p-button-info.p-button-text:not(:disabled):active,
+.p-button-group.p-button-info > .p-button.p-button-outlined:not(:disabled):active,
+.p-button-group.p-button-info > .p-button.p-button-text:not(:disabled):active,
+.p-splitbutton.p-button-info > .p-button.p-button-outlined:not(:disabled):active,
+.p-splitbutton.p-button-info > .p-button.p-button-text:not(:disabled):active {
+  color: var(--blue-700);
+  background: var(--blue-100);
+  border-color: currentColor;
+}
+
+.p-button.p-button-success,
+.p-button-group.p-button-success > .p-button,
+.p-splitbutton.p-button-success > .p-button {
+  color: #ffffff;
+  background: var(--green-500);
+  border-color: var(--green-500);
+}
+.p-button.p-button-success:not(:disabled):hover,
+.p-button-group.p-button-success > .p-button:not(:disabled):hover,
+.p-splitbutton.p-button-success > .p-button:not(:disabled):hover {
+  color: #ffffff;
+  background: var(--green-600);
+  border-color: var(--green-600);
+}
+.p-button.p-button-success:not(:disabled):focus,
+.p-button-group.p-button-success > .p-button:not(:disabled):focus,
+.p-splitbutton.p-button-success > .p-button:not(:disabled):focus {
+  box-shadow: 0 0 0 0.2rem var(--green-100);
+}
+.p-button.p-button-success:not(:disabled):active,
+.p-button-group.p-button-success > .p-button:not(:disabled):active,
+.p-splitbutton.p-button-success > .p-button:not(:disabled):active {
+  color: #ffffff;
+  background: var(--green-700);
+  border-color: var(--green-700);
+}
+.p-button.p-button-success.p-button-outlined,
+.p-button.p-button-success.p-button-text,
+.p-button-group.p-button-success > .p-button.p-button-outlined,
+.p-button-group.p-button-success > .p-button.p-button-text,
+.p-splitbutton.p-button-success > .p-button.p-button-outlined,
+.p-splitbutton.p-button-success > .p-button.p-button-text {
+  background-color: transparent;
+  color: var(--green-500);
+}
+.p-button.p-button-success.p-button-outlined,
+.p-button-group.p-button-success > .p-button.p-button-outlined,
+.p-splitbutton.p-button-success > .p-button.p-button-outlined {
+  border-color: currentColor;
+}
+.p-button.p-button-success.p-button-text,
+.p-button-group.p-button-success > .p-button.p-button-text,
+.p-splitbutton.p-button-success > .p-button.p-button-text {
+  border-color: transparent;
+}
+.p-button.p-button-success.p-button-outlined:not(:disabled):hover,
+.p-button.p-button-success.p-button-text:not(:disabled):hover,
+.p-button-group.p-button-success > .p-button.p-button-outlined:not(:disabled):hover,
+.p-button-group.p-button-success > .p-button.p-button-text:not(:disabled):hover,
+.p-splitbutton.p-button-success > .p-button.p-button-outlined:not(:disabled):hover,
+.p-splitbutton.p-button-success > .p-button.p-button-text:not(:disabled):hover {
+  color: var(--green-600);
+  background: var(--green-50);
+  border-color: currentColor;
+}
+.p-button.p-button-success.p-button-outlined:not(:disabled):active,
+.p-button.p-button-success.p-button-text:not(:disabled):active,
+.p-button-group.p-button-success > .p-button.p-button-outlined:not(:disabled):active,
+.p-button-group.p-button-success > .p-button.p-button-text:not(:disabled):active,
+.p-splitbutton.p-button-success > .p-button.p-button-outlined:not(:disabled):active,
+.p-splitbutton.p-button-success > .p-button.p-button-text:not(:disabled):active {
+  color: var(--green-700);
+  background: var(--green-100);
+  border-color: currentColor;
+}
+
+.p-button.p-button-warning,
+.p-button-group.p-button-warning > .p-button,
+.p-splitbutton.p-button-warning > .p-button {
+  color: #ffffff;
+  background: var(--yellow-500);
+  border-color: var(--yellow-500);
+}
+.p-button.p-button-warning:not(:disabled):hover,
+.p-button-group.p-button-warning > .p-button:not(:disabled):hover,
+.p-splitbutton.p-button-warning > .p-button:not(:disabled):hover {
+  color: #ffffff;
+  background: var(--yellow-600);
+  border-color: var(--yellow-600);
+}
+.p-button.p-button-warning:not(:disabled):focus,
+.p-button-group.p-button-warning > .p-button:not(:disabled):focus,
+.p-splitbutton.p-button-warning > .p-button:not(:disabled):focus {
+  box-shadow: 0 0 0 0.2rem var(--yellow-100);
+}
+.p-button.p-button-warning:not(:disabled):active,
+.p-button-group.p-button-warning > .p-button:not(:disabled):active,
+.p-splitbutton.p-button-warning > .p-button:not(:disabled):active {
+  color: #ffffff;
+  background: var(--yellow-700);
+  border-color: var(--yellow-700);
+}
+.p-button.p-button-warning.p-button-outlined,
+.p-button.p-button-warning.p-button-text,
+.p-button-group.p-button-warning > .p-button.p-button-outlined,
+.p-button-group.p-button-warning > .p-button.p-button-text,
+.p-splitbutton.p-button-warning > .p-button.p-button-outlined,
+.p-splitbutton.p-button-warning > .p-button.p-button-text {
+  background-color: transparent;
+  color: var(--yellow-700);
+}
+.p-button.p-button-warning.p-button-outlined,
+.p-button-group.p-button-warning > .p-button.p-button-outlined,
+.p-splitbutton.p-button-warning > .p-button.p-button-outlined {
+  border-color: currentColor;
+}
+.p-button.p-button-warning.p-button-text,
+.p-button-group.p-button-warning > .p-button.p-button-text,
+.p-splitbutton.p-button-warning > .p-button.p-button-text {
+  border-color: transparent;
+}
+.p-button.p-button-warning.p-button-outlined:not(:disabled):hover,
+.p-button.p-button-warning.p-button-text:not(:disabled):hover,
+.p-button-group.p-button-warning > .p-button.p-button-outlined:not(:disabled):hover,
+.p-button-group.p-button-warning > .p-button.p-button-text:not(:disabled):hover,
+.p-splitbutton.p-button-warning > .p-button.p-button-outlined:not(:disabled):hover,
+.p-splitbutton.p-button-warning > .p-button.p-button-text:not(:disabled):hover {
+  color: var(--yellow-800);
+  background: var(--yellow-50);
+  border-color: currentColor;
+}
+.p-button.p-button-warning.p-button-outlined:not(:disabled):active,
+.p-button.p-button-warning.p-button-text:not(:disabled):active,
+.p-button-group.p-button-warning > .p-button.p-button-outlined:not(:disabled):active,
+.p-button-group.p-button-warning > .p-button.p-button-text:not(:disabled):active,
+.p-splitbutton.p-button-warning > .p-button.p-button-outlined:not(:disabled):active,
+.p-splitbutton.p-button-warning > .p-button.p-button-text:not(:disabled):active {
+  color: var(--yellow-900);
+  background: var(--yellow-100);
+  border-color: currentColor;
+}
+
+.p-button.p-button-danger,
+.p-button-group.p-button-danger > .p-button,
+.p-splitbutton.p-button-danger > .p-button {
+  color: #ffffff;
+  background: var(--red-500);
+  border-color: var(--red-500);
+}
+.p-button.p-button-danger:not(:disabled):hover,
+.p-button-group.p-button-danger > .p-button:not(:disabled):hover,
+.p-splitbutton.p-button-danger > .p-button:not(:disabled):hover {
+  color: #ffffff;
+  background: var(--red-600);
+  border-color: var(--red-600);
+}
+.p-button.p-button-danger:not(:disabled):focus,
+.p-button-group.p-button-danger > .p-button:not(:disabled):focus,
+.p-splitbutton.p-button-danger > .p-button:not(:disabled):focus {
+  box-shadow: 0 0 0 0.2rem var(--red-100);
+}
+.p-button.p-button-danger:not(:disabled):active,
+.p-button-group.p-button-danger > .p-button:not(:disabled):active,
+.p-splitbutton.p-button-danger > .p-button:not(:disabled):active {
+  color: #ffffff;
+  background: var(--red-700);
+  border-color: var(--red-700);
+}
+.p-button.p-button-danger.p-button-outlined,
+.p-button.p-button-danger.p-button-text,
+.p-button-group.p-button-danger > .p-button.p-button-outlined,
+.p-button-group.p-button-danger > .p-button.p-button-text,
+.p-splitbutton.p-button-danger > .p-button.p-button-outlined,
+.p-splitbutton.p-button-danger > .p-button.p-button-text {
+  background-color: transparent;
+  color: var(--red-500);
+}
+.p-button.p-button-danger.p-button-outlined,
+.p-button-group.p-button-danger > .p-button.p-button-outlined,
+.p-splitbutton.p-button-danger > .p-button.p-button-outlined {
+  border-color: currentColor;
+}
+.p-button.p-button-danger.p-button-text,
+.p-button-group.p-button-danger > .p-button.p-button-text,
+.p-splitbutton.p-button-danger > .p-button.p-button-text {
+  border-color: transparent;
+}
+.p-button.p-button-danger.p-button-outlined:not(:disabled):hover,
+.p-button.p-button-danger.p-button-text:not(:disabled):hover,
+.p-button-group.p-button-danger > .p-button.p-button-outlined:not(:disabled):hover,
+.p-button-group.p-button-danger > .p-button.p-button-text:not(:disabled):hover,
+.p-splitbutton.p-button-danger > .p-button.p-button-outlined:not(:disabled):hover,
+.p-splitbutton.p-button-danger > .p-button.p-button-text:not(:disabled):hover {
+  color: var(--red-600);
+  background: var(--red-50);
+  border-color: currentColor;
+}
+.p-button.p-button-danger.p-button-outlined:not(:disabled):active,
+.p-button.p-button-danger.p-button-text:not(:disabled):active,
+.p-button-group.p-button-danger > .p-button.p-button-outlined:not(:disabled):active,
+.p-button-group.p-button-danger > .p-button.p-button-text:not(:disabled):active,
+.p-splitbutton.p-button-danger > .p-button.p-button-outlined:not(:disabled):active,
+.p-splitbutton.p-button-danger > .p-button.p-button-text:not(:disabled):active {
+  color: var(--red-700);
+  background: var(--red-100);
+  border-color: currentColor;
+}
+
+.p-badge.p-badge-info,
+.p-tag.p-tag-info {
+  background-color: var(--blue-500);
+  color: #ffffff;
+}
+.p-badge.p-badge-success,
+.p-tag.p-tag-success {
+  background-color: var(--green-500);
+  color: #ffffff;
+}
+.p-badge.p-badge-warning,
+.p-tag.p-tag-warning {
+  background-color: var(--yellow-500);
+  color: #ffffff;
+}
+.p-badge.p-badge-danger,
+.p-tag.p-tag-danger {
+  background-color: var(--red-500);
+  color: #ffffff;
+}
+
+.p-inline-message.p-inline-message-info,
+.p-message.p-message-info,
+.p-toast .p-toast-message.p-toast-message-info {
+  background: var(--blue-50);
+  border-color: var(--blue-500);
+  color: var(--blue-700);
+}
+.p-inline-message.p-inline-message-info .p-inline-message-icon,
+.p-message.p-message-info .p-message-icon,
+.p-message.p-message-info .p-message-close,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+  color: var(--blue-700);
+}
+.p-inline-message.p-inline-message-success,
+.p-message.p-message-success,
+.p-toast .p-toast-message.p-toast-message-success {
+  background: var(--green-50);
+  border-color: var(--green-500);
+  color: var(--green-700);
+}
+.p-inline-message.p-inline-message-success .p-inline-message-icon,
+.p-message.p-message-success .p-message-icon,
+.p-message.p-message-success .p-message-close,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: var(--green-700);
+}
+.p-inline-message.p-inline-message-warn,
+.p-message.p-message-warn,
+.p-toast .p-toast-message.p-toast-message-warn {
+  background: var(--yellow-50);
+  border-color: var(--yellow-500);
+  color: var(--yellow-800);
+}
+.p-inline-message.p-inline-message-warn .p-inline-message-icon,
+.p-message.p-message-warn .p-message-icon,
+.p-message.p-message-warn .p-message-close,
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
+  color: var(--yellow-800);
+}
+.p-inline-message.p-inline-message-error,
+.p-message.p-message-error,
+.p-toast .p-toast-message.p-toast-message-error {
+  background: var(--red-50);
+  border-color: var(--red-500);
+  color: var(--red-700);
+}
+.p-inline-message.p-inline-message-error .p-inline-message-icon,
+.p-message.p-message-error .p-message-icon,
+.p-message.p-message-error .p-message-close,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+  color: var(--red-700);
+}
 /* Customizations to the designer theme should be defined here */
 @layer primeng {
   .p-datepicker .p-datepicker-header .p-datepicker-prev,

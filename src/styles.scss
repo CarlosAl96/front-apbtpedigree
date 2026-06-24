@@ -8,15 +8,17 @@ body {
 }
 
 :root {
-  --color-primary: #4b5563;
+  --color-primary: #9ca3af;
+  --color-active-text: #374151;
   --color-secondary: #9ca3af37;
-  --color-bg-header: #242424;
+  --color-bg-main-header: #374151;
+  --color-bg-header: #9ca3af;
   --color-bg-footer: #f6f6f6;
   --color-bg-navbar: #e5e7eb;
   --color-bg-menu-pedigree: #e5e7eb;
   --color-bg-body: #f6f6f6cc;
   --color-font-light: #f6f6f6;
-  --color-font-primary: #242424;
+  --color-font-primary: #0b202e;
   --color-font-dark: #181818;
 }
 
@@ -31,6 +33,12 @@ body {
   color: var(--color-font-light);
 }
 
+.header-container a:hover,
+.header-container .link-dog:hover,
+.header-container .link-menu:hover {
+  color: var(--color-font-light) !important;
+}
+
 .p-progress-spinner-circle {
   stroke-dasharray: 89, 200;
   stroke-dashoffset: 0;
@@ -40,15 +48,15 @@ body {
 }
 
 .red {
-  color: #3f3f46 !important;
+  color: red !important;
 }
 
 .blue {
-  color: #4b5563 !important;
+  color: blue !important;
 }
 
 .green {
-  color: #525252 !important;
+  color: green !important;
 }
 
 .chat-emoji-picker {

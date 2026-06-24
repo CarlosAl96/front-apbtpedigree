@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--color-bg-header);
+  background-color: var(--color-bg-main-header);
   padding-right: 1rem;
   padding-left: 1rem;
   color: var(--color-font-light);
@@ -63,6 +63,36 @@
 ::ng-deep .header .p-dropdown-item {
   font-size: 1rem;
   text-transform: uppercase;
+}
+
+::ng-deep .header .p-button {
+  background: #d1d5db;
+  border-color: #d1d5db;
+  color: var(--color-font-primary);
+}
+
+::ng-deep .header .p-button:not(:disabled):hover,
+::ng-deep .header .p-button:not(:disabled):active {
+  background: #e5e7eb;
+  border-color: #e5e7eb;
+  color: var(--color-font-primary);
+}
+
+::ng-deep .header .p-button:disabled {
+  background: #9ca3af;
+  border-color: #9ca3af;
+  color: #e5e7eb;
+  opacity: 1;
+}
+
+::ng-deep .header .search-button.p-button,
+::ng-deep .header .search-button.p-button:not(:disabled):hover,
+::ng-deep .header .search-button.p-button:not(:disabled):active,
+::ng-deep .header .search-button.p-button:disabled {
+  background: var(--color-bg-header);
+  border-color: var(--color-bg-header);
+  color: var(--color-font-light);
+  opacity: 1;
 }
 
 .owner-option {

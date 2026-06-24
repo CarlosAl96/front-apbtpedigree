@@ -73,7 +73,7 @@
   cursor: pointer;
   color: inherit;
   &:hover {
-    color: var(--color-primary);
+    color: var(--color-active-text);
     text-decoration: underline;
   }
 }
@@ -93,7 +93,7 @@
   }
 
   a {
-    color: var(--color-primary);
+    color: var(--color-active-text);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;

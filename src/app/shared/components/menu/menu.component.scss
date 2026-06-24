@@ -23,13 +23,13 @@
 }
 
 .navbar-item:hover {
-  color: var(--color-primary);
+  color: var(--color-active-text);
   text-decoration: underline;
 }
 
 .active {
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-active-text);
   text-decoration: underline;
 }
 

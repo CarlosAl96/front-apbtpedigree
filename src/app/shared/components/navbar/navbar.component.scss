@@ -68,11 +68,11 @@
 }
 
 .navbar-item:hover {
-  color: var(--color-primary);
-  border-bottom: solid 2px var(--color-primary);
+  color: var(--color-active-text);
+  border-bottom: solid 2px var(--color-active-text);
 
   .icon-svg {
-    fill: var(--color-primary);
+    fill: var(--color-active-text);
   }
 }
 
@@ -82,22 +82,22 @@
   color: inherit;
   font-size: 1rem;
   &:hover {
-    color: var(--color-primary);
+    color: var(--color-active-text);
     text-decoration: underline;
   }
 }
 
 .active-link {
-  color: var(--color-primary);
+  color: var(--color-active-text);
   text-decoration: underline;
 }
 
 .active {
   font-weight: 700;
-  color: var(--color-primary);
-  border-bottom: solid 2px var(--color-primary);
+  color: var(--color-active-text);
+  border-bottom: solid 2px var(--color-active-text);
   .icon-svg {
-    fill: var(--color-primary);
+    fill: var(--color-active-text);
   }
 }
 
